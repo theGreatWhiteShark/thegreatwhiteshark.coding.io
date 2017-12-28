@@ -1,0 +1,6 @@
+[submodule "themes/casper"]
+	path = themes/casper
+	url = https://github.com/theGreatWhiteShark/hugo-theme-casper.git
+[submodule "themes/minos"]
+	path = themes/minos
+	url = https://github.com/theGreatWhiteShark/hugo-theme-minos.git
