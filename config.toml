@@ -1,31 +1,59 @@
-baseURL = "https://thegreatwhiteshark.github.io/"
-# baseURL = "/home/phil/git/thegreatwhiteshark.github.io/public"
+# baseurl = "https://thegreatwhiteshark.github.io"
+baseurl = "https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/"
 languageCode = "en-us"
-title = "theGreatWhiteShark blog"
-theme = "minos"
-
-[Params]
-	tagline = "theGreatWhiteShark blog"
-	author = "Philipp Müller"
-	description = "A collection of all the my interests"
-	github = "theGreatWhiteShark"
-	logoBig = "/images/logo-big.jpg"
-	logoSmall = "/images/logo-small.jpg" 
-	email = "thetruephil@googlemail.com"
-	hightlightJs = true
-	credit = true
-	customCSS = false
+disqusshortname = "thegreatwhiteshark-coding-io"
+paginate = 7
+pluralizelisttitles = false
+theme = "casper"
+title = "theGreatWhiteShark"
+RSSLink = "http://feeds.feedburner.com/Thegreatwhiteshark-coding"
 
 [[menu.main]]
-	name = "About"
-	url = "/#about"
-	weight = 1
+identifier = "home"
+name = "Home"
+url = "/"
+weight = 200
+
 [[menu.main]]
-	name = "Blogs"
-	url = "/#blogs"
-	weight = 2
+identifier = "data-science"
+name = "Data Science"
+pre = "<h3>Topics</h3>"
+url = "/data-science"
+weight = 114
 [[menu.main]]
-	name = "Projects"
-	url = "/#projects"
-	weight = 3
-	
+identifier = "hacks"
+name = "Hacks"
+url = "/hacks"
+weight = 113
+
+[[menu.main]]
+name = "Github repos"
+pre = "<h3>Follow me</h3>"
+url = "https://github.com/theGreatWhiteShark"
+weight = 100
+[[menu.main]]
+identifier = "blog"
+name = "Blogs"
+url = "https://thegreatwhiteshark.github.io/"
+weight = 90
+[[menu.main]]
+identifier = "about"
+name = "About me"
+url = "/about"
+weight = 80
+
+[params]
+authorwebsite = "https://thegreatwhiteshark.github.io/"
+cover = "images/moses-banner.png"
+email = "thetruephil@googlemail.com"
+description = "A collection of my various projects involving coding, hacking, and data"
+githubName = "theGreatWhiteShark"
+hideHUGOSupport = false
+pygmentsCodefences = true
+pygmentsStyle = "friendly"
+[permalinks]
+post = "/:slug/"
+[sitemap]
+ChangeFreq = ""
+Filename = "sitemap.xml"
+Priority = "-1"
