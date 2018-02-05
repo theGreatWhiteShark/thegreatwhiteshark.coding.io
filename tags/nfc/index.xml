@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nfc on theGreatWhiteShark</title>
+    <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/tags/nfc/</link>
+    <description>Recent content in Nfc on theGreatWhiteShark</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 20 Feb 2017 20:02:00 +0100</lastBuildDate>
+    
+	<atom:link href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/tags/nfc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Mensacard Hack Pt. III</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-iii/</link>
+      <pubDate>Mon, 20 Feb 2017 20:02:00 +0100</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-iii/</guid>
+      <description>To make a long story short, it&amp;rsquo;s not trivial to access the content of the Mensacard and I didn&amp;rsquo;t managed to do it with the technology I had at hand.
+But if you ever wanted to develop code for your Arduino in Emacs instead of the Arduino IDE, you will find a more or less comprehensive guide to do so in here.
+The technology I used:
+ Acer Aspire S3 running Ubuntu 16.</description>
+    </item>
+    
+    <item>
+      <title>Mensacard Hack Pt. II</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-ii/</link>
+      <pubDate>Sun, 29 Jan 2017 20:02:00 +0100</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-ii/</guid>
+      <description>Why I tried using Ionic. The main reason for me to do this project is to acquire all necessary skills to quickly prototype an Android app.
+It happened a couple of times already that I had a very nice idea or even a more or less elaborate roadmap to a product but in the end decided to file it away due to the gigantic overhead of app development. I really dislike doing this.</description>
+    </item>
+    
+    <item>
+      <title>Mensacard Hack Pt. I</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-i/</link>
+      <pubDate>Mon, 09 Jan 2017 20:02:00 +0100</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-i/</guid>
+      <description>In the first part of the series we will do the whole setup for the development environment and all the code is available on my Github page.
+Introduction Since NFC and RFID is imho a quite nice way to communicate with things you build which do not have any power supply I wanted to dive into this topic since quite a while. And be honest: who wants to have cables all over the place when you also could do it without?</description>
+    </item>
+    
+  </channel>
+</rss>

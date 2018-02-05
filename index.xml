@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>theGreatWhiteShark</title>
+    <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/</link>
+    <description>Recent content on theGreatWhiteShark</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 29 Jan 2018 11:58:25 +0200</lastBuildDate>
+    
+	<atom:link href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Data science</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/</link>
+      <pubDate>Mon, 29 Jan 2018 11:58:25 +0200</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hacks</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/</link>
+      <pubDate>Mon, 29 Jan 2018 11:58:25 +0200</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>About me</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/about/</link>
+      <pubDate>Mon, 25 Dec 2017 17:39:21 -0700</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/about/</guid>
+      <description>I am a PhD student in physics, a passionated programmer, a vehement open-source user, a picky musician, and an aspiring artist.
+In this blog I want to share my experiences, present the solutions I found to encountered problems, and maybe help some other people out there facing similar challenges.</description>
+    </item>
+    
+    <item>
+      <title>A data scientist’s view on the election for the Bundestag Pt. II</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/bundestagswahl-pt-ii/</link>
+      <pubDate>Sun, 08 Oct 2017 20:02:00 +0100</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/bundestagswahl-pt-ii/</guid>
+      <description>The internal representation of spatial objects in R is quite complicated. You might already experienced this while searching for neat ways to plot maps of your data online. When everything you know consists of data.frames, lists, strings, and factors, you most probably had a hard time dealing with the answers presented there. But this is about to change. Once introduced to their representation, spatial objects and the corresponding plotting routines become as simple and straight forward as any other R objects.</description>
+    </item>
+    
+    <item>
+      <title>A data scientist’s view on the election for the Bundestag Pt. I</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/bundestagswahl-pt-i/</link>
+      <pubDate>Fri, 29 Sep 2017 20:02:00 +0100</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/bundestagswahl-pt-i/</guid>
+      <description>Thanks to loads of publicly available data it&amp;rsquo;s possible to get further insight into the past and current state of the world, as well as possible future perspectives. May it be for professional reasons as a data scientist or just out of pure curiosity, using modern statistical computer languages all of us are capable of obtaining those insights.
+Introduction It&amp;rsquo;s often said that as a data scientist you spend 80% of your time not on your analysis but on the data itself: 40% on finding the right data and 40% on cleaning it.</description>
+    </item>
+    
+    <item>
+      <title>Mensacard Hack Pt. III</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-iii/</link>
+      <pubDate>Mon, 20 Feb 2017 20:02:00 +0100</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-iii/</guid>
+      <description>To make a long story short, it&amp;rsquo;s not trivial to access the content of the Mensacard and I didn&amp;rsquo;t managed to do it with the technology I had at hand.
+But if you ever wanted to develop code for your Arduino in Emacs instead of the Arduino IDE, you will find a more or less comprehensive guide to do so in here.
+The technology I used:
+ Acer Aspire S3 running Ubuntu 16.</description>
+    </item>
+    
+    <item>
+      <title>How much computer skills does a physicist need?</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/how-much-computer-skills/</link>
+      <pubDate>Thu, 02 Feb 2017 20:02:00 +0100</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/how-much-computer-skills/</guid>
+      <description>Computational skills are something almost every scientist has to offer nowadays. But unfortunately the least of us are actually trained in it. So most colleges (including me) took the autodidactic approach, a long road full of detours and wasted effort.
+For those of you who are already decent programmers but did not dived into a lot of languages and tools, I try to compile a summary of all the essential stuff I tried during my PhD in this post.</description>
+    </item>
+    
+    <item>
+      <title>Mensacard Hack Pt. II</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-ii/</link>
+      <pubDate>Sun, 29 Jan 2017 20:02:00 +0100</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-ii/</guid>
+      <description>Why I tried using Ionic. The main reason for me to do this project is to acquire all necessary skills to quickly prototype an Android app.
+It happened a couple of times already that I had a very nice idea or even a more or less elaborate roadmap to a product but in the end decided to file it away due to the gigantic overhead of app development. I really dislike doing this.</description>
+    </item>
+    
+    <item>
+      <title>Mensacard Hack Pt. I</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-i/</link>
+      <pubDate>Mon, 09 Jan 2017 20:02:00 +0100</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-i/</guid>
+      <description>In the first part of the series we will do the whole setup for the development environment and all the code is available on my Github page.
+Introduction Since NFC and RFID is imho a quite nice way to communicate with things you build which do not have any power supply I wanted to dive into this topic since quite a while. And be honest: who wants to have cables all over the place when you also could do it without?</description>
+    </item>
+    
+    <item>
+      <title>Vasp2R</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/vasp2r/</link>
+      <pubDate>Sun, 18 Dec 2016 20:02:00 +0100</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/vasp2r/</guid>
+      <description>It is about my endeavors to create some neat plots of the results obtained using the proprietary DFT program VASP one and a half years ago. Since these files are usually pretty big it is important for your plotting script to rely on compiled C, C++ or Fortran code under the hood of a high level language like R or python. And you definitely want to have one of the latter ones for creating you plots since it is way more easy and beautiful.</description>
+    </item>
+    
+  </channel>
+</rss>

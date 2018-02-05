@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="A data scientist’s view on the election for the Bundestag Pt. I"/>
+<meta name="twitter:description" content="In this series of blog posts I want to show you how to retrieve, handle, and visualize publicly available data on the example of the recent election for the Bundestag (the German parliament)."/>
+<meta name="twitter:site" content="@"/>
+
+
+
+  	<meta property="og:title" content="A data scientist’s view on the election for the Bundestag Pt. I &middot; theGreatWhiteShark" />
+  	<meta property="og:site_name" content="theGreatWhiteShark" />
+  	<meta property="og:url" content="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/bundestagswahl-pt-i/" />
+
+    
+        
+            <meta property="og:image" content="/thegreatwhiteshark.coding.io/images/moses-banner.png"/>
+        
+    
+
+    
+    <meta property="og:description" content="In this series of blog posts I want to show you how to retrieve, handle, and visualize publicly available data on the example of the recent election for the Bundestag (the German parliament)." />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2017-09-29T20:02:00&#43;01:00" />
+
+    
+    <meta property="article:tag" content="R" />
+    
+    <meta property="article:tag" content="data science" />
+    
+    
+
+    <title>A data scientist’s view on the election for the Bundestag Pt. I &middot; theGreatWhiteShark</title>
+
+    
+    <meta name="description" content="In this series of blog posts I want to show you how to retrieve, handle, and visualize publicly available data on the example of the recent election for the Bundestag (the German parliament)." />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/thegreatwhiteshark.coding.io/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="/thegreatwhiteshark.coding.io/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/custom.css" />
+
+    
+
+    
+
+    
+      
+          <link href="/thegreatwhiteshark.coding.io/index.xml" rel="alternate" type="application/rss+xml" title="theGreatWhiteShark" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.32.2" />
+
+    <link rel="canonical" href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/bundestagswahl-pt-i/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": 
+    },
+    "author": {
+        "@type": "Person",
+        "name": ,
+        
+        "url": https://thegreatwhiteshark.github.io/,
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ]
+    },
+    "headline": A data scientist’s view on the election for the Bundestag Pt. I,
+    "name": A data scientist’s view on the election for the Bundestag Pt. I,
+    "wordCount": 3129,
+    "timeRequired": "PT15M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": en
+    },
+    "url": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/bundestagswahl-pt-i/,
+    "datePublished": 2017-09-29T20:02Z,
+    "dateModified": 2017-09-29T20:02Z,
+    
+    "keywords": R, data science,
+    "description": In this series of blog posts I want to show you how to retrieve, handle, and visualize publicly available data on the example of the recent election for the Bundestag (the German parliament).,
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/bundestagswahl-pt-i/
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/">Home</a>
+            </li>
+        
+            <h3>Topics</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/data-science">Data Science</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/hacks">Hacks</a>
+            </li>
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/theGreatWhiteShark">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://thegreatwhiteshark.github.io/">Blogs</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/about">About me</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="/thegreatwhiteshark.coding.io/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+      <header class="main-header post-head no-cover">
+	<nav class="main-nav clearfix">
+	  
+
+	  
+	  
+	  <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+	  
+	</nav>
+      </header>
+
+
+
+      <main class="content" role="main">
+
+	<article class="post data-science">
+
+	  <header class="post-header">
+	    <h1 class="post-title">A data scientist’s view on the election for the Bundestag Pt. I</h1>
+	    
+	      <h3 class="post-subtitle">Obtaining and cleaning the data</h3>
+	    
+	    <hr class="post-description-separator"/>
+	    <section class="post-description-single">  
+	      <p>In this series of blog posts I want to show you how to retrieve, handle, and visualize publicly available data on the example of the recent election for the Bundestag (the German parliament).
+	    </section>
+	    <hr class="post-description-separator"/>
+            <section class="post-meta">
+              
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/r/">#R</a></span>
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/data-science/">#data science</a></span>
+              
+            </section>
+	  </header>
+
+	  <section class="post-content">
+	    
+
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl1/header.jpeg" alt="header" /></p>
+
+<p>Thanks to loads of publicly available data it&rsquo;s possible to get
+further insight into the past and current state of the world, as well
+as possible future perspectives. May it be for professional reasons as
+a data scientist or just out of pure curiosity, using modern
+statistical computer languages all of us are capable of obtaining
+those insights.</p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>It&rsquo;s often said that as a data scientist you spend 80% of your time
+not on
+your analysis but on the data itself: 40% on finding the right data
+and 40% on cleaning it. While for small examples (like this one) it&rsquo;s
+certainly true, for large analysis including many hypotheses, machine
+learning, and/or model-based approaches in my experience the analysis
+gets more dominant. But nevertheless, your data will always plays a
+central role and thus for data science I would highly recommend choose
+a programming language focusing on handling data over a general
+purpose one.</p>
+
+<h2 id="which-computer-language-should-i-use">Which computer language should I use?</h2>
+
+<p>If you <a href="https://duckduckgo.com/">duckduckgo</a> <em>Data science programming
+language</em> or lend an ear to people working with data you quickly
+realize it boils down to four different languages, which are free and
+open source:
+<a href="https://www.r-project.org/">R</a>, <a href="https://julialang.org/">Julia</a>,
+<a href="http://www.scala-lang.org/">Scala</a>, and
+<a href="https://www.python.org/">Python</a>. While the first two are statistical
+languages designed around the handling of actual data, the latter are
+general purpose languages featuring nice packages for doing the same
+job. Using the statistical ones you can start more fast and the
+overall handling of object within the language is more convenient. The
+general purpose ones, on the other hand, enable you to solve problems
+beyond those of a data scientist.</p>
+
+<p>My recommendation is: choose whatever you like! All of those four
+languages are awesome, come with tons of documentation and tutorials,
+and already produced endless helps and advises on pages like
+<a href="https://stackoverflow.com/">Stackoverflow</a>. High-level computer
+languages featuring interpreters are all quite alike and since we are
+not digging the very roots of the language you will be able to perform
+this analysis in all four of them in no time. In addition your ability
+to collaborate with other people or to integrate their code into yours
+will increase tremendously as soon as you are able to read and write
+simple lines of code in as many languages as possible.</p>
+
+<p>In this post I will choose <strong>R</strong>. I use it
+over <strong>Julia</strong> since the latter was brand new and didn&rsquo;t had that much
+momentum when I started working with data as port of my PhD. But it&rsquo;s
+supposed to be more fast and
+robust than R and I&rsquo;m already looking forward to do some projects
+using it in the near future. <strong>Scala</strong> is more of a web-centered
+language and <strong>Python</strong> does not feature specialized time series
+analysis packages I need in my regular line of work. But let me stress
+it again: they are all perfectly suitable for this example.</p>
+
+<p>Sometimes
+people try to argue for the language they are most comfortable in to
+be the best in the world. Be better than those people. Be a
+multi-lingual!</p>
+
+<h2 id="the-problem-at-hand">The problem at hand</h2>
+
+<p>In this little example we will download the results for all election
+districts in Germany and convert them into a format we are comfortable
+working with. Since the data will be high-dimensional (the number of
+votes for each individual party in all election districts) we will
+display the information using maps. Therefore we also need to download
+and handle the shape files of all the election districts.</p>
+
+<p>For a more thorough introduction into data science using R have a look
+at Hadley&rsquo;s corresponding <a href="http://r4ds.had.co.nz/">book</a>.</p>
+
+<h1 id="download-the-data">Download the data</h1>
+
+<p>First of all we have to load a number of R packages. If you don&rsquo;t
+have them installed yet, use the <code>install.packages()</code> function to do
+so.</p>
+
+<p>In addition you need two non-standard Linux packages in order to
+install the R packages handling your map data.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># On Debian-based and Ubuntu distributions
+</span><span style="color:#60a0b0;font-style:italic"></span>sudo apt update
+sudo apt install libgdal-dev libproj-dev</code></pre></div>
+<p>All remaining code has to executed in a R shell.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Loading the required packages</span>
+<span style="color:#007020;font-weight:bold">library</span>( dplyr )
+<span style="color:#007020;font-weight:bold">library</span>( tidyr )
+<span style="color:#007020;font-weight:bold">library</span>( tibble )
+<span style="color:#007020;font-weight:bold">library</span>( readr )
+<span style="color:#007020;font-weight:bold">library</span>( stringr )
+<span style="color:#007020;font-weight:bold">library</span>( rgdal )
+<span style="color:#007020;font-weight:bold">library</span>( rgeos )
+<span style="color:#007020;font-weight:bold">library</span>( maptools )
+<span style="color:#007020;font-weight:bold">library</span>( ggplot2 )</code></pre></div>
+<p>Next we will download the results of the election provided by
+<a href="https://www.bundeswahlleiter.de/bundestagswahlen/2017/ergebnisse.html">bundeswahlleiter.de</a>
+into a separate folder.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Save all data in a separate folder (within the current one)</span>
+download.folder <span style="color:#666">&lt;-</span> <span style="color:#4070a0">&#34;bundeswahlleiter/&#34;</span>
+<span style="color:#007020;font-weight:bold">if</span> ( <span style="color:#666">!</span>dir.exists( download.folder ) ){
+  <span style="color:#007020">dir.create</span>( download.folder )
+}
+<span style="color:#60a0b0;font-style:italic">## URL pointing to the file containing the results for all of Germany.</span>
+data.election.url <span style="color:#666">&lt;-</span>
+  <span style="color:#4070a0">&#34;https: //www.bundeswahlleiter. de/dam/jcr/72f186bb-aa56-47d3-b24c-6a46f5de22d0/btw17_kerg.csv&#34;</span>
+  
+data.election.path <span style="color:#666">&lt;-</span> <span style="color:#007020">paste0</span>( download.folder, <span style="color:#4070a0">&#34;btw17_kerg.csv&#34;</span> )
+<span style="color:#60a0b0;font-style:italic">## Download</span>
+download.file( url <span style="color:#666">=</span> data.election.url,
+              destfile <span style="color:#666">=</span> data.election.path,
+              method <span style="color:#666">=</span> <span style="color:#4070a0">&#34;wget&#34;</span> )</code></pre></div>
+<h1 id="tidy-the-data">Tidy the data</h1>
+
+<p>To handle and clean the data we will use packages from the so-called
+<a href="https://www.tidyverse.org/">tidyverse</a>, a new school approach of
+doing things in R. Most of those packages are quite handy (expect of
+the annoying pipes provided via the <em>magrittr</em> package).</p>
+
+<p>The keys of the individual columns of the data are provided in a
+hierarchical structure. The first header iterates through the
+individual parties, the second through the type of vote, and the last
+through the confirmation state. Therefore the header can not be simply
+read from file but has to be added by hand. But before jumping right
+into
+the import functions of your programming language better take one or
+two minutes and just have a  look at your data using a simple
+editor. What&rsquo;s
+the structure of the header? Which information is contained? What&rsquo;s the
+shape and data type of the columns? &hellip; Getting a feeling for your
+data is quite important.</p>
+
+<p>The overall goal is to produce a clean data set. Though, there is no
+universal definition of what is clean or not and each field has it&rsquo;s
+own particular view on this topic, we will use the format preferred by
+the tidyverse (and by myself). In there we have a separate row for
+each observation and a separate column for each additional information
+or attribute. So we want to have a single column containing the
+number of votes and additional columns specifying the name of the
+election district, type of vote, party etc. corresponding to this
+individual value. Using this format and descriptive column names it
+will be incredibly straight forward to filter the election results
+afterwards.</p>
+
+<p><strong>Disclaimer</strong>: The data is quite fresh and hot. So if either the
+download URL or the structure of the data changes, please leave a
+comment. I&rsquo;ll try to adjust the code as soon as possible. :)</p>
+
+<h3 id="import-data">Import data</h3>
+
+<p>Next we will import the election results into R.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">data.pure <span style="color:#666">&lt;-</span> read_delim( data.election.path, delim <span style="color:#666">=</span> <span style="color:#4070a0">&#34;;&#34;</span>,
+                            col_types <span style="color:#666">=</span> cols( <span style="color:#40a070">.</span>default <span style="color:#666">=</span> col_integer(),
+                                             X2 <span style="color:#666">=</span> col_character() ),
+                            col_names <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span>, skip <span style="color:#666">=</span> <span style="color:#40a070">5</span> )</code></pre></div>
+<p>There are a bunch of warning messages for the command above. But as far
+as I can tell all the data is present and this is what really
+matters. We aren’t writing a package here, so let’s be quick (and
+maybe a little bit dirty). .</p>
+
+<p>There are some rows in the original data featuring only one single
+semicolon. Thus they result in rows consisting of only NA
+entries. <em>NA</em> is R&rsquo;s acronym for &ldquo;not available&rdquo; and represents
+missing data. These have to be removed. Since each election districts
+must have a unique name, we will use the second column to search for
+and remove those NA rows.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">data.pure.na.row <span style="color:#666">&lt;-</span> <span style="color:#007020">which</span>( <span style="color:#007020">is.na</span>( data.pure[[ <span style="color:#40a070">2</span> ]] ) )
+data.pure <span style="color:#666">&lt;-</span> data.pure[ <span style="color:#666">-</span>data.pure.na.row, ]</code></pre></div>
+<p>The presence of such artifacts only becomes apparent when you
+continuously inspect your data. The more you trust the people
+providing your data and the algorithm you use for importing, the more
+busy you will be finding and fixing bugs in your analysis.</p>
+
+<h3 id="extract-header">Extract header</h3>
+
+<p>Now we have to extract all the strings composing the header and
+combine the hierarchical structure into a single key per column in
+order to correlate them later on.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">data.header <span style="color:#666">&lt;-</span> <span style="color:#007020">readLines</span>( data.election.path, n <span style="color:#666">=</span> <span style="color:#40a070">5</span> )
+
+<span style="color:#60a0b0;font-style:italic">## Combining the hierarchical header structure into a single key per</span>
+<span style="color:#60a0b0;font-style:italic">## column.</span>
+data.header.1 <span style="color:#666">&lt;-</span> str_split( data.header[ <span style="color:#40a070">3</span> ], pattern <span style="color:#666">=</span> <span style="color:#4070a0">&#34;;&#34;</span> )[[ <span style="color:#40a070">1</span> ]]
+data.header.2 <span style="color:#666">&lt;-</span> str_split( data.header[ <span style="color:#40a070">4</span> ], pattern <span style="color:#666">=</span> <span style="color:#4070a0">&#34;;&#34;</span> )[[ <span style="color:#40a070">1</span> ]]
+data.header.3 <span style="color:#666">&lt;-</span> str_split( data.header[ <span style="color:#40a070">5</span> ], pattern <span style="color:#666">=</span> <span style="color:#4070a0">&#34;;&#34;</span> )[[ <span style="color:#40a070">1</span> ]]</code></pre></div>
+<p>The headers of the higher levels (1 and 2) of the hierarchy leave the
+key to a column empty whenever it holds the same string as the
+previous one. Therefore we have to write a function filling those
+gaps.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">fill.header <span style="color:#666">&lt;-</span> <span style="color:#007020;font-weight:bold">function</span>( string.vector ){
+  <span style="color:#007020;font-weight:bold">for</span> ( ll <span style="color:#007020;font-weight:bold">in</span> <span style="color:#40a070">2</span> <span style="color:#666">:</span> <span style="color:#007020">length</span>( string.vector ) ){
+    <span style="color:#007020;font-weight:bold">if</span> ( string.vector[ ll ] <span style="color:#666">==</span> <span style="color:#4070a0">&#34;&#34;</span> ){
+      <span style="color:#60a0b0;font-style:italic">## Check whether the previous entry contains a string. We will</span>
+      <span style="color:#60a0b0;font-style:italic">## only fill the vector in downward direction.</span>
+      <span style="color:#007020;font-weight:bold">if</span> ( string.vector[ ll <span style="color:#666">-</span> <span style="color:#40a070">1</span> ] <span style="color:#666">!=</span> <span style="color:#4070a0">&#34;&#34;</span> ){
+        string.vector[ ll ] <span style="color:#666">&lt;-</span> string.vector[ ll <span style="color:#666">-</span> <span style="color:#40a070">1</span> ]
+      }
+    }
+  }
+  <span style="color:#60a0b0;font-style:italic">## The last column is an artifact</span>
+  string.vector[ <span style="color:#007020">length</span>( string.vector ) ] <span style="color:#666">&lt;-</span> <span style="color:#4070a0">&#34;NA&#34;</span>
+  <span style="color:#007020;font-weight:bold">return</span>( string.vector )
+}
+data.header.1.filled <span style="color:#666">&lt;-</span> fill.header( data.header.1 )
+data.header.2.filled <span style="color:#666">&lt;-</span> fill.header( data.header.2 )
+data.header.3.filled <span style="color:#666">&lt;-</span> fill.header( data.header.3 )
+data.header.combined <span style="color:#666">&lt;-</span> str_c( data.header.1.filled,
+                              data.header.2.filled,
+                              data.header.3.filled, sep <span style="color:#666">=</span> <span style="color:#4070a0">&#39;_&#39;</span> )</code></pre></div>
+<p>The first three elements of our adjusted header won&rsquo;t be needed or
+touched when reshaping the data. Therefore we will give them a proper
+name and overwrite the column names of the imported data afterwards.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">data.header.combined[ <span style="color:#40a070">1</span> ] <span style="color:#666">&lt;-</span> <span style="color:#4070a0">&#34;election.district.number&#34;</span>
+data.header.combined[ <span style="color:#40a070">2</span> ] <span style="color:#666">&lt;-</span> <span style="color:#4070a0">&#34;election.district.name&#34;</span>
+data.header.combined[ <span style="color:#40a070">3</span> ] <span style="color:#666">&lt;-</span> <span style="color:#4070a0">&#34;state.number&#34;</span>
+
+<span style="color:#60a0b0;font-style:italic">## Now we can assign the column names to our data.</span>
+<span style="color:#007020">colnames</span>( data.pure ) <span style="color:#666">&lt;-</span> data.header.combined</code></pre></div>
+<h3 id="reshaping-the-data">Reshaping the data</h3>
+
+<p>As an intermediate step, we write all the integer data representing the
+number of votes in one column called &ldquo;counts&rdquo; and all the names of the
+corresponding columns in another one called
+&ldquo;party_type.of.vote_confirmation.status&rdquo;. In the realm of the
+tidyverse this operation is called <em>gathering</em> and illustrated in
+greater detail in
+<a href="http://r4ds.had.co.nz/tidy-data.html#gathering">here</a>.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">data.gathered <span style="color:#666">&lt;-</span> gather( data.pure,
+                        <span style="color:#40a070">4</span> <span style="color:#666">:</span> <span style="color:#007020">length</span>( data.header.combined ),
+                        key <span style="color:#666">=</span> <span style="color:#4070a0">&#34;party_type.of.vote_confirmation.status&#34;</span>,
+                        value <span style="color:#666">=</span> <span style="color:#4070a0">&#34;counts&#34;</span> )</code></pre></div>
+<p>Now we separate the attributes we combined in the header into
+individual columns using the underscores. A number of vote V associated
+with a key <code>X_Y_Z</code> in the &ldquo;party_type.of.vote_confirmation.status&rdquo;
+column will now be associated with <code>X</code> in the &ldquo;party&rdquo;, <code>Y</code> in the
+&ldquo;type.of.vote&rdquo;, and <code>Z</code> in the &ldquo;confirmation.status&rdquo; column. Again,
+there is a tidyverse-specific name called <em>separating</em> and a further
+illustration can be found in
+<a href="http://r4ds.had.co.nz/tidy-data.html#separate">here</a>.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">data.separated <span style="color:#666">&lt;-</span> separate( data.gathered,
+                           <span style="color:#4070a0">`party_type.of.vote_confirmation.status`</span>,
+                           into <span style="color:#666">=</span> <span style="color:#902000">c</span>( <span style="color:#4070a0">&#34;party&#34;</span>, <span style="color:#4070a0">&#34;type.of.vote&#34;</span>,
+                                    <span style="color:#4070a0">&#34;confirmation.status&#34;</span> ),
+                           sep <span style="color:#666">=</span> <span style="color:#4070a0">&#34;_&#34;</span> )</code></pre></div>
+<h3 id="working-with-tidy-data">Working with tidy data</h3>
+
+<p>Congratulations. Your data is clean! So what did we gained and was it
+really worth the effort?</p>
+
+<p>Now you can search your data in a very intuitive way. Since every
+single bit of information is condensed in its own column, you just have
+to specify the ones you are interested in and use the others to
+search/reduce the data. So you specify the columns you are interested
+in and throw out the rows you don&rsquo;t care about.</p>
+
+<p>Imagine you want to know the preliminary number of second votes
+(direct votes for a specific party) for all parties in the election
+district called Hamburg. You just have to select the <em>counts</em> column and
+use all the other columns to search your data like a database.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Tidyverse way of doing it</span>
+<span style="color:#60a0b0;font-style:italic">## Boiling your data down to the rows you are interested in.</span>
+votes.hamburg.filtered <span style="color:#666">&lt;-</span> filter( data.separated,
+                                 election.district.name <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Hamburg&#34;</span>,
+                                 confirmation.status <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Vorläufig&#34;</span>,
+                                 type.of.vote <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Zweitstimmen&#34;</span> )
+<span style="color:#60a0b0;font-style:italic">## Extract just the name of the party and the number of votes.</span>
+select( votes.hamburg.filtered, party, counts )
+							   
+<span style="color:#60a0b0;font-style:italic">## The oldschool way of doing it</span>
+votes.hamburg.filtered <span style="color:#666">&lt;-</span> data.separated[
+    data.separated<span style="color:#666">$</span>election.district.name <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Hamburg&#34;</span> <span style="color:#666">&amp;</span>
+    data.separated<span style="color:#666">$</span>confirmation.status <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Vorläufig&#34;</span> <span style="color:#666">&amp;</span>
+    data.separated<span style="color:#666">$</span>type.of.vote <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Zweitstimmen&#34;</span>, ]
+votes.hamburg.filtered[ , <span style="color:#902000">c</span>( <span style="color:#4070a0">&#34;party&#34;</span>, <span style="color:#4070a0">&#34;counts&#34;</span> ) ]</code></pre></div>
+<p>Or you are interested in all the election districts the party SPD
+obtained more than 200000 preliminary first votes in.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">votes.for.the.spd <span style="color:#666">&lt;-</span> filter( data.separated,
+                            confirmation.status <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Vorläufig&#34;</span>,
+                            type.of.vote <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Erststimmen&#34;</span>,
+                            party <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Sozialdemokratische Partei Deutschlands&#34;</span>,
+                            counts <span style="color:#666">&gt;</span> <span style="color:#40a070">200000</span> )
+votes.for.the.spd<span style="color:#666">$</span>election.district.name </code></pre></div>
+<p>In addition you should always check for the validity of the results by
+comparing e.g. all data of one election district against the row in
+the corresponding .csv file we imported our data from.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">filter( data.separated, election.district.name <span style="color:#666">==</span>
+                      data.separated<span style="color:#666">$</span>election.district.name[ <span style="color:#40a070">1</span> ]
+      )<span style="color:#666">$</span>counts</code></pre></div>
+<p>But be careful about the encoding here! At least for me entering the
+names of the districts by hand didn&rsquo;t worked for all of the them.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">data.separated<span style="color:#666">$</span>election.district.name[<span style="color:#40a070">1</span>] <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Flensburg - Schleswig&#34;</span></code></pre></div>
+<blockquote>
+<p>[1] FALSE</p>
+</blockquote>
+
+<p>This is caused by a different &lsquo;minus sign&rsquo; in the data.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">data.separated<span style="color:#666">$</span>election.district.name[<span style="color:#40a070">1</span>] <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Flensburg – Schleswig&#34;</span></code></pre></div>
+<blockquote>
+<p>[1] TRUE
+They appear to be identically but they are not!</p>
+</blockquote>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#007020">charToRaw</span>(data.separated<span style="color:#666">$</span>election.district.name[<span style="color:#40a070">1</span>])</code></pre></div>
+<blockquote>
+<p>[1] 46 6c 65 6e 73 62 75 72 67 20 e2 80 93 20 53 63 68 6c 65 73 77 69 67</p>
+</blockquote>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#007020">charToRaw</span>( <span style="color:#4070a0">&#34;Flensburg - Schleswig&#34;</span> )</code></pre></div>
+<blockquote>
+<p>[1] 46 6c 65 6e 73 62 75 72 67 20 2d 20 53 63 68 6c 65 73 77 69 67</p>
+</blockquote>
+
+<p>This is probably the case since I&rsquo;m using a Linux machine and the
+document seems to be written in a Windows-based environment.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">guess_encoding( <span style="color:#007020">charToRaw</span>( str_c( data.separated<span style="color:#666">$</span>election.district.name,
+                                 collapse <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;</span> ) ) )</code></pre></div>
+<blockquote>
+<p>encoding confidence
+        <chr>      <dbl>
+1        UTF-8        1.0
+2 windows-1252        0.3</p>
+</blockquote>
+
+<p>Anyway. Most importantly the values do match and the tidying is complete.</p>
+
+<h1 id="display-the-data">Display the data</h1>
+
+<p>Of course we can just print our results as a table or vector but our
+data at hand is best displayed and interpreted using maps.</p>
+
+<p>The handling of spatial data is an advanced topic and worth a post
+itself. That&rsquo;s why I will just summarize the mere basics of generating
+a nice map using the <em>ggplot2</em> package here and cover the topic of
+geographical data and their representation in the next post.</p>
+
+<h3 id="download-and-import-the-shape-data">Download and import the shape data</h3>
+
+<p>First of all we need to download and extract the shape files of the
+election districts.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## This URL contains all the geographical information.</span>
+election.districts.url <span style="color:#666">&lt;-</span> <span style="color:#4070a0">&#34;https: //www.bundeswahlleiter .de/dam/jcr/f92e42fa-44f1-47e5-b775-924926b34268/btw17_geometrie_wahlkreise_geo_shp.zip&#34;</span>
+<span style="color:#60a0b0;font-style:italic">## For convenience reason let&#39;s split the URL at all &#39;/&#39;. This way</span>
+<span style="color:#60a0b0;font-style:italic">## we can directly access the file name.</span>
+<span style="color:#60a0b0;font-style:italic">## Download</span>
+election.districts.url.split <span style="color:#666">&lt;-</span> str_split(
+    election.districts.url, <span style="color:#4070a0">&#34;/&#34;</span> )
+download.file( url <span style="color:#666">=</span> election.districts.url,
+              destfile <span style="color:#666">=</span> <span style="color:#007020">paste0</span>( download.folder,
+                                election.districts.url.split[ <span style="color:#40a070">7</span> ] ),
+              method <span style="color:#666">=</span> <span style="color:#4070a0">&#34;wget&#34;</span> )
+<span style="color:#60a0b0;font-style:italic">## Extract the data for the election districts</span>
+unzip( <span style="color:#007020">paste0</span>( download.folder, election.districts.url.split[ <span style="color:#40a070">7</span> ] ),
+      exdir <span style="color:#666">=</span> download.folder )</code></pre></div>
+<p>Now we import all the spatial information into one single data
+object. The shapes are stored as polynomials. We will extract all
+coordinate of their vertices and display them using a regular
+plotting engine. .</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">election.districts <span style="color:#666">&lt;-</span> readOGR( dsn <span style="color:#666">=</span> <span style="color:#007020">paste0</span>( download.folder, <span style="color:#4070a0">&#34;.&#34;</span> ),
+                              layer <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Geometrie_Wahlkreise_19DBT_geo&#34;</span> )
+<span style="color:#60a0b0;font-style:italic">## Converting the spatial object into a data.frame better suited</span>
+<span style="color:#60a0b0;font-style:italic">## for the &#39;ggplot2&#39; package.</span>
+election.districts.df <span style="color:#666">&lt;-</span> fortify( election.districts )</code></pre></div>
+<h3 id="relate-the-election-results-and-the-district-geometries">Relate the election results and the district geometries</h3>
+
+<p>Now we have two clean data sets. But those on their own are not really
+that helpful for generating the plots we are looking for. What we have
+to do now is to combine them. The technical term for those data sets
+is <strong>relational data</strong>.</p>
+
+<p>In order to accomplish this task we need at least one key (column) to
+be present in both data sets. Since we did just imported the geometry
+of the individual election districts, it&rsquo;s only natural to use their
+numbers. The object <em>election.districts.df</em> features a key called <em>id</em>
+which does the job but starts at zero. So we have to increment all its
+entries and rename the key.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Convert the IDs of the polygons to the same key used to</span>
+<span style="color:#60a0b0;font-style:italic">## identify the election districts.</span>
+election.districts.df<span style="color:#666">$</span>election.district.number <span style="color:#666">&lt;-</span>
+  <span style="color:#007020">as.numeric</span>( election.districts.df<span style="color:#666">$</span>id ) <span style="color:#666">+</span> <span style="color:#40a070">1</span></code></pre></div>
+<p>What we will do next is to take each district number of every
+coordinate combination (row) in <em>election.districts.df</em> and add all
+data from <em>data.separated</em> which rows feature the same value. But this
+is just one of <a href="http://r4ds.had.co.nz/relational-data.html#mutating-joins">many
+ways</a> to
+relate your data sets.</p>
+
+<p>As you might have already noticed when inspecting your data earlier:
+we have a problem. The election district numbers are not unique.</p>
+
+<p>Unfortunately, the implicit assumptions you make about your data aren&rsquo;t
+true more often than you think. Most of the time such issues are fixed
+after a short dive into your data. But keep in mind to frequently
+check your intermediate results or you may miss such glitches, which
+might even spoil your whole analysis.</p>
+
+<p>In our case the states of Germany (a superset of the election
+districts) are listed as well. Not with distinct numbers in the
+<em>election.district.number</em> column, but with the one held by the
+district which
+appears first in the data. Since we have the key <em>state.number</em>
+and all states have their value set to 99, we can filter them out in
+no time.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">current.election.no.states <span style="color:#666">&lt;-</span> filter( data.separated,
+                                       state.number <span style="color:#666">!=</span> <span style="color:#40a070">99</span> )</code></pre></div>
+<p>In general we can combine the whole data sets. But in our small
+example we will focus on a specific information we want to
+display. Let&rsquo;s say the number of preliminary second votes for the
+leftists (die Linke).</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">counts.leftists.second.vote <span style="color:#666">&lt;-</span>
+  filter( current.election.no.states,
+         confirmation.status <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Vorläufig&#34;</span>,
+         type.of.vote <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Zweitstimmen&#34;</span>,
+         party <span style="color:#666">==</span> <span style="color:#4070a0">&#34;DIE LINKE&#34;</span> )
+<span style="color:#60a0b0;font-style:italic">## Select just the &#39;election.district.number&#39; key and the</span>
+<span style="color:#60a0b0;font-style:italic">## &#39;counts&#39; value (number of votes)</span>
+counts.leftists.second.vote <span style="color:#666">&lt;-</span> select(
+    counts.leftists.second.vote, election.district.number,
+    counts )</code></pre></div>
+<p>This filtered set of rows and columns we now relate to the spatial
+information.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Add the counts to all points of the corresponding polygons</span>
+election.districts.df <span style="color:#666">&lt;-</span> left_join( election.districts.df,
+                                   counts.leftists.second.vote,
+                                   by <span style="color:#666">=</span><span style="color:#4070a0">&#34;election.district.number&#34;</span>)</code></pre></div>
+<p>Finally, we will plot the results using
+<a href="http://ggplot2.tidyverse.org/">ggplot2</a>. This package and its
+underlying <a href="https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/1441920331/ref=mt_paperback?_encoding=UTF8&amp;me=">Grammar of
+Graphics</a>
+ensures your plots to always look nice and should be your plotting
+package of choice in R. Since its handling and its layered structure
+is not that straight forward, let me just summarize the main things
+that happen in the next couple of line and point to Hadley&rsquo;s chapter
+on <a href="http://r4ds.had.co.nz/data-visualisation.html">Data
+Visualization</a>.</p>
+
+<p>We will separate the vertices of the individual polygons by the <em>group</em>
+aesthetic and plot all the districts separately within the same
+figure. Each one of them will be filled red and its alpha
+value (opacity) will represent the number of votes for the leftists.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">ggplot() <span style="color:#666">+</span> geom_polygon( data <span style="color:#666">=</span> election.districts.df,
+                        aes( x <span style="color:#666">=</span> long, y <span style="color:#666">=</span> lat, group <span style="color:#666">=</span> group,
+                            alpha <span style="color:#666">=</span> counts ),
+                        color <span style="color:#666">=</span> <span style="color:#4070a0">&#39;black&#39;</span>, fill <span style="color:#666">=</span> <span style="color:#4070a0">&#39;#df0404&#39;</span> ) <span style="color:#666">+</span>
+coord_quickmap() <span style="color:#666">+</span> theme_minimal() <span style="color:#666">+</span> xlab( <span style="color:#4070a0">&#34;&#34;</span> ) <span style="color:#666">+</span> ylab( <span style="color:#4070a0">&#34;&#34;</span> )</code></pre></div>
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl1/leftist-map.png" alt="map plot" /></p>
+
+<h3 id="cleanup">Cleanup</h3>
+
+<p>When all is said and done, you can delete the folder holding the
+downloaded data using the following command.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#007020">unlink</span>( download.folder, recursive <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span> )</code></pre></div>
+<h1 id="preview">Preview</h1>
+
+<p>We have learned how to download, clean, and use the results of the 2017
+election for the Bundestag. But what about the weird format of the
+shape files? And is it possible to plot the map in an even nicer
+fashion? Maybe in combination with an actual map using
+<a href="https://www.openstreetmap.org/">OpenStreetMap</a> tiles or an
+interactive one showing the names of the states etc. when hoovering
+over it by mouse?</p>
+
+<p>All this I will cover in the <a href="bundestagswahl-pt-ii">next post</a> of this
+series. So stay tuned.</p>
+
+	  </section>
+
+
+	  <footer class="post-footer">
+
+
+	    
+
+
+
+
+	    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=A%20data%20scientist%e2%80%99s%20view%20on%20the%20election%20for%20the%20Bundestag%20Pt.%20I&nbsp;-&nbsp;theGreatWhiteShark&amp;url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fdata-science%2fbundestagswahl-pt-i%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fdata-science%2fbundestagswahl-pt-i%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fdata-science%2fbundestagswahl-pt-i%2f&amp;description=A%20data%20scientist%e2%80%99s%20view%20on%20the%20election%20for%20the%20Bundestag%20Pt.%20I"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fdata-science%2fbundestagswahl-pt-i%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+	    
+
+<div id="disqus_thread"></div>
+<script>
+
+
+
+
+var disqus_config = function () {
+this.page.url = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/data-science\/bundestagswahl-pt-i\/";  
+this.page.identifier = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/data-science\/bundestagswahl-pt-i\/"; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://thegreatwhiteshark-coding-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+
+	  </footer>
+	</article>
+
+      </main>
+
+      
+      <aside class="read-next">
+  
+  <a class="read-next-story" style="no-cover" href="/thegreatwhiteshark.coding.io/data-science/bundestagswahl-pt-ii/">
+    <section class="post">
+      <h2>A data scientist’s view on the election for the Bundestag Pt. II</h2>
+      
+        <h4>Visualizing spatial information in R</h4>
+      
+      
+    </section>
+  </a>
+  
+  
+</aside>
+
+      
+
+          <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">theGreatWhiteShark</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/index.js"></script>
+    
+</body>
+</html>
+

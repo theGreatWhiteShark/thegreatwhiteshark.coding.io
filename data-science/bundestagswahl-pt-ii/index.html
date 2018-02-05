@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="A data scientist’s view on the election for the Bundestag Pt. II"/>
+<meta name="twitter:description" content="In the second part of this series I want to introduce you to the huge ecosystem of spatial objects, their implementation in R, and how to display them in the most convenient way."/>
+<meta name="twitter:site" content="@"/>
+
+
+
+  	<meta property="og:title" content="A data scientist’s view on the election for the Bundestag Pt. II &middot; theGreatWhiteShark" />
+  	<meta property="og:site_name" content="theGreatWhiteShark" />
+  	<meta property="og:url" content="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/bundestagswahl-pt-ii/" />
+
+    
+        
+            <meta property="og:image" content="/thegreatwhiteshark.coding.io/images/moses-banner.png"/>
+        
+    
+
+    
+    <meta property="og:description" content="In the second part of this series I want to introduce you to the huge ecosystem of spatial objects, their implementation in R, and how to display them in the most convenient way." />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2017-10-08T20:02:00&#43;01:00" />
+
+    
+    <meta property="article:tag" content="R" />
+    
+    <meta property="article:tag" content="data science" />
+    
+    
+
+    <title>A data scientist’s view on the election for the Bundestag Pt. II &middot; theGreatWhiteShark</title>
+
+    
+    <meta name="description" content="In the second part of this series I want to introduce you to the huge ecosystem of spatial objects, their implementation in R, and how to display them in the most convenient way." />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/thegreatwhiteshark.coding.io/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="/thegreatwhiteshark.coding.io/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/custom.css" />
+
+    
+
+    
+
+    
+      
+          <link href="/thegreatwhiteshark.coding.io/index.xml" rel="alternate" type="application/rss+xml" title="theGreatWhiteShark" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.32.2" />
+
+    <link rel="canonical" href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/bundestagswahl-pt-ii/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": 
+    },
+    "author": {
+        "@type": "Person",
+        "name": ,
+        
+        "url": https://thegreatwhiteshark.github.io/,
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ]
+    },
+    "headline": A data scientist’s view on the election for the Bundestag Pt. II,
+    "name": A data scientist’s view on the election for the Bundestag Pt. II,
+    "wordCount": 4357,
+    "timeRequired": "PT21M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": en
+    },
+    "url": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/bundestagswahl-pt-ii/,
+    "datePublished": 2017-10-08T20:02Z,
+    "dateModified": 2017-10-08T20:02Z,
+    
+    "keywords": R, data science,
+    "description": In the second part of this series I want to introduce you to the huge ecosystem of spatial objects, their implementation in R, and how to display them in the most convenient way.,
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/bundestagswahl-pt-ii/
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/">Home</a>
+            </li>
+        
+            <h3>Topics</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/data-science">Data Science</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/hacks">Hacks</a>
+            </li>
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/theGreatWhiteShark">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://thegreatwhiteshark.github.io/">Blogs</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/about">About me</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="/thegreatwhiteshark.coding.io/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+      <header class="main-header post-head no-cover">
+	<nav class="main-nav clearfix">
+	  
+
+	  
+	  
+	  <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+	  
+	</nav>
+      </header>
+
+
+
+      <main class="content" role="main">
+
+	<article class="post data-science">
+
+	  <header class="post-header">
+	    <h1 class="post-title">A data scientist’s view on the election for the Bundestag Pt. II</h1>
+	    
+	      <h3 class="post-subtitle">Visualizing spatial information in R</h3>
+	    
+	    <hr class="post-description-separator"/>
+	    <section class="post-description-single">  
+	      <p>In the second part of this series I want to introduce you to the huge ecosystem of spatial objects, their implementation in R, and how to display them in the most convenient way.
+	    </section>
+	    <hr class="post-description-separator"/>
+            <section class="post-meta">
+              
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/r/">#R</a></span>
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/data-science/">#data science</a></span>
+              
+            </section>
+	  </header>
+
+	  <section class="post-content">
+	    
+
+<p>The internal representation of spatial objects in R is quite
+complicated. You might already experienced this while searching for
+neat ways to plot maps of your data online. When everything you know
+consists of data.frames, lists, strings, and factors, you most
+probably had a hard time dealing with the answers presented there. But
+this is about to change. Once introduced to their representation,
+spatial objects and the corresponding plotting routines become as
+simple and straight forward as any other R objects.</p>
+
+<h1 id="geospatial-libraries-and-formats">Geospatial libraries and formats</h1>
+
+<p>There is a whole zoo of different libraries and formats dealing with
+spatial objects out there. So let&rsquo;s make a quick guided tour and
+review the most important ones.</p>
+
+<p>The
+<a href="https://en.wikipedia.org/wiki/JTS_Topology_Suite#GEOS_Library">GEOS</a>
+packages, a C++ port of the <strong>JTS</strong> (Java Topology Suite), provides
+classes for basic geometric objects (like points, polygons, and lines)
+and definitions for operations performed on them (e.g. point in
+polygon or distance measures). In addition it is also able to
+import and export <a href="https://en.wikipedia.org/wiki/Well-known_text">WKT (Well-known
+text)</a> files, their
+binary presentation <strong>WKB</strong>, and <a href="https://en.wikipedia.org/wiki/Geography_Markup_Language">GML (Graphical Markup
+Language)</a>
+files. All these markup documents can represent both spatial objects
+and their coordinate reference systems.</p>
+
+<p>Fortunately you don&rsquo;t have to care about the various data formats for
+spatial data at all. Imagine the following scenario: Someone is
+providing you data in format A, which you have to transform into
+format B since your analysis is incompatible with the former one, and
+finally you have to hand your results to a collaborator in format
+C. In most fields, especially in data science itself, all those
+conversions are prone to cause a lot of trouble and force you to
+manually adjust the import and export procedures. But for spatial data
+you have the <a href="https://en.wikipedia.org/wiki/GDAL">GDAL (Geospatial Data Abstraction
+Library)</a>. This very powerful and
+convenient package builds on top of <strong>GEOS</strong> and handles the reading
+and writing of 120 different raster and vector data formats used in
+geospatial applications. So whatever format you are dealing with, the
+<strong>GDAL</strong> package handles the import and provides you the data using
+the classes implemented in <strong>GEOS</strong>.</p>
+
+<p>Our last main ingredient is the <a href="https://en.wikipedia.org/wiki/Coordinate_reference_system">CRS (Coordinate reference
+system)</a>
+describing the projection of a spatial object onto a map and its
+transformation into other CRS. This is quite important because a
+coordinate is basically nothing but a number. Without a
+reference placing them on a map those numbers are meaningless. Well,
+this might seems a little bit trivial since the usage of the equator,
+the prime meridian, and sea level are so common. But think about
+it. Due to the climate change the mean sea level is rising. So does
+the altitude of things decrease? As it turns out not even the <a href="https://en.wikipedia.org/wiki/Prime_meridian_(Greenwich)">prime
+meridian</a> is
+at a latitude of exactly zero on GPS receivers. Therefore we need
+reference systems. Of course there are dozens. Some of them only span
+the entire world, some just specific countries, and others are tailored to the need of
+specific software and companies. We will stick to the most popular
+<a href="https://en.wikipedia.org/wiki/World_Geodetic_System#WGS84">WGS84</a>,
+which covers the whole globe.</p>
+
+<p>As a matter of consistency, operations involving objects using
+different CRS are usually prohibited. Thus, we need the
+<a href="https://en.wikipedia.org/wiki/PROJ.4">PROJ.4</a> C-library to handle
+both the transformation between the different systems and the actual
+projection of the spatial information onto a map.</p>
+
+<h1 id="geospatial-packages-in-r">Geospatial packages in R</h1>
+
+<p>The implementation in R looks quite similar. But here it is the <strong>sp</strong>
+package providing the classes and definition of the underlying spatial
+objects. Since most (if not all) R packages focusing on handling and
+plotting spatial objects are relying on this one, you can very easily
+interconnect various packages in your analysis making R an ideal language
+to work with this kind of data. So even if you are a R user but don&rsquo;t
+plan to work with spatial objects, checking out
+<a href="https://cran.r-project.org/doc/Rnews/Rnews_2005-2.pdf#section*.12">this</a>
+short introduction into the different classes and methods for spatial
+data is still a good idea.</p>
+
+<p>Next we have the <strong>rgdal</strong> and the <strong>rgeos</strong> package. As you might
+already guess, they are both wrappers around the corresponding
+libraries. But remember, it&rsquo;s still the <strong>sp</strong> packages providing the
+definitions of the spatial objects. So whenever you import some
+spatial data using the <strong>rgdal</strong> package it reads it with the
+standardized <strong>GEOS</strong> API and directly converts these objects into the
+classes implemented by the <strong>sp</strong> package.</p>
+
+<p>For displaying our results we basically have three different options:
+the <strong>ggmap</strong>, <strong>tmap</strong>, and <strong>leaflet</strong> package. I will cover all
+them this blog post.</p>
+
+<p>Worth mentioning are also the two package <strong>maps</strong> and <strong>maptools</strong> for
+providing different tools to manipulate spatial objects and the
+<a href="https://github.com/r-spatial/sf">sf</a> package. The latter is supposed
+to provide a more simple implementation of spatial objects and cover
+the functionality of the <strong>sp</strong>, <strong>rgdal</strong>, and <strong>rgeos</strong> package. But
+it is still under active development.</p>
+
+<h3 id="installation">Installation</h3>
+
+<p>In order to install all those aforementioned R packages, you have to
+have some additional libraries installed on your system first.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># In Debian-based distributions.
+</span><span style="color:#60a0b0;font-style:italic"></span>sudo apt update
+sudo apt install libjq-dev libv8-3.14-dev libprotobuf-dev libgdal-dev libproj-dev libudunits2-dev</code></pre></div>
+<p>Depending on which distribution is running on your computer, you might
+have to download and install a more recent
+<a href="http://download.osgeo.org/gdal/">GDAL</a> version in order to install
+the <strong>tmap</strong> package. If you were successful in installing it
+using <code>install.packages( &quot;tmap&quot; )</code>, skip the following code
+chunk.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># In case your system&#39;s repositories provide a GDAL package too 
+</span><span style="color:#60a0b0;font-style:italic"># old for the R packages above, you have to install a newer one 
+</span><span style="color:#60a0b0;font-style:italic"># from source.
+</span><span style="color:#60a0b0;font-style:italic"># Download (into a folder you neither move, rename, or delete!)
+</span><span style="color:#60a0b0;font-style:italic"></span>wget http://download.osgeo.org/gdal/2.2.2/gdal-2.2.2.tar.gz
+<span style="color:#60a0b0;font-style:italic"># Extract the folder
+</span><span style="color:#60a0b0;font-style:italic"></span>tar -xf gdal-2.2.2.tar.gz
+<span style="color:#007020">cd</span> gdal-2.2.2
+<span style="color:#60a0b0;font-style:italic"># Run the ./configure script to tell the package all your local 
+</span><span style="color:#60a0b0;font-style:italic"># libraries, programs, and configurations
+</span><span style="color:#60a0b0;font-style:italic"></span>./configure
+<span style="color:#60a0b0;font-style:italic"># Compile the source code
+</span><span style="color:#60a0b0;font-style:italic"></span>make
+<span style="color:#60a0b0;font-style:italic"># Install the compiled code
+</span><span style="color:#60a0b0;font-style:italic"></span>sudo make install</code></pre></div>
+<p>Now we can load all the required packages into our R environment.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#007020;font-weight:bold">library</span>( stringr )
+<span style="color:#007020;font-weight:bold">library</span>( dplyr )
+<span style="color:#007020;font-weight:bold">library</span>( tidyr )
+<span style="color:#007020;font-weight:bold">library</span>( rgdal )
+<span style="color:#007020;font-weight:bold">library</span>( maptools )
+<span style="color:#007020;font-weight:bold">library</span>( ggmap )
+<span style="color:#007020;font-weight:bold">library</span>( tmap )
+<span style="color:#007020;font-weight:bold">library</span>( OpenStreetMap ) <span style="color:#60a0b0;font-style:italic"># For more apealing visualization</span>
+<span style="color:#007020;font-weight:bold">library</span>( leaflet )</code></pre></div>
+<h1 id="import-and-preparation-of-our-data">Import and preparation of our data</h1>
+
+<h3 id="import">Import</h3>
+
+<p>Firstly, we will download the polygons of the election districts.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Download the files into a separated folder created in the current one.</span>
+download.folder <span style="color:#666">&lt;-</span> <span style="color:#4070a0">&#34;bundeswahlleiter/&#34;</span>
+<span style="color:#007020;font-weight:bold">if</span> ( <span style="color:#666">!</span>dir.exists( download.folder ) ){
+  <span style="color:#007020">dir.create</span>( download.folder )
+}
+
+<span style="color:#60a0b0;font-style:italic">## This URL contains all the geographical information.</span>
+election.districts.url <span style="color:#666">&lt;-</span> <span style="color:#4070a0">&#34;https://www.bundeswahlleiter.de/dam/jcr/f92e42fa-44f1-47e5-b775-924926b34268/btw17_geometrie_wahlkreise_geo_shp.zip&#34;</span>
+<span style="color:#60a0b0;font-style:italic">## For convenience reason let&#39;s split the URL at all &#39;/&#39;. This way</span>
+<span style="color:#60a0b0;font-style:italic">## we can directly access the file name.</span>
+<span style="color:#60a0b0;font-style:italic">## Download</span>
+election.districts.url.split <span style="color:#666">&lt;-</span> str_split(
+    election.districts.url, <span style="color:#4070a0">&#34;/&#34;</span> )[[ <span style="color:#40a070">1</span> ]]
+download.file( url <span style="color:#666">=</span> election.districts.url,
+              destfile <span style="color:#666">=</span> <span style="color:#007020">paste0</span>( download.folder,
+                                election.districts.url.split[ <span style="color:#40a070">7</span> ] ),
+              method <span style="color:#666">=</span> <span style="color:#4070a0">&#34;wget&#34;</span> )
+<span style="color:#60a0b0;font-style:italic">## Extract the data for the election districts</span>
+unzip( <span style="color:#007020">paste0</span>( download.folder, election.districts.url.split[ <span style="color:#40a070">7</span> ] ),
+      exdir <span style="color:#666">=</span> download.folder )</code></pre></div>
+<p>The data format our polygons are provided in is the so called
+<a href="https://en.wikipedia.org/wiki/Shapefile">Shapefile</a>. It is a vector
+format incorporating associated attribute information and features a
+number of actual files (the mandatory ones are marked with &rsquo;m&rsquo;).</p>
+
+<ul>
+<li>.shp (m): Main shape file providing the coordinates for the
+different geometries</li>
+<li>.shx (m): Provides indices for the geometries</li>
+<li>.dbf (m): Holds the attribute information for the each spatial
+objects in separated columns</li>
+<li>.cpg: Specifies the code page/character set used for the encoding
+of the attributes</li>
+<li>.prj: Provides the CRS and the projection information in WKT</li>
+<li>.sbn/.sbx: Binary spatial indices of the features.</li>
+<li>.shp.xml: Contains geospatial metadata</li>
+</ul>
+
+<p>You see, the term &lsquo;Shapefile&rsquo; is quite counterintuitive since it
+consists of several files at ones.</p>
+
+<p>Now we import the Shapefile into the R environment using the <strong>rgdal</strong>
+package.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Import all the spatial information into one single data object.</span>
+
+<span style="color:#60a0b0;font-style:italic">## https://github.com/tidyverse/ggplot2/wiki/plotting-polygon-shapefiles</span>
+election.districts <span style="color:#666">&lt;-</span> readOGR( dsn <span style="color:#666">=</span> <span style="color:#007020">paste0</span>( download.folder, <span style="color:#4070a0">&#34;.&#34;</span> ),
+                              layer <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Geometrie_Wahlkreise_19DBT_geo&#34;</span> )</code></pre></div>
+<h3 id="handling-spatial-objects-in-r">Handling spatial objects in R</h3>
+
+<p>The <em>election.districts</em> object is not an ordinary R object like a
+list or data.frame, as already noted, but of a special spatial class
+provided by the <strong>sp</strong> package. It sure builds on top of those
+fundamental classes, but it&rsquo;s defined using the more strict S4 object
+class. Thus, we aren&rsquo;t able to use the <code>name()</code> function to access the
+names of all its components and can&rsquo;t access those using the <code>$</code>
+symbol either. Instead of list elements, S4 based objects consist of
+different <em>slots</em> accessible using <code>@</code> symbol. You can get the
+names of all available slots using the <code>slotNames()</code> function.</p>
+
+<p>For our <em>election.districts</em> objects we care most about the <em>polygons</em>
+slot containing a list of all the different polygons consisting of the
+longitude and latitude coordinates of all their vertices and some
+metadata as well as the <em>data</em> slot holding a data.frame with the
+numbers and names of the individual election districts and the numbers
+and names of the corresponding states. The latter is also called an
+&lsquo;attribute table&rsquo;.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">slotNames( election.districts )</code></pre></div>
+<blockquote>
+<p>[1] &ldquo;data&rdquo;        &ldquo;polygons&rdquo;    &ldquo;plotOrder&rdquo;   &ldquo;bbox&rdquo;        &ldquo;proj4string&rdquo;</p>
+</blockquote>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Slot names of the first polygon stored in election.districts</span>
+slotNames( election.districts<span style="color:#666">@</span>polygons[[ <span style="color:#40a070">1</span> ]] )</code></pre></div>
+<blockquote>
+<p>[1] &ldquo;Polygons&rdquo;  &ldquo;plotOrder&rdquo; &ldquo;labpt&rdquo;     &ldquo;ID&rdquo;        &ldquo;area&rdquo;</p>
+</blockquote>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## ID of the first polygon</span>
+election.districts<span style="color:#666">@</span>polygons[[ <span style="color:#40a070">1</span> ]]<span style="color:#666">@</span>ID</code></pre></div>
+<blockquote>
+<p>[1] &ldquo;0&rdquo;</p>
+</blockquote>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## First rows of the data slot</span>
+<span style="color:#007020">head</span>( election.districts<span style="color:#666">@</span>data )</code></pre></div>
+<blockquote>
+<pre><code> WKR_NR LAND_NR LAND_NAME                          WKR_NAME
+
+ 1      01      Schleswig-Holstein             Flensburg – Schleswig
+
+ 2      01      Schleswig-Holstein Nordfriesland – Dithmarschen Nord
+
+ 3      01      Schleswig-Holstein      Steinburg – Dithmarschen Süd
+
+ 4      01      Schleswig-Holstein             Rendsburg-Eckernförde
+
+ 5      01      Schleswig-Holstein                              Kiel
+
+ 6      01      Schleswig-Holstein                 Plön – Neumünster
+</code></pre>
+</blockquote>
+
+<p>As you can see, the ID of each polygon/election district matches the
+name of the row (leftmost digit) of the data.frame stored in the <em>data</em>
+slot. In order relate it using the number of the election districts
+later on, we will have to increment (add 1) the IDs once. For a more
+thorough introduction to the S4 object class see the object-oriented
+chapter of Hadley&rsquo;s <a href="http://adv-r.had.co.nz/OO-essentials.html#s4">advanced
+R</a> book.</p>
+
+<h3 id="importing-the-cleaned-results-of-the-election">Importing the cleaned results of the election</h3>
+
+<p>Now we will import the results of the election we cleaned during the
+<a href="bundestagswahl-pt-i">previous blog post</a>
+into our current R environment. Note: we will use the last version of
+the <em>data.separated</em> object renamed to <em>election.results</em>. It&rsquo;s a
+little bit inconsistent, but I decided to give it a more descriptive
+name to make things more clear within this and all following posts.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">download.file( url <span style="color:#666">=</span> <span style="color:#4070a0">&#34;https://github.com/theGreatWhiteShark/blog-resources/blob/master/coding/bundestag-election/election.results.RData?raw=true&#34;</span>,
+              destfile <span style="color:#666">=</span> <span style="color:#007020">paste0</span>( download.folder,
+                                <span style="color:#4070a0">&#34;election.results.RData&#34;</span> ) )
+
+<span style="color:#60a0b0;font-style:italic">## Load the cleaned results of the election</span>
+<span style="color:#60a0b0;font-style:italic">## Include a link to Github!</span>
+<span style="color:#007020">load</span>( <span style="color:#007020">paste0</span>( download.folder, <span style="color:#4070a0">&#34;election.results.RData&#34;</span> ) )</code></pre></div>
+<h3 id="selecting-the-results-we-want-to-display">Selecting the results we want to display</h3>
+
+<p>In this example we will work again with the preliminary total number
+of second votes for the leftists and another party called &ldquo;Die
+Partei&rdquo;.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Exclude the states (since they cause the</span>
+<span style="color:#60a0b0;font-style:italic">## election.district.number to be not unique )</span>
+election.results.no.states <span style="color:#666">&lt;-</span> filter( election.results,
+                                       state.number <span style="color:#666">!=</span> <span style="color:#40a070">99</span> )
+
+<span style="color:#60a0b0;font-style:italic">## The amount of 2nd votes for the leftists (die Linke)</span>
+counts.leftists.second.vote <span style="color:#666">&lt;-</span>
+  filter( election.results.no.states,
+         confirmation.status <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Vorläufig&#34;</span> <span style="color:#666">&amp;</span>
+         type.of.vote <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Zweitstimmen&#34;</span> <span style="color:#666">&amp;</span>
+         party <span style="color:#666">==</span> <span style="color:#4070a0">&#34;DIE LINKE&#34;</span> )
+
+<span style="color:#60a0b0;font-style:italic">## The amount of 2nd votes for die Partei</span>
+counts.partei.second.vote <span style="color:#666">&lt;-</span>
+  filter( election.results.no.states,
+         confirmation.status <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Vorläufig&#34;</span> <span style="color:#666">&amp;</span>
+         type.of.vote <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Zweitstimmen&#34;</span> <span style="color:#666">&amp;</span>
+         party <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative&#34;</span> )</code></pre></div>
+<h1 id="plotting">Plotting</h1>
+
+<p>Generally speaking it is possible to use the base <code>plot()</code> function
+for plotting your polygons and to add additional layers representing
+the information you want to display.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">plot( election.districts )</code></pre></div>
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl2/plot-raw.jpeg" alt="raw plot" /></p>
+
+<p>But I would highly recommend using more advanced packages instead.</p>
+
+<p>In this tutorial I will cover the three main packages concerned with
+plotting maps: the <strong>ggmap</strong>, the <strong>tmap</strong>, and the <strong>leaflet</strong>
+package. So which one of these serves your needs best?</p>
+
+<p>The <a href="https://github.com/dkahle/ggmap">ggmap</a> package builds on top of
+<a href="http://ggplot2.tidyverse.org/reference/">ggplot2</a>, which features a
+very intuitive way of handling your data and enables you to display
+loads of information using as few lines of codes as possible. Since
+<strong>ggplot2</strong> should definitely be your package of choice for generating
+plots in R, it&rsquo;s most convenient to add a layer of tiles to your
+existing plot using the <strong>ggmap</strong> package. But at the moment of
+writing the package is just badly implemented and a lot of things do
+not work. The broken OpenStreetMap support also seems to be a
+<a href="https://github.com/dkahle/ggmap/issues/172">feature</a> and not a
+bug. Nope. If all you want is to draw polygons, points, and lines,
+it&rsquo;s a good idea to stick with the <strong>ggplot2</strong> package. If you,
+instead, want to add tiles (parts of an actual map, like
+e.g. OpenStreetMap etc.), I would recommend the use of the <strong>tmap</strong>
+package.</p>
+
+<p><a href="https://github.com/mtennekes/tmap">tmap</a> is based on the same Grammar
+of Graphics as <strong>ggplot2</strong>, is also structured using layers and
+aesthetics, and tries to provide the same syntax as the latter
+one. You&rsquo;ll have many different themes of maps and ways to modify your
+results and the package itself is quite intuitive.</p>
+
+<p>The <a href="https://rstudio.github.io/leaflet/">leaflet</a> package, on the
+other hand, takes things a few steps further. Using the
+<a href="http://www.htmlwidgets.org/">htmlwidgets</a> package it provides an
+interactive, JavaScript-based browser application. If you just want to
+produce some nice plots, this one is clearly over the top. You
+actually have less flexibility to manipulate the appearance of the map
+since you are relying on a R wrapper around the JavaScript package
+<a href="http://leafletjs.com/">leaflet</a>. But if you have high dimensional
+data to explore, this package can significantly ease the pain of
+extracting knowledge from your data set.</p>
+
+<h3 id="plotting-using-ggmap">Plotting using ggmap</h3>
+
+<p>Since the <strong>ggplot2</strong> package and its handling goes beyond the scope
+of this post, I would recommend you to either have a look at
+<a href="http://r4ds.had.co.nz/data-visualisation.html">Hadley&rsquo;s</a> short but
+comprehensive introduction or to read over the code without a
+thorough understanding of what&rsquo;s going on.</p>
+
+<p>As a brief summary: The code for the <strong>ggplot2</strong> package is structured
+in layers. We will print the tiles, the polygons etc. layer after
+layer on top of each other. All arguments for the functions producing
+e.g. lines or points can take two different types of input. Either one
+single constant number or string or a whole vector. The latter can
+hold numerical or character values and is called an <em>aesthetic</em>. Using
+those we can e.g. make the alpha value of each polygon to alter
+according to the number of votes or pick the color of the election
+district according to the party, which received the majority of votes.</p>
+
+<p>The first thing we have to do when dealing with the <strong>ggmap</strong> or
+<strong>ggplot2</strong> package is to convert our data into a data.frame. Spatial
+data formats are not supported.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Converting the spatial object into a data.frame better suited</span>
+<span style="color:#60a0b0;font-style:italic">## for the &#39;ggplot2&#39; package.</span>
+election.districts.df <span style="color:#666">&lt;-</span> fortify( election.districts )</code></pre></div>
+<p>The resulting data.frame contains a separate row for each of the
+vertices containing the columns longitude, latitude, id, and group
+among others. The <em>group</em> column is used to associate all points to a
+distinct polygon and the <em>id</em> specifies the name of the
+corresponding row in the <em>election.districts</em> attribute table. To
+obtain the numbers of the election districts, which we need to relate
+the points to the election results, we have to increment the <em>id</em>
+column ones.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Convert the IDs of the polygons to the same key used to</span>
+<span style="color:#60a0b0;font-style:italic">## identify the election districts.</span>
+election.districts.df<span style="color:#666">$</span>election.district.number <span style="color:#666">&lt;-</span>
+  <span style="color:#007020">as.numeric</span>( election.districts.df<span style="color:#666">$</span>id ) <span style="color:#666">+</span> <span style="color:#40a070">1</span></code></pre></div>
+<p>Now we can relate the election results to the points constituting the
+election districts.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Add the counts to all points of the corresponding polygons</span>
+election.districts.df <span style="color:#666">&lt;-</span> left_join( election.districts.df,
+                                   counts.leftists.second.vote,
+                                   by <span style="color:#666">=</span><span style="color:#4070a0">&#34;election.district.number&#34;</span>)</code></pre></div>
+<p>For the final plot we first get map tiles we will use as a basis for
+our map with the <code>get_map()</code> function. But be careful: this one is
+quite buggy! The true boundaries of the supplied polygons do not
+work. So instead we have to adjust them carefully by hand.</p>
+
+<p>Afterwards we&rsquo;ll plot the districts on top of the tiles.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Download map tiles. Be careful: this interface is quite buggy!</span>
+<span style="color:#60a0b0;font-style:italic">## The true boundaries of the supplied polygons do not work. Instead</span>
+<span style="color:#60a0b0;font-style:italic">## One has adjust the boundaries careful by hand.</span>
+map.tiles <span style="color:#666">&lt;-</span> get_map( location <span style="color:#666">=</span> <span style="color:#60a0b0;font-style:italic">#bbox( election.districts ) )</span>
+                        <span style="color:#902000">c</span>( left <span style="color:#666">=</span> <span style="color:#40a070">0</span>, bottom <span style="color:#666">=</span> <span style="color:#40a070">47</span>,
+                          right <span style="color:#666">=</span> <span style="color:#40a070">20</span>, top <span style="color:#666">=</span> <span style="color:#40a070">56</span> ) )
+<span style="color:#60a0b0;font-style:italic">## Plotting the polygons on top of the map tiles.</span>
+ggmap( map.tiles ) <span style="color:#666">+</span> geom_polygon( data <span style="color:#666">=</span> election.districts.df,
+                        aes( x <span style="color:#666">=</span> long, y <span style="color:#666">=</span> lat, group <span style="color:#666">=</span> group,
+                            alpha <span style="color:#666">=</span> counts ),
+                        color <span style="color:#666">=</span> <span style="color:#4070a0">&#39;black&#39;</span>, fill <span style="color:#666">=</span> <span style="color:#4070a0">&#39;#df0404&#39;</span> ) <span style="color:#666">+</span>
+coord_quickmap() <span style="color:#666">+</span> theme_minimal() <span style="color:#666">+</span> xlab( <span style="color:#4070a0">&#34;&#34;</span> ) <span style="color:#666">+</span> ylab( <span style="color:#4070a0">&#34;&#34;</span> ) <span style="color:#666">+</span>
+  scale_alpha_continuous( guide <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span> )
+<span style="color:#60a0b0;font-style:italic">## &#39;coord_quickmap()&#39; ensures the axis to be of the right ratio</span>
+<span style="color:#60a0b0;font-style:italic">## to prevent a stretching of the displayed map.</span></code></pre></div>
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl2/ggmap-leftists.jpeg" alt="plot ggmap" /></p>
+
+<h3 id="plotting-using-tmap">Plotting using tmap</h3>
+
+<p>In contrast to the <strong>ggplot2</strong> package <strong>tmap</strong> sole purpose is to
+neatly visualize maps. Its most natural class to work with is not the
+data.frame, but spatial objects provided by the <strong>sp</strong>
+package. Therefore in this approach we will relate the extracted
+number of votes to the attribute information of the spatial object
+<em>election.districts</em> itself.</p>
+
+<p>Firstly, we have to rename the <em>election.district.number</em> of the
+data.frame holding the results to match the <em>WKR_NR</em> column in the
+<em>data</em> slot of our shape object. In addition also we have to change
+the format of our data. Since every row in the attribute table is
+related to a specific polygon, we have to add the election results for
+different parties in separate columns (instead of one with an addition
+column specifying the name of the party).</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Renaming the column</span>
+counts.leftists.districts <span style="color:#666">&lt;-</span> mutate( counts.leftists.second.vote,
+                                    WKR_NR <span style="color:#666">=</span> election.district.number,
+                                    counts.leftists <span style="color:#666">=</span> counts )
+counts.partei.districts <span style="color:#666">&lt;-</span> mutate( counts.partei.second.vote,
+                                    WKR_NR <span style="color:#666">=</span> election.district.number,
+                                    counts.partei <span style="color:#666">=</span> counts )
+<span style="color:#60a0b0;font-style:italic">## Extracting only the relevant information</span>
+counts.leftists.districts <span style="color:#666">&lt;-</span> select( counts.leftists.districts,
+                                    WKR_NR, counts.leftists )
+counts.partei.districts <span style="color:#666">&lt;-</span> select( counts.partei.districts,
+                                  WKR_NR, counts.partei )
+<span style="color:#60a0b0;font-style:italic">## Combining the results by adding them into different columns.</span>
+counts.districts <span style="color:#666">&lt;-</span> left_join( counts.leftists.districts,
+                              counts.partei.districts,
+                              by <span style="color:#666">=</span> <span style="color:#4070a0">&#34;WKR_NR&#34;</span> )
+counts.districts <span style="color:#666">&lt;-</span> select( counts.districts, WKR_NR,
+                           counts.leftists, counts.partei )
+<span style="color:#60a0b0;font-style:italic">## Join the information about each polygon with the number of votes</span>
+<span style="color:#60a0b0;font-style:italic">## by the unique number of the election district.</span>
+election.districts<span style="color:#666">@</span>data <span style="color:#666">&lt;-</span> left_join( election.districts<span style="color:#666">@</span>data,
+                              counts.districts,
+                              by <span style="color:#666">=</span> <span style="color:#4070a0">&#34;WKR_NR&#34;</span> )</code></pre></div>
+<p>This may sounds quite frustrating and the resulting object is not
+&lsquo;clean&rsquo; in the way we considered it throughout the last post. But
+different packages prefer different data structures and formats and in
+addition the libraries for &lsquo;tidying&rsquo; data were established during the
+last years and some packages haven&rsquo;t adapted (yet). But this is just
+how it is in open source languages.</p>
+
+<p>Now let&rsquo;s do a quick plot of the results. To do this with the least lines
+of codes possible, the <strong>tmap</strong> package features the function <code>qtm()</code>,
+which behaves similar as the <code>qplot()</code> function in <strong>ggplot2</strong>. But
+this is not the only commonality. The <strong>tmap</strong> package as a whole is
+very similar to <strong>ggplot2</strong>.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Using the number of votes to fill the polygons with color</span>
+qtm( election.districts, fill <span style="color:#666">=</span> <span style="color:#902000">c</span>( <span style="color:#4070a0">&#34;counts.leftists&#34;</span>, <span style="color:#4070a0">&#34;counts.partei&#34;</span> ),
+    fill.palette <span style="color:#666">=</span> <span style="color:#902000">list</span>( <span style="color:#4070a0">&#34;Reds&#34;</span>, <span style="color:#4070a0">&#34;Blues&#34;</span> ), cols <span style="color:#666">=</span> <span style="color:#40a070">2</span> )</code></pre></div>
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl2/quick-tmap.jpeg" alt="quick tmap plot" /></p>
+
+<p>Next we will introduce map tiles provided by the OpenStreetMap project
+and plot the polygons of the election districts on top of them.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Using the more verbose version of the writing code of the tmap package</span>
+tm_shape( tmaptools<span style="color:#666">::</span>read_osm( bbox( election.districts ) ) ) <span style="color:#666">+</span>
+  tm_raster() <span style="color:#666">+</span> tm_shape( election.districts ) <span style="color:#666">+</span>
+  tm_polygons( <span style="color:#4070a0">&#34;counts.leftists&#34;</span>, palette <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Reds&#34;</span>, alpha <span style="color:#666">=</span> <span style="color:#40a070">.5</span>,
+              fill.title <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Number of second votes for the leftists&#34;</span> )</code></pre></div>
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl2/tmap-osm-leftists.jpeg" alt="tmap osm" /></p>
+
+<p>The <strong>tmap</strong> package features two different <a href="https://cran.r-project.org/web/packages/tmap/vignettes/tmap-modes.html">drawing
+modes</a>. Beforehand
+we were using the <em>plot</em> mode generating highly customizable maps in
+X11 device windows. Alternatively, we can use <strong>tmap</strong> as a wrapper around the
+JavaScript package leaflet via the <em>view</em> mode.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Displayed in the browser using leaflet package</span>
+tm_shape( tmaptools<span style="color:#666">::</span>read_osm( bbox( election.districts ) ) ) <span style="color:#666">+</span>
+  tm_raster() <span style="color:#666">+</span> tm_shape( election.districts ) <span style="color:#666">+</span>
+  tm_polygons( <span style="color:#4070a0">&#34;counts.leftists&#34;</span>, palette <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Reds&#34;</span>, alpha <span style="color:#666">=</span> <span style="color:#40a070">.5</span>,
+              fill.title <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Number of second votes for the leftists&#34;</span> ) <span style="color:#666">+</span>
+  tmap_mode( <span style="color:#4070a0">&#34;view&#34;</span> )</code></pre></div>
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl2/screenshot-leftists-tmap.jpeg" alt="tmap shiny" /></p>
+
+<p>Now let&rsquo;s plot something more advanced. For example the top 20
+election districts ranked according to the number of votes for the
+leftists. To get a better feeling of the actual size of the
+individual districts we will use OpenStreetMap tiles for the
+background.</p>
+
+<p>There are two main things to learn in this little example. Firstly,
+functions for manipulating and cleaning data do not work on the
+spatial object itself, but just on its attribute table. This might
+seems kinda odd in the beginning since <code>names( election.districts )</code>
+and <code>head( election.districts$counts.partei</code> act like they would
+deal with the attribute table instead of the raw
+polygons. In fact <code>election.districts$counts.leftists</code> is just a
+shortcut for <code>election.districts@data$counts.leftists</code>. But such
+shortcuts only exist for a small number of functions and in order to
+assure compatibility of your code with future releases of packages,
+it&rsquo;s best practice to make all data assessments as explicit as
+possible.</p>
+
+<p>Secondly, there is the concept of <em>factors</em> in R. Factors are character
+vectors, which are only allowed to hold a predefined number of
+possible elements called <em>levels</em>. Okay. So why would someone need a
+second type of characters? Well, in the beginning of the R language,
+almost 25 years ago, this trick gave a huge burst in CPU and memory
+efficiency. As for today I would consider it to be a legacy
+component. But legacy or not, it&rsquo;s still a commonplace. For a thorough
+introduction into factors see the corresponding section in Hadley&rsquo;s <a href="http://r4ds.had.co.nz/factors.html">R
+for Data Science</a> book.</p>
+
+<p>If we would just extract the rows of the spatial object holding the 20
+largest values in the <em>counts.leftists</em> column and plot each of the
+districts in their own subfigure separated by their unique name, the
+order of the plots would be alphabetic. But this is not what we
+intended. We want the order to be descending starting with the
+district holding the largest number of votes. When we check out the
+levels of the names of the election districts <code>levels(
+election.districts@data$WKR_NAME )</code> we see that they are indeed
+ordered alphabetically. So we have to (you might already guessed it)
+change the order of the levels to represent the top 20 election
+districts.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Displaying the election districts, which received the most votes.</span>
+<span style="color:#60a0b0;font-style:italic">## Extract the ordered names of the top 20 districts for the leftists.</span>
+top.20.districts <span style="color:#666">&lt;-</span> <span style="color:#007020">as.character</span>(
+    arrange( election.districts<span style="color:#666">@</span>data,
+            desc( counts.leftists ) )<span style="color:#666">$</span>WKR_NAME[ <span style="color:#40a070">1</span> <span style="color:#666">:</span> <span style="color:#40a070">20</span> ] )
+<span style="color:#60a0b0;font-style:italic">## Selecting the spatial information for those 20 districts</span>
+election.districts.top.20 <span style="color:#666">&lt;-</span> election.districts[
+    election.districts<span style="color:#666">@</span>data<span style="color:#666">$</span>WKR_NAME <span style="color:#666">%in%</span> top.20.districts, ]
+
+<span style="color:#60a0b0;font-style:italic">## Reordering the factor levels of the election districts according to</span>
+<span style="color:#60a0b0;font-style:italic">## the number of votes</span>
+election.districts.top.20<span style="color:#666">@</span>data<span style="color:#666">$</span>WKR_NAME <span style="color:#666">&lt;-</span>
+  <span style="color:#007020">factor</span>( election.districts.top.20<span style="color:#666">@</span>data<span style="color:#666">$</span>WKR_NAME, levels <span style="color:#666">=</span> top.20.districts ) 
+
+<span style="color:#60a0b0;font-style:italic">## Reordering of the factors according to the number of votes</span>
+tm_shape( tmaptools<span style="color:#666">::</span>read_osm( bbox( election.districts ),
+                              type <span style="color:#666">=</span> <span style="color:#4070a0">&#34;maptoolkit-topo&#34;</span>) ) <span style="color:#666">+</span>
+  tm_raster() <span style="color:#666">+</span> tm_shape( election.districts.top.20 ) <span style="color:#666">+</span>
+  tm_polygons( <span style="color:#4070a0">&#34;counts.leftists&#34;</span>, legend.show <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span>,
+              alpha <span style="color:#666">=</span> <span style="color:#40a070">.5</span>, palette <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Reds&#34;</span> ) <span style="color:#666">+</span>
+  tm_facets( <span style="color:#4070a0">&#34;WKR_NAME&#34;</span>, free.coords <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span> ) <span style="color:#666">+</span> tmap_mode( <span style="color:#4070a0">&#34;plot&#34;</span> )</code></pre></div>
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl2/tmap-facets.jpeg" alt="tmap districts" /></p>
+
+<p>In our final example for the <strong>tmap</strong> package we will check out one of
+the many styles it is provides. We will plot both the number of
+votes for the leftist and die Partei in a classical map format you
+might remember from your textbooks in school. Since we do the plotting
+for two different columns/data sets, it&rsquo;s best practice to avoid writing
+two very similar chunks of code, but to instead to write a function
+handling the job.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Function for generating a classical plot.</span>
+classic.map <span style="color:#666">&lt;-</span> <span style="color:#007020;font-weight:bold">function</span>( column.name, color.palette, title ){
+  <span style="color:#60a0b0;font-style:italic">## In order to feature &#39;counts&#39; as the heading of the legend, we have</span>
+  <span style="color:#60a0b0;font-style:italic">## to generate/rename the corresponding column.</span>
+  election.districts<span style="color:#666">@</span>data<span style="color:#666">$</span>counts <span style="color:#666">&lt;-</span> election.districts<span style="color:#666">@</span>data[,column.name]
+  tm_shape( election.districts ) <span style="color:#666">+</span>
+    tm_polygons( <span style="color:#4070a0">&#34;counts&#34;</span>, palette <span style="color:#666">=</span> color.palette ) <span style="color:#666">+</span>
+    tm_compass( position <span style="color:#666">=</span> <span style="color:#902000">c</span>( <span style="color:#4070a0">&#34;right&#34;</span>, <span style="color:#4070a0">&#34;bottom&#34;</span> ),
+               color.light <span style="color:#666">=</span> <span style="color:#4070a0">&#34;grey90&#34;</span> ) <span style="color:#666">+</span>
+    tm_style_classic( inner.margins <span style="color:#666">=</span> <span style="color:#902000">c</span>( <span style="color:#40a070">.04</span>, <span style="color:#40a070">.03</span>, <span style="color:#40a070">.02</span>, <span style="color:#40a070">.01</span> ),
+                     legend.position <span style="color:#666">=</span> <span style="color:#902000">c</span>( <span style="color:#4070a0">&#34;left&#34;</span>, <span style="color:#4070a0">&#34;bottom&#34;</span> ), 
+                     legend.frame <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>, bg.color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#f2d5b8&#34;</span>,
+                     legend.bg.color<span style="color:#666">=</span> <span style="color:#4070a0">&#34;#f2d5b8&#34;</span>, legend.bg.alpha <span style="color:#666">=</span> <span style="color:#40a070">.3</span>,
+                     legend.text.size <span style="color:#666">=</span> <span style="color:#40a070">.55</span>, title <span style="color:#666">=</span> title,
+                     legend.width <span style="color:#666">=</span> <span style="color:#40a070">-.16</span>,
+                     earth.boundary <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>, space.color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;grey90&#34;</span>,
+                     sepia.intensity <span style="color:#666">=</span> <span style="color:#40a070">.4</span>, fontfamily <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Courier&#34;</span> )
+}
+<span style="color:#60a0b0;font-style:italic">## Generate the two plots (without actually plotting them)</span>
+map.leftists <span style="color:#666">&lt;-</span> classic.map( <span style="color:#4070a0">&#34;counts.leftists&#34;</span>, <span style="color:#4070a0">&#34;YlOrRd&#34;</span>, <span style="color:#4070a0">&#34;Leftists&#34;</span> )
+map.partei <span style="color:#666">&lt;-</span> classic.map( <span style="color:#4070a0">&#34;counts.partei&#34;</span>, <span style="color:#4070a0">&#34;YlGnBu&#34;</span>, <span style="color:#4070a0">&#34;Die Partei&#34;</span> )
+<span style="color:#60a0b0;font-style:italic">## Plot both figures next to eachother.</span>
+tmap_arrange( map.leftists, map.partei )</code></pre></div>
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl2/tmap-classic.jpeg" alt="tmap vintage" /></p>
+
+<h3 id="plotting-using-leaflet">Plotting using leaflet</h3>
+
+<p>The <a href="https://rstudio.github.io/leaflet/">leaflet</a> package produces
+results quite similar to the ones generated in the <em>view</em> mode of
+<strong>tmap</strong>. But since the main purpose of <strong>leaflet</strong> is to be an easy
+to use wrapper around the JavaScript library
+<a href="http://leafletjs.com/">leaflet</a> it will be much more simple and
+convenient to tailor the resulting map to our needs.</p>
+
+<p>All of the generated plots will be displayed in your default browser
+inside a new tab. So let&rsquo;s make the most out of it and design our map
+to be as informative as possible. Therefore we will write a list of
+HTML codes called <em>labels</em> holding both the election districts names
+and the
+total number of votes. Whenever you hover your mouse over one of the
+polygons this label will be displayed. But of course not for the plot
+you can see below, which is just a screenshot (since I&rsquo;m writing this
+as a static web page). So try it yourself!</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Defining a custom palette for the map.</span>
+color.palette <span style="color:#666">&lt;-</span> colorBin( <span style="color:#4070a0">&#34;YlOrRd&#34;</span>,
+                          domain <span style="color:#666">=</span> election.districts<span style="color:#666">@</span>data<span style="color:#666">$</span>counts.leftists )
+labels <span style="color:#666">&lt;-</span> <span style="color:#007020">lapply</span>( <span style="color:#007020">sprintf</span>(
+    <span style="color:#4070a0">&#34;&lt;strong&gt;%s&lt;/strong&gt;&lt;br/&gt;number of votes: %g&#34;</span>,
+    election.districts<span style="color:#666">$</span>WKR_NAME, election.districts<span style="color:#666">$</span>counts.leftists ),
+    htmltools<span style="color:#666">::</span>HTML )
+
+leaflet( election.districts ) <span style="color:#666">%&gt;%</span>
+  addProviderTiles( <span style="color:#4070a0">&#34;OpenStreetMap&#34;</span> ) <span style="color:#666">%&gt;%</span>
+  addPolygons( data <span style="color:#666">=</span> election.districts,
+              fillColor <span style="color:#666">=</span> <span style="color:#666">~</span>color.palette( counts.leftists ),
+              opacity <span style="color:#666">=</span> <span style="color:#40a070">1</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;black&#34;</span>, fillOpacity <span style="color:#666">=</span> <span style="color:#40a070">.5</span>,
+              weight <span style="color:#666">=</span> <span style="color:#40a070">1</span>,
+              highlight <span style="color:#666">=</span> highlightOptions(
+                  weight <span style="color:#666">=</span> <span style="color:#40a070">3</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#555&#34;</span>, fillOpacity <span style="color:#666">=</span> <span style="color:#40a070">.8</span>,
+                  bringToFront <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span> ),
+              label <span style="color:#666">=</span> <span style="color:#007020">labels</span>,
+              labelOption <span style="color:#666">=</span> labelOptions(
+                  style <span style="color:#666">=</span> <span style="color:#902000">list</span>( <span style="color:#4070a0">&#34;font-weight&#34;</span> <span style="color:#666">=</span> <span style="color:#4070a0">&#34;normal&#34;</span>,
+                               padding <span style="color:#666">=</span> <span style="color:#4070a0">&#34;3px 8px&#34;</span> ),
+                  textsize <span style="color:#666">=</span> <span style="color:#4070a0">&#34;15px&#34;</span>,
+                  direction <span style="color:#666">=</span> <span style="color:#4070a0">&#34;auto&#34;</span> ) )
+              </code></pre></div>
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl2/leaflet.jpeg" alt="leaflet" /></p>
+
+<p>To get the most out of the leaflet package I strongly recommend to use
+it in corporation with <a href="https://shiny.rstudio.com/">shiny</a>. There
+you can have e.g. a widget with which you can select the parties,
+which results you want to display on the map. It&rsquo;s a very powerful
+package and out of the scope of the post. Check out the app of my
+<a href="http://climex.pks.mpg.de">climex</a> packages as a
+comprehensive example. So yes, you can host such little applications
+too using <a href="https://github.com/rstudio/shiny-server">shiny-server</a>.</p>
+
+<h1 id="further-reading">Further reading</h1>
+
+<p>In case you are looking for further information about spatial objects
+in R and their visualization, be sure to check out <strong>tmap&rsquo;s</strong> guide
+<a href="https://cran.r-project.org/web/packages/tmap/vignettes/tmap-nutshell.html">tmap in a
+nutshell</a>,
+Robin Lovelace&rsquo; tutorial for <a href="https://github.com/Robinlovelace/Creating-maps-in-R">creating maps in
+R</a>, or this
+<a href="https://github.com/geocomPP/sdvwR">extended tutorial</a> based on a book
+chapter of Robin Lovelace&rsquo;s, Jakub Nowosad&rsquo;s, and Jannes Muenchow&rsquo;s
+<a href="http://robinlovelace.net/geocompr/">Geocomputation with R</a> (which is
+still work in progress).</p>
+
+	  </section>
+
+
+	  <footer class="post-footer">
+
+
+	    
+
+
+
+
+	    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=A%20data%20scientist%e2%80%99s%20view%20on%20the%20election%20for%20the%20Bundestag%20Pt.%20II&nbsp;-&nbsp;theGreatWhiteShark&amp;url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fdata-science%2fbundestagswahl-pt-ii%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fdata-science%2fbundestagswahl-pt-ii%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fdata-science%2fbundestagswahl-pt-ii%2f&amp;description=A%20data%20scientist%e2%80%99s%20view%20on%20the%20election%20for%20the%20Bundestag%20Pt.%20II"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fdata-science%2fbundestagswahl-pt-ii%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+	    
+
+<div id="disqus_thread"></div>
+<script>
+
+
+
+
+var disqus_config = function () {
+this.page.url = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/data-science\/bundestagswahl-pt-ii\/";  
+this.page.identifier = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/data-science\/bundestagswahl-pt-ii\/"; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://thegreatwhiteshark-coding-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+
+	  </footer>
+	</article>
+
+      </main>
+
+      
+      <aside class="read-next">
+  
+  
+  <a class="read-next-story prev" style="no-cover" href="/thegreatwhiteshark.coding.io/data-science/bundestagswahl-pt-i/">
+    <section class="post">
+      <h2>A data scientist’s view on the election for the Bundestag Pt. I</h2>
+      
+        <h4>Obtaining and cleaning the data</h4>
+      
+    </section>
+  </a>
+  
+</aside>
+
+      
+
+          <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">theGreatWhiteShark</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/index.js"></script>
+    
+</body>
+</html>
+

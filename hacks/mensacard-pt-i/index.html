@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="Mensacard Hack Pt. I"/>
+<meta name="twitter:description" content="In this little series I will try to duplicate the RFID based card of my local cafeteria. On the way I will explore many nice tools and frameworks like the Android SDK, Apache Cordova, JavaScript based app programming, NFC/RFID technology, databases, and maybe even some Arduino related stuff."/>
+<meta name="twitter:site" content="@"/>
+
+
+
+  	<meta property="og:title" content="Mensacard Hack Pt. I &middot; theGreatWhiteShark" />
+  	<meta property="og:site_name" content="theGreatWhiteShark" />
+  	<meta property="og:url" content="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-i/" />
+
+    
+        
+            <meta property="og:image" content="/thegreatwhiteshark.coding.io/images/moses-banner.png"/>
+        
+    
+
+    
+    <meta property="og:description" content="In this little series I will try to duplicate the RFID based card of my local cafeteria. On the way I will explore many nice tools and frameworks like the Android SDK, Apache Cordova, JavaScript based app programming, NFC/RFID technology, databases, and maybe even some Arduino related stuff." />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2017-01-09T20:02:00&#43;01:00" />
+
+    
+    <meta property="article:tag" content="Apache Cordova" />
+    
+    <meta property="article:tag" content="NFC" />
+    
+    
+
+    <title>Mensacard Hack Pt. I &middot; theGreatWhiteShark</title>
+
+    
+    <meta name="description" content="In this little series I will try to duplicate the RFID based card of my local cafeteria. On the way I will explore many nice tools and frameworks like the Android SDK, Apache Cordova, JavaScript based app programming, NFC/RFID technology, databases, and maybe even some Arduino related stuff." />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/thegreatwhiteshark.coding.io/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="/thegreatwhiteshark.coding.io/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/custom.css" />
+
+    
+
+    
+
+    
+      
+          <link href="/thegreatwhiteshark.coding.io/index.xml" rel="alternate" type="application/rss+xml" title="theGreatWhiteShark" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.32.2" />
+
+    <link rel="canonical" href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-i/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": 
+    },
+    "author": {
+        "@type": "Person",
+        "name": ,
+        
+        "url": https://thegreatwhiteshark.github.io/,
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ]
+    },
+    "headline": Mensacard Hack Pt. I,
+    "name": Mensacard Hack Pt. I,
+    "wordCount": 1158,
+    "timeRequired": "PT6M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": en
+    },
+    "url": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-i/,
+    "datePublished": 2017-01-09T20:02Z,
+    "dateModified": 2017-01-09T20:02Z,
+    
+    "keywords": Apache Cordova, NFC,
+    "description": In this little series I will try to duplicate the RFID based card of my local cafeteria. On the way I will explore many nice tools and frameworks like the Android SDK, Apache Cordova, JavaScript based app programming, NFC/RFID technology, databases, and maybe even some Arduino related stuff.,
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-i/
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/">Home</a>
+            </li>
+        
+            <h3>Topics</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/data-science">Data Science</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/hacks">Hacks</a>
+            </li>
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/theGreatWhiteShark">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://thegreatwhiteshark.github.io/">Blogs</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/about">About me</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="/thegreatwhiteshark.coding.io/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+      <header class="main-header post-head no-cover">
+	<nav class="main-nav clearfix">
+	  
+
+	  
+	  
+	  <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+	  
+	</nav>
+      </header>
+
+
+
+      <main class="content" role="main">
+
+	<article class="post hacks">
+
+	  <header class="post-header">
+	    <h1 class="post-title">Mensacard Hack Pt. I</h1>
+	    
+	      <h3 class="post-subtitle">Setup</h3>
+	    
+	    <hr class="post-description-separator"/>
+	    <section class="post-description-single">  
+	      <p>In this little series I will try to duplicate the RFID based card of my local cafeteria. On the way I will explore many nice tools and frameworks like the Android SDK, Apache Cordova, JavaScript based app programming, NFC/RFID technology, databases, and maybe even some Arduino related stuff.
+	    </section>
+	    <hr class="post-description-separator"/>
+            <section class="post-meta">
+              
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/apache-cordova/">#Apache Cordova</a></span>
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/nfc/">#NFC</a></span>
+              
+            </section>
+	  </header>
+
+	  <section class="post-content">
+	    
+
+<p>In the first part of the series we will do the whole setup for the
+development environment and all the code is available on my <a href="https://github.com/theGreatWhiteShark/mensacard-hack">Github
+page</a>.</p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Since NFC and RFID is imho a quite nice way to communicate with things
+you build which do not have any power supply I wanted to dive into
+this topic since quite a while. And be honest: who wants to have
+cables all over the place when you also could do it without?</p>
+
+<p>A second thing which also bothered me was the security issue of RFID
+chips in all sorts of cards you have in your wallet. While I was
+buying a RFID block-condom for my ID at the 33C3 a guy from
+<a href="https://www.digitalcourage.de/themen/rfid">digitalcourage</a> told me a
+lot of credit cards actually provide the credit card number as well as
+the date of expiration without any encryption. Creepy. So I decided
+(based on an idea by old <a href="https://github.com/jusjusjus">Justus</a>) to
+check out the card of the cafeteria of the local university I&rsquo;m doing
+my PhD at.</p>
+
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/mensa-card-hack/cafeteria-card.jpg" alt="cafeteria card" /></p>
+
+<h2 id="roadmap">Roadmap</h2>
+
+<ol>
+<li>Firstly, we will do the setup for the Apache Cordova development
+environment.</li>
+<li>Then I write some code to extract the content of the cafeteria card.</li>
+<li>I will write this content to a NFC-tag and see if I&rsquo;m able to pay
+with it in the cafeteria.</li>
+<li>Last I will check out how easy it is to read out the content of the
+card
+with a NFC-enabled Android phone. So, is it enough to stand next to
+someone while she has the card in her wallet? How large is
+the distant allowed to be or are the clothes and the wallet already
+protection enough?
+<br /></li>
+</ol>
+
+<h2 id="requirements">Requirements</h2>
+
+<ul>
+<li>I will use a Huawei ALE-L21 phone running Android 6 and a Linux
+laptop running Ubuntu 16.10</li>
+<li>To build an app to read the card&rsquo;s content we will use
+<a href="https://cordova.apache.org/docs/en/latest/guide/cli/index.html">Apache
+Cordova</a>
+as the underlying framework and the
+<a href="https://developer.android.com/studio/command-line/adb.html">Android debugging bridge
+(ADB)</a>
+in order to install it.</li>
+<li>In addition I will use an Arduino Mega with a NPX PN532 NFC shield
+to write
+the content to the tag, since I feel the urge to using my Arduino and
+mini computers more frequently. :)</li>
+</ul>
+
+<h2 id="reference">Reference</h2>
+
+<p>For everyone how want to dive deeper into the subject of NFC I can
+recommend the
+<a href="https://www.amazon.com/Beginning-NFC-Communication-Arduino-PhoneGap/dp/1449372066/ref=sr_1_1?s=office-products&amp;ie=UTF8&amp;qid=1483802943&amp;sr=8-1&amp;keywords=igoe+nfc">Beginning NFC</a> by
+Tom Igoe, Don Coleman and Brian Jepson. Its very applied and you find
+a lot of actual code in there. Clearly intended for makers and
+hardware enthusiasts.</p>
+
+<h1 id="setting-up-the-android-environment">Setting up the Android environment</h1>
+
+<p>Before we start building our own custom app we have to set up the
+Android development environment.</p>
+
+<p>Firstly, we have to set up the Android SDK (software development kit). A
+year ago I would had suggest to go to the
+<a href="https://developer.android.com/studio/index.html">Android web page</a>
+and download the newest kit. But it seems to be not available anymore
+separately from Android Studio. Which sucks. Also I&rsquo;m <em>not</em> using
+Android Studio but Emacs for developing.</p>
+
+<p>Fortunately the SDK is included in the Ubuntu package repositories so
+we don&rsquo;t have to think about setting the whole thing up and updating
+at all.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt install android-sdk android-sdk-build-tools  android-sdk-platform-tools</code></pre></div>
+<p>To check if the setup was successful connect your Android phone via
+USB go to the <em>Settings &gt; Developer options</em> and enable <em>USB
+debugging</em>. If you don&rsquo;t see the <em>Developer options</em> go to <em>Setting &gt;
+About phone</em> and click about eight times on the <em>Build number</em>. Then
+check if you can see your phone via the <em>Android debugging bridge
+(ADB)</em></p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">adb devices</code></pre></div>
+<p>Now we have to install all the headers etc. to be able to build an app
+for our Android 6.</p>
+
+<p>When I programmed some Cordova apps a year ago I installed the SDK
+manually and used the <strong>android</strong> tool to install the individual
+platforms. So you might think we already have all the tools installed
+via the packages from above. But unfortunately they are not
+included. So I headed back to the
+<a href="https://developer.android.com/reference/packages.html">Android developer
+page</a> to
+download the SDK manually. But guess what. Google stopped supplying
+them but we can still download the SDK-tools (which we will use to
+download the Android SDK) at the very bottom of
+this <a href="https://developer.android.com/studio/index.html">page</a>. Be sure
+the folder is actually called <em>&ldquo;tools&rdquo;</em>! If not the <strong>android</strong>
+program for downloading the platforms won&rsquo;t work (just cost me about
+a hour).</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget https://dl.google.com/android/repository/tools_r25.2.3-linux.zip
+unzip tools_r25.2.3-linux.zip
+mkdir --parents ~/software/android
+mv tools ~/software/android-sdk
+~/software/android-sdk/tools/android</code></pre></div>
+<p>Then select Android 6.0 (API 23), Android SDK tools, Android
+Platform-tools and Android SDK Build-tools and press <em>Install
+packages</em>.</p>
+
+<h1 id="setting-up-apache-cordova">Setting up Apache Cordova</h1>
+
+<p>To install Apache Cordova just use the node.js package manager</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo npm install -g cordova</code></pre></div>
+<p>So Android is already set up as our development platform and we have
+to check what is still missing to deploy our app.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> cordova
+cordova platform add android
+cordova requirements</code></pre></div>
+<p>Alright. So now we have to tell Cordova where to find all the
+installed libraries and download
+the
+<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">Java JDK</a>.</p>
+
+<p>Therefore we add the Android SDK tools to our search <em>PATH</em> and set a
+<em>ANDROID_HOME</em> and <em>JAVA_PATH</em> variable.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export PATH=$PATH:$HOME/software/android-sdk/tools:$HOME/software/android-sdk/platform-tools&#39;</span> &gt;&gt; .bashrc
+<span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export ANDROID_HOME=$HOME/software/android&#39;</span> &gt;&gt; .bashrc
+<span style="color:#60a0b0;font-style:italic"># be sure to replace the PATH_TO_DOWNLOADED_JDK with the appropriate path
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;export JAVA_HOME=PATH_TO_DOWNLOADED_JDK&#34;</span> &gt;&gt; .bashrc</code></pre></div>
+<p>(Setting up the Java environment actually gave me a huge amount of
+trouble. Firstly, I wanted to suggest you to install the <em>default-jdk</em>
+<em>default-jre</em> and <em>icedtea-plugin</em> packages. But after setting the
+<em>JAVA_PATH</em> to /usr/lib/jvm/openjdk-9-jdk-amd64 (or openjdk-8- or
+whatsoever) Cordova couldn&rsquo;t find the Java environment and constantly
+complained <strong>cordova Error: Requirements check failed for JDK 1.8 or
+greater</strong>. Downloading the JDK from the link mentioned earlier and
+setting it up also didn&rsquo;t resolved this issue. Only after I removed
+all JDK related packages from Ubuntu Cordova was finally able to find
+and use the downloaded JDK. There had to be something in the
+background of the Ubuntu system masking the Java paths. Re-installing
+all the programs which were removed upon the JDK removal (like
+tuxguitar) did not broke the Cordova setting again. So better try this
+approach since all sort of different advises on stackoverflow didn&rsquo;t
+worked for me.)</p>
+
+<h2 id="installing-the-app">Installing the app</h2>
+
+<p>Now that everything is set up we just need to enter the following
+command while our Android phone is connect via USB and its
+USB-debugging is enable and the Mensacard app is getting installed.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cordova run android</code></pre></div>
+<p>NOTE: If you for some reason had to remove and add the android
+platform for Cordova you will loose the custom icon of the
+app. Unfortunately I was not able to link them via Cordova&rsquo;s
+<em>config.xml</em>. Instead just replace the icons in
+platform/android/res/mipmap-* with the ones in www/res/android.</p>
+
+<p>Alright. So let&rsquo;s activate the NFC of the smartphone and let&rsquo;s check
+if its able to read the cards information. It works!</p>
+
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/mensa-card-hack/cordova_works.png" alt="it works" /></p>
+
+<h1 id="outlook">Outlook</h1>
+
+<p>Awesome. This concludes the first part of this little series.</p>
+
+<p><a href="mensacard-pt-ii">Next time</a>, we will tweak the very simplistic first
+draft of the JavaScript app to actually fulfill our needs of storing
+and writing the content of the card.</p>
+
+<p>So see you next time!</p>
+
+	  </section>
+
+
+	  <footer class="post-footer">
+
+
+	    
+
+
+
+
+	    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Mensacard%20Hack%20Pt.%20I&nbsp;-&nbsp;theGreatWhiteShark&amp;url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fhacks%2fmensacard-pt-i%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fhacks%2fmensacard-pt-i%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fhacks%2fmensacard-pt-i%2f&amp;description=Mensacard%20Hack%20Pt.%20I"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fhacks%2fmensacard-pt-i%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+	    
+
+<div id="disqus_thread"></div>
+<script>
+
+
+
+
+var disqus_config = function () {
+this.page.url = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/hacks\/mensacard-pt-i\/";  
+this.page.identifier = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/hacks\/mensacard-pt-i\/"; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://thegreatwhiteshark-coding-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+
+	  </footer>
+	</article>
+
+      </main>
+
+      
+      <aside class="read-next">
+  
+  <a class="read-next-story" style="no-cover" href="/thegreatwhiteshark.coding.io/hacks/mensacard-pt-ii/">
+    <section class="post">
+      <h2>Mensacard Hack Pt. II</h2>
+      
+        <h4>Ionic</h4>
+      
+      
+    </section>
+  </a>
+  
+  
+</aside>
+
+      
+
+          <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">theGreatWhiteShark</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/index.js"></script>
+    
+</body>
+</html>
+

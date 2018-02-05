@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="Mensacard Hack Pt. III"/>
+<meta name="twitter:description" content="In this final part of the Mensacard hack trilogy, I will present the results of the Cordova app and use an Arduino NFC shield to read the information of the card."/>
+<meta name="twitter:site" content="@"/>
+
+
+
+  	<meta property="og:title" content="Mensacard Hack Pt. III &middot; theGreatWhiteShark" />
+  	<meta property="og:site_name" content="theGreatWhiteShark" />
+  	<meta property="og:url" content="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-iii/" />
+
+    
+        
+            <meta property="og:image" content="/thegreatwhiteshark.coding.io/images/moses-banner.png"/>
+        
+    
+
+    
+    <meta property="og:description" content="In this final part of the Mensacard hack trilogy, I will present the results of the Cordova app and use an Arduino NFC shield to read the information of the card." />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2017-02-20T20:02:00&#43;01:00" />
+
+    
+    <meta property="article:tag" content="Apache Cordova" />
+    
+    <meta property="article:tag" content="NFC" />
+    
+    
+
+    <title>Mensacard Hack Pt. III &middot; theGreatWhiteShark</title>
+
+    
+    <meta name="description" content="In this final part of the Mensacard hack trilogy, I will present the results of the Cordova app and use an Arduino NFC shield to read the information of the card." />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/thegreatwhiteshark.coding.io/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="/thegreatwhiteshark.coding.io/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/custom.css" />
+
+    
+
+    
+
+    
+      
+          <link href="/thegreatwhiteshark.coding.io/index.xml" rel="alternate" type="application/rss+xml" title="theGreatWhiteShark" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.32.2" />
+
+    <link rel="canonical" href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-iii/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": 
+    },
+    "author": {
+        "@type": "Person",
+        "name": ,
+        
+        "url": https://thegreatwhiteshark.github.io/,
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ]
+    },
+    "headline": Mensacard Hack Pt. III,
+    "name": Mensacard Hack Pt. III,
+    "wordCount": 2357,
+    "timeRequired": "PT12M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": en
+    },
+    "url": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-iii/,
+    "datePublished": 2017-02-20T20:02Z,
+    "dateModified": 2017-02-20T20:02Z,
+    
+    "keywords": Apache Cordova, NFC,
+    "description": In this final part of the Mensacard hack trilogy, I will present the results of the Cordova app and use an Arduino NFC shield to read the information of the card.,
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-iii/
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/">Home</a>
+            </li>
+        
+            <h3>Topics</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/data-science">Data Science</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/hacks">Hacks</a>
+            </li>
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/theGreatWhiteShark">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://thegreatwhiteshark.github.io/">Blogs</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/about">About me</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="/thegreatwhiteshark.coding.io/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+      <header class="main-header post-head no-cover">
+	<nav class="main-nav clearfix">
+	  
+
+	  
+	  
+	  <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+	  
+	</nav>
+      </header>
+
+
+
+      <main class="content" role="main">
+
+	<article class="post hacks">
+
+	  <header class="post-header">
+	    <h1 class="post-title">Mensacard Hack Pt. III</h1>
+	    
+	      <h3 class="post-subtitle">Using Apache Cordova and the Arduino Mega</h3>
+	    
+	    <hr class="post-description-separator"/>
+	    <section class="post-description-single">  
+	      <p>In this final part of the Mensacard hack trilogy, I will present the results of the Cordova app and use an Arduino NFC shield to read the information of the card.
+	    </section>
+	    <hr class="post-description-separator"/>
+            <section class="post-meta">
+              
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/apache-cordova/">#Apache Cordova</a></span>
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/nfc/">#NFC</a></span>
+              
+            </section>
+	  </header>
+
+	  <section class="post-content">
+	    
+
+<p>To make a long story short, it&rsquo;s not trivial to access the content of
+the Mensacard and I didn&rsquo;t managed to do it with the technology I had
+at hand.</p>
+
+<p>But if you ever wanted to develop code for your Arduino in Emacs
+instead of the Arduino IDE, you will find a more or less comprehensive
+guide to do so in here.</p>
+
+<p>The technology I used:</p>
+
+<ul>
+<li>Acer Aspire S3 running Ubuntu 16.10</li>
+<li>Arduino Mega 2560</li>
+<li><a href="http://www.elechouse.com/elechouse/index.php?main_page=product_info&amp;cPath=90_93&amp;products_id=2242">Elechouse NFC Module V3</a> shield</li>
+<li>Huawei ALE-L21</li>
+</ul>
+
+<h1 id="rfid-and-nfc">RFID and NFC</h1>
+
+<p>But let&rsquo;s start with some basics. What exactly is RFID and NFC?</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Radio-frequency_identification">Radio Frequency Identification
+(RFID)</a>
+is a way to establish a wireless communication between an active
+sender and an active or passive receiver along very short distances
+(several centimeters). As far as I understood, there is no true
+consensus about how this communication is established or which kind of
+technology is used. In addition only small amounts of data (&lt;1kB) can
+be transmitted.</p>
+
+<p>This is where <a href="https://en.wikipedia.org/wiki/Near_field_communication">Near Field Communication
+(NFC)</a>
+enters. It&rsquo;s a subset of RFID and provides a standardized protocol,
+the <em>NFC Data Exchange Format (NDEF)</em>, to transmit messages between
+devices. This can be either used to store/access information on cards
+(up to MBs) or to establish a direct communication between devices.</p>
+
+<p>I won&rsquo;t go into detail here because in the end I unfortunately can not
+apply this knowledge on a practical example. But if you are more
+interested in the topic of NFC, be sure to check out the
+<a href="https://www.amazon.com/Beginning-NFC-Communication-Arduino-PhoneGap/dp/1449372066/ref=sr_1_1?s=office-products&amp;ie=UTF8&amp;qid=1483802943&amp;sr=8-1&amp;keywords=igoe+nfc">book</a>
+of Tom Igoe. I again enjoyed it quite a lot.</p>
+
+<h1 id="android">Android</h1>
+
+<p>So, I tweaked the app until I point I was finally able to read the
+content of RFID based cards (Latest version in the
+<a href="https://github.com/theGreatWhiteShark/mensacard-hack/tree/master/cordova">git</a>
+repository).  But unfortunately my phone was not capable of accessing
+the content of neither the Mensacard, nor the NFC tag I bought
+alongside the NFC Arduino shield. I just can read the <em>Unique
+Identifier Number (UID)</em> of both. You can think of this to be just the
+card&rsquo;s name. It was not just my phone. In fact I tried three different
+ones and each of them provided just the UID. So in the end the mobile
+phones are probably just intended to use NFC for communicating with
+other devices instead of interacting with cards.</p>
+
+<p>But reading the card&rsquo;s name is already something. Imagine: You could
+be spied on by people, who just read out your cards UID whenever they
+pass by you or whenever you pass a certain checkpoint. Could this be
+possible with an Android phone?</p>
+
+<h2 id="detecting-nfc-cards-using-android">Detecting NFC cards using Android</h2>
+
+<p>Yes. It&rsquo;s indeed quite easy.</p>
+
+<p>The Android operation system handles a lot of things quite differently
+than your normal computer. When you turn on your phone&rsquo;s NFC and a
+corresponding card is in its vicinity, a so called <strong>event</strong> is
+raised. The smartphone is more or less shouting: &ldquo;There is a NFC card
+over here. Who knows how to handle it?&ldquo;. When your NFC reader is
+already opened and listening, it alone will receive the information
+and can process it. On the other hand, it is also possible to tell the
+<em>event listener</em> to start up your app and to perform an action
+whenever there is a card passing by. In this sense, someone could
+write an app to collect card identities (even without accessing its
+content) at certain positions and times, without running out of
+battery after half an hour.</p>
+
+<p>But don&rsquo;t panic. The Android phone is just able to read the <em>UID</em> up
+to a distance of two centimeters through plain air. In a wallet with
+other cards, even half a centimeter was enough to hide the card from
+my phone&rsquo;s eyes. So people can&rsquo;t spy on you by just activating the NFC
+capability of the phone in their pockets.</p>
+
+<p>In addition the German
+<a href="https://en.wikipedia.org/wiki/German_identity_card">ID</a> is encrypted
+with the so called <a href="https://de.wikipedia.org/wiki/Password_Authenticated_Connection_Establishment">Password Authenticated Connection Establishment
+(PACE)</a>
+protocol. This one just provides a random number instead of a <em>UID</em>
+and is protected by an asymmetric encryption. Only with an additional
+password entered via a numpad, the card&rsquo;s UID and content can be
+accessed.</p>
+
+<h1 id="arduino">Arduino</h1>
+
+<p>Alright. Since I was not able to access the content of the card via my
+mobile phone, I will use an Arduino shield instead.</p>
+
+<p>But what&rsquo;s even better than handling a micro controller to read the
+Mensacard&rsquo;s information? That&rsquo;s right: doing it using
+<a href="https://www.emacswiki.org/emacs/ArduinoSupport">Emacs</a> :)</p>
+
+<h2 id="emacs-as-arduino-ide">Emacs as Arduino IDE</h2>
+
+<p>First of all, you have to install the <em>android-mk</em> package in order to
+generate a <em>Makefile</em> to transcompile the written code for the
+Arduino&rsquo;s CPU.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt install arduino-core arduino-mk</code></pre></div>
+<h3 id="transcompiling">Transcompiling?</h3>
+
+<p>When you computer is compiling code, it translates it into a set of
+CPU instructions. Those instructions represent your program and are
+performed whenever you call it. But every family of CPUs has a
+different instruction set and thus speaks a different language. In
+order for your computer to be able to compile a piece of code in such
+a way the Arduino can understand it, it has know the language of the
+Arduino&rsquo;s CPU. This whole procedure of translating code into
+instructions for another CPU to understand is called
+<strong>transcompiling</strong> and is guided by the Makefile generated using the
+<em>arduino-mk</em> package.</p>
+
+<h3 id="enabling-serial-communication">Enabling serial communication</h3>
+
+<p>Next, we have to add our user to the <em>dialout group</em> to be able to use
+the <strong>serial communication</strong>. The later allows use to communicate with
+the Arduino via USB while it is still running. This way we can both
+send commands and receive messages. It would be quite pointless for
+the Arduino to read a card&rsquo;s information without transmitting it to
+us, wouldn&rsquo;t it?</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># Make sure to replace USERNAME by your actual user name
+</span><span style="color:#60a0b0;font-style:italic"></span>sudo usermod -a -G dialout USERNAME
+# You need to restart your system to apply this change</code></pre></div>
+<p>Do we need to be in <em>dialout</em>? Actually it would be sufficient to just
+run <code>sudo chmod 666 /dev/ttyACM0</code> every time you connect your
+Arduino. But this is quite nagging and you should reduce your sudo
+usage as much as possible.</p>
+
+<h3 id="setting-up-the-arduino-development-environment">Setting up the Arduino development environment</h3>
+
+<p>The most easy way to configure your Arduino board is to just download
+Arduino&rsquo;s <a href="https://www.arduino.cc/en/Main/Software">IDE</a> and run
+it. Then choose your boards name, the processor and the port in the
+<em>Tools</em> menu and you are done.</p>
+
+<p>The IDE is storing all the preferences in your home
+(<em>~/.arduino15/preferences.txt</em> in on my computer) and you can make
+use of this file from within Emacs.</p>
+
+<p>I am not quite sure if this file is actual used in the compilation
+procedure. But it&rsquo;s a good starting point in case some of the settings
+are messed up and your Arduino is not working smoothly.</p>
+
+<h3 id="importing-libraries">Importing libraries</h3>
+
+<p>In order to hook you up with to newest versions of the NFC/NDEF
+libraries, I provide them as submodules. So don&rsquo;t worry if you don&rsquo;t
+see any content in the //arduino/libraries/PN532 folder of the git
+repository yet. We still have to get their content by initializing and
+updating those submodules.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># Make sure you are at the root of mensacard-hack&#39;s repository tree
+</span><span style="color:#60a0b0;font-style:italic"></span>git submodule update --init --recursive --remote</code></pre></div>
+<p>Now, every time you would import a library via Arduino&rsquo;s IDE, it would
+just copy the folder/unzip the zip to Arduino&rsquo;s default library
+path. This one is defined in the <em>preferences.txt</em> file as
+<strong>sketchbook.path</strong>. I changed the default <em>~/Arduino</em> to
+<em>~/software/arduino</em> to avoid having countless folders in my home. But
+this is just a matter of taste. In the end you just add a line
+specifying <em>ARDUINO_LIB_PATH</em> to the Makefile and you are done.</p>
+
+<p>To install the libraries, you just have to copy all the folders from
+<em>//arduino/libraries/PN532</em> into <em>sketchbook.path/libraries</em>. (All the
+README.md, git related files etc. are not harmful and we don&rsquo;t have to
+care about them)</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># make sure your Arduino folder really is called ~/.arduino15
+</span><span style="color:#60a0b0;font-style:italic"></span>cp arduino/libraries/PN532/* <span style="color:#007020;font-weight:bold">$(</span>cat ~/.arduino15/preferences.txt | awk <span style="color:#4070a0">&#39;BEGIN {FS=&#34;=&#34;} /sketchbook.path/{print $2&#34;/libraries&#34;}&#39;</span><span style="color:#007020;font-weight:bold">)</span></code></pre></div>
+<p>The second command is just a small <a href="http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html">bash
+script</a> using
+<a href="https://en.wikipedia.org/wiki/AWK">AWK</a> to extract the default
+directory from the preferences.txt file. Both <em>bash</em> and <em>AWK</em> are
+pretty handy for especially this kind of little tasks. They are easy
+to learn, since both of them are not that complex and have a fairly
+limited scope of application, and enable you to harness the true power
+of a Linux system. Be sure to check them out one day! (And don&rsquo;t
+forget about <a href="https://en.wikipedia.org/wiki/Sed">sed</a> while your at
+it).</p>
+
+<h3 id="installing-arduino-mode">Installing Arduino-mode</h3>
+
+<p>What would be writing code for an Arduino without its distinct mode?</p>
+
+<p>Firstly, let&rsquo;s download the corresponding Lisp file. (For the sake of
+completeness, I also added this file to
+<em>//arduino/res/arduino-mode.el</em>).</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir --parents ~/git/emacs-spass
+<span style="color:#007020">cd</span> ~/git/emacs-spass
+git clone git://github.com/bookest/arduino-mode.git</code></pre></div>
+<p>Now we have to tell Emacs where to find this file, to load it whenever
+we are in need of the Arduino-mode, and which file suffixes are
+associated with this mode (.ino and .pbe). I actually took a look into
+the Lisp code and the package adds a hook for those suffixes
+itself. But it&rsquo;s good practice to do so anyway. Therefore, we will add
+the following lines to our <em>~/.emacs</em>.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lisp" data-lang="lisp">(<span style="color:#bb60d5">add-to-list</span> <span style="color:#517918">&#39;load-path</span> <span style="color:#4070a0">&#34;~/git/emacs-spass/arduino-mode&#34;</span>)
+(<span style="color:#bb60d5">setq</span> <span style="color:#bb60d5">auto-mode-alist</span> (<span style="color:#bb60d5">cons</span> <span style="color:#666">&#39;</span>(<span style="color:#4070a0">&#34;\\.\\(pde\\|ino\\)$&#34;</span> <span style="color:#666">.</span> <span style="color:#bb60d5">arduino-mode</span>) <span style="color:#bb60d5">auto-mode-alist</span>))
+(<span style="color:#bb60d5">autoload</span> <span style="color:#517918">&#39;arduino-mode</span> <span style="color:#4070a0">&#34;arduino-mode&#34;</span> <span style="color:#60add5">nil</span> <span style="color:#60add5">t</span>)</code></pre></div>
+<h3 id="getting-started">Getting started</h3>
+
+<p>Now that everything is set up, let&rsquo;s just start right away.</p>
+
+<p>We create a short script to make the Arduino&rsquo;s on board LED blinking
+and to report this via the serial port. Note that we will do so in a
+distinct folder. Since we have to use a separate Makefile for every
+Arduino script, it&rsquo;s good practice to keep them all separated in
+different folders.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir blinking
+<span style="color:#007020">cd</span> blinking
+touch blinking.ino
+touch Makefile</code></pre></div>
+<p>The <em>blinking.ino</em> script will contain the following lines of code.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#60a0b0;font-style:italic">// Number of the LED&#39;s pin
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#007020;font-weight:bold">const</span> <span style="color:#902000">int</span> led <span style="color:#666">=</span> <span style="color:#40a070">13</span>;
+
+<span style="color:#60a0b0;font-style:italic">// Run once on initialization
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#902000">void</span> <span style="color:#06287e">setup</span>(){
+  <span style="color:#60a0b0;font-style:italic">// Setup the serial communication
+</span><span style="color:#60a0b0;font-style:italic"></span>  Serial.begin( <span style="color:#40a070">9600</span> );
+  <span style="color:#60a0b0;font-style:italic">// Use LED as output
+</span><span style="color:#60a0b0;font-style:italic"></span>  pinMode( led, OUTPUT );
+}
+
+<span style="color:#60a0b0;font-style:italic">// Run until resetting or switching of the power supply
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#902000">void</span> <span style="color:#06287e">loop</span>(){
+  <span style="color:#60a0b0;font-style:italic">// Turn on the LED
+</span><span style="color:#60a0b0;font-style:italic"></span>  digitalWrite( led, HIGH );
+  <span style="color:#60a0b0;font-style:italic">// Wait a second
+</span><span style="color:#60a0b0;font-style:italic"></span>  delay( <span style="color:#40a070">1000</span> );
+  <span style="color:#60a0b0;font-style:italic">// Turn the LED off again
+</span><span style="color:#60a0b0;font-style:italic"></span>  digitalWrite( led, LOW );
+  <span style="color:#60a0b0;font-style:italic">// Wait another second
+</span><span style="color:#60a0b0;font-style:italic"></span>  delay( <span style="color:#40a070">1000</span> );
+  <span style="color:#60a0b0;font-style:italic">// Print a message via the serial port
+</span><span style="color:#60a0b0;font-style:italic"></span>  Serial.println( <span style="color:#4070a0"></span><span style="color:#4070a0">&#34;Hello world!&#34;</span> );
+}</code></pre></div>
+<h3 id="create-a-makefile">Create a Makefile</h3>
+
+<p>In order to compile the <em>blinking.ino</em> script, we still have to have a
+<em>Makefile</em> containing all our configuration. Fortunately we already
+dealt with the configuration in an earlier step. The only thing left
+to do is to tell compiler where to find <em>arduino-mk</em> package and which
+Arduino board we are using.</p>
+
+<p>Therefore the minimal version of our <strong>Makefile</strong> consists of two
+lines. (Make sure it resides in the same folder as the <em>blinking.ino</em>
+script.)</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">BOARD_TAG <span style="color:#666">=</span> mega2560
+include <span style="color:#666">/</span>usr<span style="color:#666">/</span>share<span style="color:#666">/</span>arduino<span style="color:#666">/</span>Arduino.mk</code></pre></div>
+<p>The <em>arduino-mk</em> package will now just reference to the a copy of the
+<em>preferences.txt</em> file to obtain all additional configuration
+necessary for compilation.</p>
+
+<h3 id="compile-and-upload-the-code">Compile and upload the code</h3>
+
+<p>The most important command to use in Arduino-mode is certainly the one
+compiling the code and uploading the result to the Arduino. This is
+done in one single step</p>
+
+<p><strong>M-x compile RET make -k upload</strong></p>
+
+<p>Immediately afterwards your Arduino should start blinking.</p>
+
+<h3 id="connect-to-the-serial-port">Connect to the serial port</h3>
+
+<p>Now that our script is running and the LED is blinking, we also want
+to see what the Arduino tries telling us. For this, just open a new
+instance of your
+<a href="https://github.com/emacsmirror/multi-term">multi-term</a> in a separate
+buffer and enter the following commands.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">stty /dev/ttyACM0 <span style="color:#40a070">9600</span>
+stty /dev/ttyACM0 raw
+cat &lt; /dev/ttyACM0</code></pre></div>
+<p>This terminal will keep listening to the serial port connected to the
+Arduino and display everything it has to say. (Note, the digit behind
+/dev/ttyACM can differ)</p>
+
+<h2 id="using-the-nfc-shield">Using the NFC shield</h2>
+
+<p>Next, I connected my <a href="http://www.elechouse.com/elechouse/index.php?main_page=product_info&amp;cPath=90_93&amp;products_id=2242">Elechouse NFC Module
+V3</a>
+shield to my Arduino Mega</p>
+
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/mensa-card-hack/wiring-arduino.jpeg" alt="wiring" /></p>
+
+<p>and wrote a little script to detect a NFC tag.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#60a0b0;font-style:italic">// Use the Serial-Peripheral Interfaces to communicate with the Arduino
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#007020">#if 0</span><span style="color:#60a0b0;font-style:italic">
+</span><span style="color:#60a0b0;font-style:italic">  #include &lt;SPI.h&gt;
+</span><span style="color:#60a0b0;font-style:italic">  #include &lt;PN532_SPI.h&gt;
+</span><span style="color:#60a0b0;font-style:italic">  #include &lt;PN532.h&gt;
+</span><span style="color:#60a0b0;font-style:italic">  #include &lt;NfcAdapter.h&gt;
+</span><span style="color:#60a0b0;font-style:italic">
+</span><span style="color:#60a0b0;font-style:italic">  PN532_SPI pn532spi( SPI, 10 );
+</span><span style="color:#60a0b0;font-style:italic">  NfcAdapter nfc = NfcAdapter( pn532spi );
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#007020">#elif 0 // If SPI is not working, set this one to 1 to use HSU
+</span><span style="color:#007020"></span>  <span style="color:#007020">#include</span> <span style="color:#007020">&lt;PN532_HSU.h&gt;</span><span style="color:#007020">
+</span><span style="color:#007020"></span>  <span style="color:#007020">#include</span> <span style="color:#007020">&lt;PN532.h&gt;</span><span style="color:#007020">
+</span><span style="color:#007020"></span>  <span style="color:#007020">#include</span> <span style="color:#007020">&lt;NfcAdapter.h&gt;</span><span style="color:#007020">
+</span><span style="color:#007020"></span>      
+  PN532_HSU <span style="color:#06287e">pn532hsu</span>( Serial1 );
+  NfcAdapter nfc <span style="color:#666">=</span> NfcAdapter( pn532hsu );
+<span style="color:#007020">#else </span><span style="color:#60a0b0;font-style:italic">// This one I used with my NFC shield
+</span><span style="color:#60a0b0;font-style:italic"></span>  <span style="color:#007020">#include</span> <span style="color:#007020">&lt;PN532_I2C.h&gt;</span><span style="color:#007020">
+</span><span style="color:#007020"></span>  <span style="color:#007020">#include</span> <span style="color:#007020">&lt;PN532.h&gt;</span><span style="color:#007020">
+</span><span style="color:#007020"></span>  <span style="color:#007020">#include</span> <span style="color:#007020">&lt;NfcAdapter.h&gt;</span><span style="color:#007020">
+</span><span style="color:#007020"></span>  <span style="color:#007020">#include</span> <span style="color:#007020">&lt;Wire.h&gt;</span><span style="color:#007020">
+</span><span style="color:#007020"></span>
+  PN532_I2C <span style="color:#06287e">pn532i2c</span>( Wire );
+  NfcAdapter nfc <span style="color:#666">=</span> NfcAdapter( pn532i2c );
+<span style="color:#007020">#endif
+</span><span style="color:#007020"></span>
+<span style="color:#60a0b0;font-style:italic">// Run once on initialization
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#902000">void</span> <span style="color:#06287e">setup</span>() {
+  Serial.begin( <span style="color:#40a070">9600</span> );
+  Serial.println(<span style="color:#4070a0"></span><span style="color:#4070a0">&#34;Starting up NDEF reader...&#34;</span>);
+  nfc.begin();
+}
+
+<span style="color:#60a0b0;font-style:italic">// Run until resetting or switching of the power supply
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#902000">void</span> <span style="color:#06287e">loop</span>(){
+  <span style="color:#007020;font-weight:bold">if</span> ( nfc.tagPresent() ){
+    <span style="color:#60a0b0;font-style:italic">// A tag was detected
+</span><span style="color:#60a0b0;font-style:italic"></span>    NfcTag tag <span style="color:#666">=</span> nfc.read();
+    Serial.println( <span style="color:#4070a0"></span><span style="color:#4070a0">&#34;Found a tag!&#34;</span> );
+    <span style="color:#60a0b0;font-style:italic">// Print the type of the tag
+</span><span style="color:#60a0b0;font-style:italic"></span>    Serial.println( tag.getTagType() );
+    <span style="color:#60a0b0;font-style:italic">// And its Unifersal identifier (its name)
+</span><span style="color:#60a0b0;font-style:italic"></span>    Serial.print( <span style="color:#4070a0"></span><span style="color:#4070a0">&#34;UID: &#34;</span> );
+    Serial.println( tag.getUidString() );
+  }
+}</code></pre></div>
+<p>In order to establish a serial connection to the shield, I had to use
+the I2C protocol and switch a tiny switch on the shield. In addition
+you have to declare all libraries in the <em>Makefile</em> you are about to
+use in your script!</p>
+
+<p>For communicating via I2C, I had to add the following line.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">ARDUINO_LIBS <span style="color:#666">=</span> NDEF PN532 PN532_I2C Wire</code></pre></div>
+<h2 id="reading-the-mensacard-and-the-tag">Reading the Mensacard and the tag</h2>
+
+<p>Now our big moment has finally come and we are ready to read the
+content of the Mensacard!</p>
+
+<p>But when I tried it: nothing&hellip; :| But the tag is working just fine. :|</p>
+
+<p>Shit.</p>
+
+<p>So it&rsquo;s not that trivial after all to access the content of NFC
+cards. It&rsquo;s quite discontent, but I there are a whole bunch of other
+things in my pipeline. So I won&rsquo;t buy different hardware to access the
+card&rsquo;s information. But I will keep it. Who knows, maybe one day I
+have a phone/shield capable of reading it.</p>
+
+<h1 id="summary">Summary</h1>
+
+<p>Okay, with this I will end my endeavor of accessing the content of the
+Mensacard. I really enjoyed playing around with JavaScript and Apache
+Cordova and I finally managed to use my Arduino again. It was quite a
+lot of fun and I feel more comfortable carrying my Mensacard in my
+wallet without any protection. I hope you enjoyed it too.</p>
+
+<p>So be skeptical of new trends in technology
+<a href="https://digitalcourage.de/themen/rfid">surveillance</a>, use
+<a href="http://www.ebay.de/itm/5-NFC-Schutzhullen-NFC-Blocker-Schutz-der-Kreditkarte-EC-Karte-Personal-/121924193167?hash=item1c633f8b8f:g:ZSgAAOSwAuNW5o22">condoms</a>,
+and never stop exploring new technologies.</p>
+
+	  </section>
+
+
+	  <footer class="post-footer">
+
+
+	    
+
+
+
+
+	    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Mensacard%20Hack%20Pt.%20III&nbsp;-&nbsp;theGreatWhiteShark&amp;url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fhacks%2fmensacard-pt-iii%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fhacks%2fmensacard-pt-iii%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fhacks%2fmensacard-pt-iii%2f&amp;description=Mensacard%20Hack%20Pt.%20III"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fhacks%2fmensacard-pt-iii%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+	    
+
+<div id="disqus_thread"></div>
+<script>
+
+
+
+
+var disqus_config = function () {
+this.page.url = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/hacks\/mensacard-pt-iii\/";  
+this.page.identifier = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/hacks\/mensacard-pt-iii\/"; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://thegreatwhiteshark-coding-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+
+	  </footer>
+	</article>
+
+      </main>
+
+      
+      <aside class="read-next">
+  
+  
+  <a class="read-next-story prev" style="no-cover" href="/thegreatwhiteshark.coding.io/hacks/mensacard-pt-ii/">
+    <section class="post">
+      <h2>Mensacard Hack Pt. II</h2>
+      
+        <h4>Ionic</h4>
+      
+    </section>
+  </a>
+  
+</aside>
+
+      
+
+          <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">theGreatWhiteShark</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/index.js"></script>
+    
+</body>
+</html>
+

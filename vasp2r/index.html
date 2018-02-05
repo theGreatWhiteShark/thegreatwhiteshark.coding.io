@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="Vasp2R"/>
+<meta name="twitter:description" content="In my first blog post (yes!) I will cover my R package [vasp2R](https://github.com/theGreatWhiteShark/vasp2R). It is a based on some wrappers to import the results of the density functional theory (DFT) program VASP into R. There, all the advanced visualization features of the *ggplot2* package can be utilized."/>
+<meta name="twitter:site" content="@"/>
+
+
+
+  	<meta property="og:title" content="Vasp2R &middot; theGreatWhiteShark" />
+  	<meta property="og:site_name" content="theGreatWhiteShark" />
+  	<meta property="og:url" content="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/vasp2r/" />
+
+    
+        
+            <meta property="og:image" content="/thegreatwhiteshark.coding.io/images/moses-banner.png"/>
+        
+    
+
+    
+    <meta property="og:description" content="In my first blog post (yes!) I will cover my R package [vasp2R](https://github.com/theGreatWhiteShark/vasp2R). It is a based on some wrappers to import the results of the density functional theory (DFT) program VASP into R. There, all the advanced visualization features of the *ggplot2* package can be utilized." />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2016-12-18T20:02:00&#43;01:00" />
+
+    
+    <meta property="article:tag" content="R" />
+    
+    
+
+    <title>Vasp2R &middot; theGreatWhiteShark</title>
+
+    
+    <meta name="description" content="In my first blog post (yes!) I will cover my R package [vasp2R](https://github.com/theGreatWhiteShark/vasp2R). It is a based on some wrappers to import the results of the density functional theory (DFT) program VASP into R. There, all the advanced visualization features of the *ggplot2* package can be utilized." />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/thegreatwhiteshark.coding.io/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="/thegreatwhiteshark.coding.io/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/custom.css" />
+
+    
+
+    
+
+    
+      
+          <link href="/thegreatwhiteshark.coding.io/index.xml" rel="alternate" type="application/rss+xml" title="theGreatWhiteShark" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.32.2" />
+
+    <link rel="canonical" href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/vasp2r/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": 
+    },
+    "author": {
+        "@type": "Person",
+        "name": ,
+        
+        "url": https://thegreatwhiteshark.github.io/,
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ]
+    },
+    "headline": Vasp2R,
+    "name": Vasp2R,
+    "wordCount": 1625,
+    "timeRequired": "PT8M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": en
+    },
+    "url": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/vasp2r/,
+    "datePublished": 2016-12-18T20:02Z,
+    "dateModified": 2016-12-18T20:02Z,
+    
+    "keywords": R,
+    "description": In my first blog post (yes!) I will cover my R package [vasp2R](https://github.com/theGreatWhiteShark/vasp2R). It is a based on some wrappers to import the results of the density functional theory (DFT) program VASP into R. There, all the advanced visualization features of the *ggplot2* package can be utilized.,
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/vasp2r/
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/">Home</a>
+            </li>
+        
+            <h3>Topics</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/data-science">Data Science</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/hacks">Hacks</a>
+            </li>
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/theGreatWhiteShark">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://thegreatwhiteshark.github.io/">Blogs</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/about">About me</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="/thegreatwhiteshark.coding.io/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+      <header class="main-header post-head no-cover">
+	<nav class="main-nav clearfix">
+	  
+
+	  
+	  
+	  <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+	  
+	</nav>
+      </header>
+
+
+
+      <main class="content" role="main">
+
+	<article class="post post">
+
+	  <header class="post-header">
+	    <h1 class="post-title">Vasp2R</h1>
+	    
+	    <hr class="post-description-separator"/>
+	    <section class="post-description-single">  
+	      <p>In my first blog post (yes!) I will cover my R package [vasp2R](https://github.com/theGreatWhiteShark/vasp2R). It is a based on some wrappers to import the results of the density functional theory (DFT) program VASP into R. There, all the advanced visualization features of the *ggplot2* package can be utilized.
+	    </section>
+	    <hr class="post-description-separator"/>
+            <section class="post-meta">
+              
+              <time class="post-date" datetime="2016-12-18T20:02:00&#43;01:00">
+		Dec 18, 2016
+              </time>
+              
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/r/">#R</a></span>
+              
+            </section>
+	  </header>
+
+	  <section class="post-content">
+	    
+
+<p>It is about my endeavors to create some neat plots of the results
+obtained using the proprietary
+<a href="https://en.wikipedia.org/wiki/Density_functional_theory">DFT</a> program
+<a href="https://www.vasp.at/">VASP</a> one and a half years ago. Since these
+files are usually pretty big it is important for your plotting script
+to rely on compiled C, C++ or Fortran code under the hood of a high
+level language like R or python. And you definitely want to have one
+of the latter ones for creating you plots since it is way more easy
+and beautiful.</p>
+
+<p>I wrote a couple of functions handling both the import and the
+manipulation of the CHGCAR and CHG files of VASP’s output including
+C++ functions speeding them up. So it felt quite naturally to pack
+them all together and make them available for other users. But as a
+disclaimer: I haven’t worked with VASP in years and neither do I
+intend to do it anymore nor have I access to the program. But anyway I
+will of course try my best to support you in case of questions or bugs
+in the vasp2R package.</p>
+
+<h1 id="data">Data</h1>
+
+<p>This vignette shows the basic usage of the vasp2R package. First we
+will import an example CHG file, do some manipulation and finally plot
+the result of the VASP calculation.</p>
+
+<p>The VASP files used to create the CHG file supplied by this package
+are taken from the <a href="https://www.vasp.at/vasp-workshop/slides/Handson3.tgz">third Hands-on example of VASP’s
+documentation</a>. I
+used the first one: the clean Ni surface. Why did I used the CHG and
+not the CHGCAR? Because it also contains the required information but
+is smaller in size and I want to keep package’s size at a minimum.</p>
+
+<h1 id="import">Import</h1>
+
+<p>First of all you have to be sure of have the <strong>vasp2R</strong> package
+installed.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">check.validity <span style="color:#666">&lt;-</span> <span style="color:#007020">try</span>( <span style="color:#007020;font-weight:bold">library</span>( <span style="color:#4070a0">&#34;vasp2R&#34;</span> ), silent <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span> )
+<span style="color:#007020;font-weight:bold">if</span> ( <span style="color:#007020">class</span>( check.validity ) <span style="color:#666">==</span> <span style="color:#4070a0">&#34;try-error&#34;</span> ){
+    <span style="color:#60a0b0;font-style:italic">## the package is not installed yet</span>
+    devtools<span style="color:#666">::</span>install_github( <span style="color:#4070a0">&#34;theGreatWhiteShark/vasp2R&#34;</span> )
+    <span style="color:#007020;font-weight:bold">library</span>( vasp2R )
+}</code></pre></div>
+<p>During installation the CHG files is copied as one of the package&rsquo;s
+assets on the hard disk. We will import it into R using the
+<em>vasp.import</em> function.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r import, cache = TRUE" data-lang="r import, cache = TRUE">data.imported <span style="color:#666">&lt;-</span> vasp.<span style="color:#007020;font-weight:bold">import</span>( system.file( <span style="color:#4070a0">&#34;example/CHG&#34;</span>,
+                                          <span style="color:#007020;font-weight:bold">package</span> = <span style="color:#4070a0">&#34;vasp2R&#34;</span> ) )</code></pre></div>
+<h2 id="structure-of-the-imported-vasp-object">Structure of the imported vasp object</h2>
+
+<p>The resulting object <em>data.imported</em> is of class <strong>vasp</strong> and inherits
+from the list class. It has three named elements: charge, atoms, and
+lattice.</p>
+
+<h4 id="charge">charge</h4>
+
+<p>The <em>charge</em> element represents the charge density in the three
+dimensional unit cell. It itself is of class data.frame and contains
+four named columns: x, y, z, charge.</p>
+
+<h4 id="atoms">atoms</h4>
+
+<p>The <em>atoms</em> element represents the coordinates and the type of the
+individual atoms in the unit cell. It is derived from the CONTCAR like
+entry in the CHGCAR/CHG file. So the type <em>value</em> corresponds to the
+VASP internal string representation of the periodic table (e.g. &ldquo;Si&rdquo;
+for silicon). It is of class data.frame and consists of four named
+columns: x, y, z and type</p>
+
+<h4 id="lattice">lattice</h4>
+
+<p>The <em>lattice</em> element is a data.frame representing the lattice vectors
+of the unit cell. It contains three named columns: x, y and z and the
+entries of a specific row correspond to a specific vector.</p>
+
+<h1 id="manipulation-of-the-vasp-object">Manipulation of the <strong>vasp</strong> object</h1>
+
+<h2 id="reproducing-the-unit-cell">Reproducing the unit cell</h2>
+
+<p>Afterwards we will reproduce the imported VASP results of a single Ni
+atom with periodic boundary conditions to make it actually look like a
+surface.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r reproduce, dependson = 'import', cache = TRUE" data-lang="r reproduce, dependson = 'import', cache = TRUE">data.reproduced &lt;- vasp.reproduce( data.imported, x.rep = seq( -3, 3 ),
+                                  y.rep = seq( -3, 3 ) )
+## the x.rep, y.rep and z.rep argument of the vasp.reproduce function
+## have to be supplied using a numerical vector. In the above example
+## the unit cell is going to be reproduced three times in the positive
+## and negative direction along both the x and y axis.</code></pre></div>
+<p>Most of the functions in vasp2R can be called with either the whole
+object of class <strong>vasp</strong> or with the individual elements. So its also
+possible to call <em>vasp.reproduce( data.imported$atoms )</em> to calculate
+just a reproduced version of the atomic positions.</p>
+
+<h2 id="rotating-the-surface">Rotating the surface</h2>
+
+<p>We can also rotate the positions to change our point of view. For such
+a clean and symmetric surface this is a little bit useless. But for
+more complex structures it will become quite handy.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r rotate, dependson = 'reproduce', cache = TRUE" data-lang="r rotate, dependson = 'reproduce', cache = TRUE">data.rotated &lt;- vasp.rotate.cell( data.reproduced, angle = 45* pi/ 180 )</code></pre></div>
+<h2 id="creating-bonds-between-atoms">Creating bonds between atoms</h2>
+
+<p>Then we establish bonds between the individual atoms (for a better
+visualization of the results).</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r bonding, dependson = 'rotate', cache = TRUE" data-lang="r bonding, dependson = 'rotate', cache = TRUE">data.bonds &lt;- vasp.bonds( data.rotated, distance = 8 )</code></pre></div>
+<p>The <em>vasp.bonds</em> function will create bonds between all atoms closer
+together than the supplied distance value within the x-y plane.</p>
+
+<h2 id="further-modifications">Further modifications</h2>
+
+<p>Another function implemented in vasp2R is <em>vasp.diff</em>. It expects two
+objects of class <strong>vasp</strong> as input and creates a new one of the same
+type containing the charge differences of the first input minus the
+second one. It also holds all the atoms and lattice entries of the
+first argument and is therefore a fully fledged <strong>vasp</strong> object.</p>
+
+<h1 id="visualization">Visualization</h1>
+
+<p>In principle you can use whatever plotting package you want. But
+personally I would recommend the usage of the <strong>ggplot2</strong> package.</p>
+
+<p>But before we start visualizing anything, how do we plot the charge
+density? My approach is to slice the three dimensional charge density
+in individual planes and plot those along with the atoms in the plane.</p>
+
+<p>There are two main problems in visualizing the charge density:</p>
+
+<ol>
+<li>The spacing of the charge density values provided by the CHGCAR is
+not compatible with the one the ggplot2 libraries accept. This
+actually leads to a huge number of tiny rectangle getting plotted
+and you won&rsquo;t even be able to see. That&rsquo;s how tiny they gonna be.</li>
+<li>There are way to much charge density values. If one intends to save
+the plot as a vector graphic you would end up with several GB even
+for moderate sized unit cells (simply because they contain hundreds
+of thousand points)</li>
+</ol>
+
+<p>So instead we create an evenly grid of variable size and calculate the
+mean charge density in each of those grid boxes.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r plot, dependson = 'bonding', cache = TRUE" data-lang="r plot, dependson = 'bonding', cache = TRUE">library( ggplot2 )
+library( RColorBrewer ) # For nice colors out of the bxo
+color.atom &lt;- &#34;navy&#34;
+color.gradient &lt;- &#34;YlOrRd&#34; # a RColorBrewer palette
+
+## Here we will create a plot function taking a z value, create
+## a slice at this specific value and plots it along with the atomic
+## positions in the x-y plane
+vasp.plot &lt;- function( vasp.input, z = 0, grid.point.number = 20 ){
+    ## Check out RColorBrewer::brewer.pal.info for different ones
+
+    ## Determine the z grid point closed to the supplied z value
+    ## This is not the actual height value but its index in
+    ## vasp.input$charge$z!
+    plot.height &lt;- which( abs( unique( vasp.input$charge$z ) - z ) == 
+                          min( abs( unique( vasp.input$charge$z ) - z ) ) )
+    ## Extract just those values of the charge density corresponding to
+    ## the determined slice grid point
+    slice.charge &lt;-  vasp.input$charge[
+        vasp.input$charge[ &#34;z&#34; ] == unique( vasp.input$charge$z )[
+                                              plot.height ], ]
+    ## Same for the atoms
+    plot.atoms &lt;-  vasp.input$atoms[
+        vasp.input$atoms[ &#34;z&#34; ] == unique( vasp.input$atoms$z )[
+                                             plot.height ], ]
+
+    ## Constructing a grid for plotting the charge density
+    ## Boundaries of the charge density
+    limits.x &lt;- c( min( slice.charge$x ), max( slice.charge$x ) )
+    limits.y &lt;- c( min( slice.charge$y ), max( slice.charge$y ) )
+    
+    ## Creating the grid
+    plot.charge &lt;- expand.grid( x = seq( limits.x[ 1 ],
+                                          limits.x[ 2 ], , 
+                                          grid.point.number ),
+                                 y = seq( limits.y[ 1 ],
+                                         limits.y[ 2 ], ,
+                                         grid.point.number ) )
+
+    ## Width of the grid boxes
+    grid.width.x &lt;- unique( plot.charge$x )[ 2 ] -
+                      unique( plot.charge$x )[ 1 ]
+    grid.width.y &lt;- unique( plot.charge$y )[ 2 ] -
+                      unique( plot.charge$y )[ 1 ]
+    
+    ## Calculate the mean charge density for all points within one grid
+    ## box
+    plot.charge$charge &lt;- Reduce( c, apply( plot.charge, 1, function( row ){
+        charge &lt;- mean( slice.charge$charge[
+            abs( slice.charge$x - as.numeric( row[ 1 ] ) ) &lt;=
+                grid.width.x &amp;
+            abs( slice.charge$y - as.numeric( row[ 2 ] ) ) &lt;=
+                grid.width.y ] )
+        return( charge )
+    } ) )
+
+    ## the actual plotting
+    ggplot() +
+        ## Plotting the charge density of the slice
+        geom_raster( data = plot.charge, interpolate = TRUE,
+                  aes( x = x, y = y, fill = charge ) ) +
+        ## Plotting the atoms
+        geom_point( data = plot.atoms, color = color.atom, stroke = 1.5,
+                   aes( x = x, y = y ), shape = 16, size = 4 ) +
+        ## Customized the color scale of the charge density
+        scale_fill_distiller( palette = color.gradient, direction = 1 ) +
+        ## Remove the grid lines in the ggplot plot
+        theme_bw() + 
+        theme( panel.grid.major = element_blank(), 
+              panel.grid.minor = element_blank(), 
+              panel.background = element_blank() )
+
+    ## Via this functions additional elements can be introduced to the
+    ## plot after calling this function
+    return( last_plot() )
+}
+
+vasp.plot( data.imported, 0, 20 )
+    </code></pre></div>
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/imported.png" alt="unit cell" /></p>
+
+<p>And for the reproduced one</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r, dependson = 'plot'" data-lang="r, dependson = 'plot'">vasp.plot( data.reproduced, 0, 20 )</code></pre></div>
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/reproduced.png" alt="reproduced plot" /></p>
+
+<p>Pretty good so far. Now lets introduce the bonds to the plotting.</p>
+
+<p>The <em>data.bonds$bonds</em> element contains the point of the beginning and
+end of all the extracted bonds.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r, dependson = 'plot'" data-lang="r, dependson = 'plot'">vasp.plot( data.bonds, 0, 20 ) +
+    ## extract just the bonds within the considered plane
+    geom_segment( data = data.bonds$bonds[
+                      data.bonds$bonds$z.begin == 0 &amp;
+                      data.bonds$bonds$z.end == 0, ],
+                 aes( x = x.begin, y = y.begin, xend = x.end,
+                     yend = y.end ), colour = color.atom, size = 1 )</code></pre></div>
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/bonds1.png" alt="rotated" /></p>
+
+<p>Now we have bonds to the nearest neighbors.</p>
+
+<p>If we want to have additional bonds to the next nearest neighbors we
+just have to increase the <em>distance</em> argument in the <em>vasp.bonds</em>
+function. (this time without rotation)</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r, dependson = 'plot'" data-lang="r, dependson = 'plot'">data.plot &lt;- vasp.bonds( data.reproduced, distance = 15 )
+
+vasp.plot( data.plot, 0, 20 ) +
+    ## extract just the bonds within the considered plane
+    geom_segment( data = data.plot$bonds[
+                      data.plot$bonds$z.begin == 0 &amp;
+                      data.plot$bonds$z.end == 0, ],
+                 aes( x = x.begin, y = y.begin, xend = x.end,
+                     yend = y.end ), colour = color.atom, size = 1 )</code></pre></div>
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/bonds2.png" alt="bonds" /></p>
+
+	  </section>
+
+
+	  <footer class="post-footer">
+
+
+	    
+
+
+
+
+	    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Vasp2R&nbsp;-&nbsp;theGreatWhiteShark&amp;url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fvasp2r%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fvasp2r%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fvasp2r%2f&amp;description=Vasp2R"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fvasp2r%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+	    
+
+<div id="disqus_thread"></div>
+<script>
+
+
+
+
+var disqus_config = function () {
+this.page.url = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/vasp2r\/";  
+this.page.identifier = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/vasp2r\/"; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://thegreatwhiteshark-coding-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+
+	  </footer>
+	</article>
+
+      </main>
+
+      
+      <aside class="read-next">
+  
+  <a class="read-next-story" style="no-cover" href="/thegreatwhiteshark.coding.io/how-much-computer-skills/">
+    <section class="post">
+      <h2>How much computer skills does a physicist need?</h2>
+      
+      
+    </section>
+  </a>
+  
+  
+</aside>
+
+      
+
+          <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">theGreatWhiteShark</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/index.js"></script>
+    
+</body>
+</html>
+
