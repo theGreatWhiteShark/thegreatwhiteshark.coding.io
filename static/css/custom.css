@@ -68,3 +68,7 @@
   text-align: center;
   color: #ccc;
 }
+
+.post-footer .share {
+  position: relative;
+}

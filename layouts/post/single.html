@@ -36,7 +36,7 @@
 	    {{end}}
 	    <hr class="post-description-separator"/>
 	    <section class="post-description-single">  
-	      <p>{{.Description}}
+	      <p>{{.Description | markdownify}}
 	    </section>
 	    <hr class="post-description-separator"/>
             <section class="post-meta">

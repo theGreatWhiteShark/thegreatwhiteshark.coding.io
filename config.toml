@@ -50,7 +50,7 @@ description = "A collection of my various projects involving coding, hacking, an
 githubName = "theGreatWhiteShark"
 hideHUGOSupport = false
 pygmentsCodefences = true
-pygmentsStyle = "friendly"
+pygmentsStyle = "monokai"
 [permalinks]
 post = "/:slug/"
 [sitemap]

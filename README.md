@@ -6,6 +6,9 @@ It is based on the awesome static website generator
 [Hugo](https://gohugo.io/) and the
 [casper](https://github.com/vjeantet/hugo-theme-casper) theme.
 
+You can access the blog via
+[https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/](https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/).
+
 # Installation
 
 In order to use this repository as a basis for your own blog, first,
