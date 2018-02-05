@@ -18,7 +18,7 @@
 
 
 
-  	<meta property="og:title" content="Mensacard Hack Pt. I &middot; theGreatWhiteShark" />
+  	<meta property="og:title" content="Mensacard Hack Pt. I" />
   	<meta property="og:site_name" content="theGreatWhiteShark" />
   	<meta property="og:url" content="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-i/" />
 
@@ -40,7 +40,7 @@
     
     
 
-    <title>Mensacard Hack Pt. I &middot; theGreatWhiteShark</title>
+    <title>Mensacard Hack Pt. I</title>
 
     
     <meta name="description" content="In this little series I will try to duplicate the RFID based card of my local cafeteria. On the way I will explore many nice tools and frameworks like the Android SDK, Apache Cordova, JavaScript based app programming, NFC/RFID technology, databases, and maybe even some Arduino related stuff." />
@@ -303,14 +303,14 @@ Android Studio but Emacs for developing.</p>
 <p>Fortunately the SDK is included in the Ubuntu package repositories so
 we don&rsquo;t have to think about setting the whole thing up and updating
 at all.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt install android-sdk android-sdk-build-tools  android-sdk-platform-tools</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt install android-sdk android-sdk-build-tools  android-sdk-platform-tools</code></pre></div>
 <p>To check if the setup was successful connect your Android phone via
 USB go to the <em>Settings &gt; Developer options</em> and enable <em>USB
 debugging</em>. If you don&rsquo;t see the <em>Developer options</em> go to <em>Setting &gt;
 About phone</em> and click about eight times on the <em>Build number</em>. Then
 check if you can see your phone via the <em>Android debugging bridge
 (ADB)</em></p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">adb devices</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">adb devices</code></pre></div>
 <p>Now we have to install all the headers etc. to be able to build an app
 for our Android 6.</p>
 
@@ -328,7 +328,7 @@ this <a href="https://developer.android.com/studio/index.html">page</a>. Be sure
 the folder is actually called <em>&ldquo;tools&rdquo;</em>! If not the <strong>android</strong>
 program for downloading the platforms won&rsquo;t work (just cost me about
 a hour).</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget https://dl.google.com/android/repository/tools_r25.2.3-linux.zip
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget https://dl.google.com/android/repository/tools_r25.2.3-linux.zip
 unzip tools_r25.2.3-linux.zip
 mkdir --parents ~/software/android
 mv tools ~/software/android-sdk
@@ -340,10 +340,10 @@ packages</em>.</p>
 <h1 id="setting-up-apache-cordova">Setting up Apache Cordova</h1>
 
 <p>To install Apache Cordova just use the node.js package manager</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo npm install -g cordova</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo npm install -g cordova</code></pre></div>
 <p>So Android is already set up as our development platform and we have
 to check what is still missing to deploy our app.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> cordova
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd cordova
 cordova platform add android
 cordova requirements</code></pre></div>
 <p>Alright. So now we have to tell Cordova where to find all the
@@ -353,10 +353,10 @@ the
 
 <p>Therefore we add the Android SDK tools to our search <em>PATH</em> and set a
 <em>ANDROID_HOME</em> and <em>JAVA_PATH</em> variable.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export PATH=$PATH:$HOME/software/android-sdk/tools:$HOME/software/android-sdk/platform-tools&#39;</span> &gt;&gt; .bashrc
-<span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export ANDROID_HOME=$HOME/software/android&#39;</span> &gt;&gt; .bashrc
-<span style="color:#60a0b0;font-style:italic"># be sure to replace the PATH_TO_DOWNLOADED_JDK with the appropriate path
-</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;export JAVA_HOME=PATH_TO_DOWNLOADED_JDK&#34;</span> &gt;&gt; .bashrc</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#39;export PATH=$PATH:$HOME/software/android-sdk/tools:$HOME/software/android-sdk/platform-tools&#39;</span> &gt;&gt; .bashrc
+echo <span style="color:#e6db74">&#39;export ANDROID_HOME=$HOME/software/android&#39;</span> &gt;&gt; .bashrc
+<span style="color:#75715e"># be sure to replace the PATH_TO_DOWNLOADED_JDK with the appropriate path
+</span><span style="color:#75715e"></span>echo <span style="color:#e6db74">&#34;export JAVA_HOME=PATH_TO_DOWNLOADED_JDK&#34;</span> &gt;&gt; .bashrc</code></pre></div>
 <p>(Setting up the Java environment actually gave me a huge amount of
 trouble. Firstly, I wanted to suggest you to install the <em>default-jdk</em>
 <em>default-jre</em> and <em>icedtea-plugin</em> packages. But after setting the
@@ -378,7 +378,7 @@ worked for me.)</p>
 <p>Now that everything is set up we just need to enter the following
 command while our Android phone is connect via USB and its
 USB-debugging is enable and the Mensacard app is getting installed.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cordova run android</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cordova run android</code></pre></div>
 <p>NOTE: If you for some reason had to remove and add the android
 platform for Cordova you will loose the custom icon of the
 app. Unfortunately I was not able to link them via Cordova&rsquo;s

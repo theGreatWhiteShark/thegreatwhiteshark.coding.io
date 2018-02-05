@@ -80,3 +80,9 @@ $color-subtitle-read-next: #ccc;
     color: $color-subtitle-read-next;
   }
 }
+
+// Customizing the share buttons under the content and above the
+// Disqus comment line
+.post-footer .share {
+  position: relative;
+}

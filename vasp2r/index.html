@@ -18,7 +18,7 @@
 
 
 
-  	<meta property="og:title" content="Vasp2R &middot; theGreatWhiteShark" />
+  	<meta property="og:title" content="Vasp2R" />
   	<meta property="og:site_name" content="theGreatWhiteShark" />
   	<meta property="og:url" content="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/vasp2r/" />
 
@@ -38,7 +38,7 @@
     
     
 
-    <title>Vasp2R &middot; theGreatWhiteShark</title>
+    <title>Vasp2R</title>
 
     
     <meta name="description" content="In my first blog post (yes!) I will cover my R package [vasp2R](https://github.com/theGreatWhiteShark/vasp2R). It is a based on some wrappers to import the results of the density functional theory (DFT) program VASP into R. There, all the advanced visualization features of the *ggplot2* package can be utilized." />
@@ -201,7 +201,7 @@
 	    
 	    <hr class="post-description-separator"/>
 	    <section class="post-description-single">  
-	      <p>In my first blog post (yes!) I will cover my R package [vasp2R](https://github.com/theGreatWhiteShark/vasp2R). It is a based on some wrappers to import the results of the density functional theory (DFT) program VASP into R. There, all the advanced visualization features of the *ggplot2* package can be utilized.
+	      <p>In my first blog post (yes!) I will cover my R package <a href="https://github.com/theGreatWhiteShark/vasp2R">vasp2R</a>. It is a based on some wrappers to import the results of the density functional theory (DFT) program VASP into R. There, all the advanced visualization features of the <em>ggplot2</em> package can be utilized.
 	    </section>
 	    <hr class="post-description-separator"/>
             <section class="post-meta">
@@ -255,17 +255,17 @@ is smaller in size and I want to keep package’s size at a minimum.</p>
 
 <p>First of all you have to be sure of have the <strong>vasp2R</strong> package
 installed.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">check.validity <span style="color:#666">&lt;-</span> <span style="color:#007020">try</span>( <span style="color:#007020;font-weight:bold">library</span>( <span style="color:#4070a0">&#34;vasp2R&#34;</span> ), silent <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span> )
-<span style="color:#007020;font-weight:bold">if</span> ( <span style="color:#007020">class</span>( check.validity ) <span style="color:#666">==</span> <span style="color:#4070a0">&#34;try-error&#34;</span> ){
-    <span style="color:#60a0b0;font-style:italic">## the package is not installed yet</span>
-    devtools<span style="color:#666">::</span>install_github( <span style="color:#4070a0">&#34;theGreatWhiteShark/vasp2R&#34;</span> )
-    <span style="color:#007020;font-weight:bold">library</span>( vasp2R )
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">check.validity <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">try</span>( <span style="color:#f92672">library</span>( <span style="color:#e6db74">&#34;vasp2R&#34;</span> ), silent <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span> )
+<span style="color:#66d9ef">if</span> ( <span style="color:#66d9ef">class</span>( check.validity ) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;try-error&#34;</span> ){
+    <span style="color:#75715e">## the package is not installed yet</span>
+    devtools<span style="color:#f92672">::</span>install_github( <span style="color:#e6db74">&#34;theGreatWhiteShark/vasp2R&#34;</span> )
+    <span style="color:#f92672">library</span>( vasp2R )
 }</code></pre></div>
 <p>During installation the CHG files is copied as one of the package&rsquo;s
 assets on the hard disk. We will import it into R using the
 <em>vasp.import</em> function.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r import, cache = TRUE" data-lang="r import, cache = TRUE">data.imported <span style="color:#666">&lt;-</span> vasp.<span style="color:#007020;font-weight:bold">import</span>( system.file( <span style="color:#4070a0">&#34;example/CHG&#34;</span>,
-                                          <span style="color:#007020;font-weight:bold">package</span> = <span style="color:#4070a0">&#34;vasp2R&#34;</span> ) )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r import, cache = TRUE" data-lang="r import, cache = TRUE"><span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">imported</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">vasp</span>.<span style="color:#f92672">import</span>( <span style="color:#a6e22e">system</span>.<span style="color:#a6e22e">file</span>( <span style="color:#e6db74">&#34;example/CHG&#34;</span>,
+                                          <span style="color:#f92672">package</span> = <span style="color:#e6db74">&#34;vasp2R&#34;</span> ) )</code></pre></div>
 <h2 id="structure-of-the-imported-vasp-object">Structure of the imported vasp object</h2>
 
 <p>The resulting object <em>data.imported</em> is of class <strong>vasp</strong> and inherits
@@ -300,7 +300,7 @@ entries of a specific row correspond to a specific vector.</p>
 <p>Afterwards we will reproduce the imported VASP results of a single Ni
 atom with periodic boundary conditions to make it actually look like a
 surface.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r reproduce, dependson = 'import', cache = TRUE" data-lang="r reproduce, dependson = 'import', cache = TRUE">data.reproduced &lt;- vasp.reproduce( data.imported, x.rep = seq( -3, 3 ),
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r reproduce, dependson = 'import', cache = TRUE" data-lang="r reproduce, dependson = 'import', cache = TRUE">data.reproduced &lt;- vasp.reproduce( data.imported, x.rep = seq( -3, 3 ),
                                   y.rep = seq( -3, 3 ) )
 ## the x.rep, y.rep and z.rep argument of the vasp.reproduce function
 ## have to be supplied using a numerical vector. In the above example
@@ -316,12 +316,12 @@ just a reproduced version of the atomic positions.</p>
 <p>We can also rotate the positions to change our point of view. For such
 a clean and symmetric surface this is a little bit useless. But for
 more complex structures it will become quite handy.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r rotate, dependson = 'reproduce', cache = TRUE" data-lang="r rotate, dependson = 'reproduce', cache = TRUE">data.rotated &lt;- vasp.rotate.cell( data.reproduced, angle = 45* pi/ 180 )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r rotate, dependson = 'reproduce', cache = TRUE" data-lang="r rotate, dependson = 'reproduce', cache = TRUE">data.rotated &lt;- vasp.rotate.cell( data.reproduced, angle = 45* pi/ 180 )</code></pre></div>
 <h2 id="creating-bonds-between-atoms">Creating bonds between atoms</h2>
 
 <p>Then we establish bonds between the individual atoms (for a better
 visualization of the results).</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r bonding, dependson = 'rotate', cache = TRUE" data-lang="r bonding, dependson = 'rotate', cache = TRUE">data.bonds &lt;- vasp.bonds( data.rotated, distance = 8 )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r bonding, dependson = 'rotate', cache = TRUE" data-lang="r bonding, dependson = 'rotate', cache = TRUE">data.bonds &lt;- vasp.bonds( data.rotated, distance = 8 )</code></pre></div>
 <p>The <em>vasp.bonds</em> function will create bonds between all atoms closer
 together than the supplied distance value within the x-y plane.</p>
 
@@ -357,7 +357,7 @@ of thousand points)</li>
 
 <p>So instead we create an evenly grid of variable size and calculate the
 mean charge density in each of those grid boxes.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r plot, dependson = 'bonding', cache = TRUE" data-lang="r plot, dependson = 'bonding', cache = TRUE">library( ggplot2 )
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r plot, dependson = 'bonding', cache = TRUE" data-lang="r plot, dependson = 'bonding', cache = TRUE">library( ggplot2 )
 library( RColorBrewer ) # For nice colors out of the bxo
 color.atom &lt;- &#34;navy&#34;
 color.gradient &lt;- &#34;YlOrRd&#34; # a RColorBrewer palette
@@ -439,14 +439,14 @@ vasp.plot( data.imported, 0, 20 )
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/imported.png" alt="unit cell" /></p>
 
 <p>And for the reproduced one</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r, dependson = 'plot'" data-lang="r, dependson = 'plot'">vasp.plot( data.reproduced, 0, 20 )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r, dependson = 'plot'" data-lang="r, dependson = 'plot'">vasp.plot( data.reproduced, 0, 20 )</code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/reproduced.png" alt="reproduced plot" /></p>
 
 <p>Pretty good so far. Now lets introduce the bonds to the plotting.</p>
 
 <p>The <em>data.bonds$bonds</em> element contains the point of the beginning and
 end of all the extracted bonds.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r, dependson = 'plot'" data-lang="r, dependson = 'plot'">vasp.plot( data.bonds, 0, 20 ) +
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r, dependson = 'plot'" data-lang="r, dependson = 'plot'">vasp.plot( data.bonds, 0, 20 ) +
     ## extract just the bonds within the considered plane
     geom_segment( data = data.bonds$bonds[
                       data.bonds$bonds$z.begin == 0 &amp;
@@ -460,7 +460,7 @@ end of all the extracted bonds.</p>
 <p>If we want to have additional bonds to the next nearest neighbors we
 just have to increase the <em>distance</em> argument in the <em>vasp.bonds</em>
 function. (this time without rotation)</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r, dependson = 'plot'" data-lang="r, dependson = 'plot'">data.plot &lt;- vasp.bonds( data.reproduced, distance = 15 )
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r, dependson = 'plot'" data-lang="r, dependson = 'plot'">data.plot &lt;- vasp.bonds( data.reproduced, distance = 15 )
 
 vasp.plot( data.plot, 0, 20 ) +
     ## extract just the bonds within the considered plane

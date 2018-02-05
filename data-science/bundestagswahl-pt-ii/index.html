@@ -18,7 +18,7 @@
 
 
 
-  	<meta property="og:title" content="A data scientist’s view on the election for the Bundestag Pt. II &middot; theGreatWhiteShark" />
+  	<meta property="og:title" content="A data scientist’s view on the election for the Bundestag Pt. II" />
   	<meta property="og:site_name" content="theGreatWhiteShark" />
   	<meta property="og:url" content="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/bundestagswahl-pt-ii/" />
 
@@ -40,7 +40,7 @@
     
     
 
-    <title>A data scientist’s view on the election for the Bundestag Pt. II &middot; theGreatWhiteShark</title>
+    <title>A data scientist’s view on the election for the Bundestag Pt. II</title>
 
     
     <meta name="description" content="In the second part of this series I want to introduce you to the huge ecosystem of spatial objects, their implementation in R, and how to display them in the most convenient way." />
@@ -325,8 +325,8 @@ it is still under active development.</p>
 
 <p>In order to install all those aforementioned R packages, you have to
 have some additional libraries installed on your system first.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># In Debian-based distributions.
-</span><span style="color:#60a0b0;font-style:italic"></span>sudo apt update
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># In Debian-based distributions.
+</span><span style="color:#75715e"></span>sudo apt update
 sudo apt install libjq-dev libv8-3.14-dev libprotobuf-dev libgdal-dev libproj-dev libudunits2-dev</code></pre></div>
 <p>Depending on which distribution is running on your computer, you might
 have to download and install a more recent
@@ -334,56 +334,56 @@ have to download and install a more recent
 the <strong>tmap</strong> package. If you were successful in installing it
 using <code>install.packages( &quot;tmap&quot; )</code>, skip the following code
 chunk.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># In case your system&#39;s repositories provide a GDAL package too 
-</span><span style="color:#60a0b0;font-style:italic"># old for the R packages above, you have to install a newer one 
-</span><span style="color:#60a0b0;font-style:italic"># from source.
-</span><span style="color:#60a0b0;font-style:italic"># Download (into a folder you neither move, rename, or delete!)
-</span><span style="color:#60a0b0;font-style:italic"></span>wget http://download.osgeo.org/gdal/2.2.2/gdal-2.2.2.tar.gz
-<span style="color:#60a0b0;font-style:italic"># Extract the folder
-</span><span style="color:#60a0b0;font-style:italic"></span>tar -xf gdal-2.2.2.tar.gz
-<span style="color:#007020">cd</span> gdal-2.2.2
-<span style="color:#60a0b0;font-style:italic"># Run the ./configure script to tell the package all your local 
-</span><span style="color:#60a0b0;font-style:italic"># libraries, programs, and configurations
-</span><span style="color:#60a0b0;font-style:italic"></span>./configure
-<span style="color:#60a0b0;font-style:italic"># Compile the source code
-</span><span style="color:#60a0b0;font-style:italic"></span>make
-<span style="color:#60a0b0;font-style:italic"># Install the compiled code
-</span><span style="color:#60a0b0;font-style:italic"></span>sudo make install</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># In case your system&#39;s repositories provide a GDAL package too 
+</span><span style="color:#75715e"># old for the R packages above, you have to install a newer one 
+</span><span style="color:#75715e"># from source.
+</span><span style="color:#75715e"># Download (into a folder you neither move, rename, or delete!)
+</span><span style="color:#75715e"></span>wget http://download.osgeo.org/gdal/2.2.2/gdal-2.2.2.tar.gz
+<span style="color:#75715e"># Extract the folder
+</span><span style="color:#75715e"></span>tar -xf gdal-2.2.2.tar.gz
+cd gdal-2.2.2
+<span style="color:#75715e"># Run the ./configure script to tell the package all your local 
+</span><span style="color:#75715e"># libraries, programs, and configurations
+</span><span style="color:#75715e"></span>./configure
+<span style="color:#75715e"># Compile the source code
+</span><span style="color:#75715e"></span>make
+<span style="color:#75715e"># Install the compiled code
+</span><span style="color:#75715e"></span>sudo make install</code></pre></div>
 <p>Now we can load all the required packages into our R environment.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#007020;font-weight:bold">library</span>( stringr )
-<span style="color:#007020;font-weight:bold">library</span>( dplyr )
-<span style="color:#007020;font-weight:bold">library</span>( tidyr )
-<span style="color:#007020;font-weight:bold">library</span>( rgdal )
-<span style="color:#007020;font-weight:bold">library</span>( maptools )
-<span style="color:#007020;font-weight:bold">library</span>( ggmap )
-<span style="color:#007020;font-weight:bold">library</span>( tmap )
-<span style="color:#007020;font-weight:bold">library</span>( OpenStreetMap ) <span style="color:#60a0b0;font-style:italic"># For more apealing visualization</span>
-<span style="color:#007020;font-weight:bold">library</span>( leaflet )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">library</span>( stringr )
+<span style="color:#f92672">library</span>( dplyr )
+<span style="color:#f92672">library</span>( tidyr )
+<span style="color:#f92672">library</span>( rgdal )
+<span style="color:#f92672">library</span>( maptools )
+<span style="color:#f92672">library</span>( ggmap )
+<span style="color:#f92672">library</span>( tmap )
+<span style="color:#f92672">library</span>( OpenStreetMap ) <span style="color:#75715e"># For more apealing visualization</span>
+<span style="color:#f92672">library</span>( leaflet )</code></pre></div>
 <h1 id="import-and-preparation-of-our-data">Import and preparation of our data</h1>
 
 <h3 id="import">Import</h3>
 
 <p>Firstly, we will download the polygons of the election districts.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Download the files into a separated folder created in the current one.</span>
-download.folder <span style="color:#666">&lt;-</span> <span style="color:#4070a0">&#34;bundeswahlleiter/&#34;</span>
-<span style="color:#007020;font-weight:bold">if</span> ( <span style="color:#666">!</span>dir.exists( download.folder ) ){
-  <span style="color:#007020">dir.create</span>( download.folder )
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## Download the files into a separated folder created in the current one.</span>
+download.folder <span style="color:#f92672">&lt;-</span> <span style="color:#e6db74">&#34;bundeswahlleiter/&#34;</span>
+<span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span>dir.exists( download.folder ) ){
+  <span style="color:#66d9ef">dir.create</span>( download.folder )
 }
 
-<span style="color:#60a0b0;font-style:italic">## This URL contains all the geographical information.</span>
-election.districts.url <span style="color:#666">&lt;-</span> <span style="color:#4070a0">&#34;https://www.bundeswahlleiter.de/dam/jcr/f92e42fa-44f1-47e5-b775-924926b34268/btw17_geometrie_wahlkreise_geo_shp.zip&#34;</span>
-<span style="color:#60a0b0;font-style:italic">## For convenience reason let&#39;s split the URL at all &#39;/&#39;. This way</span>
-<span style="color:#60a0b0;font-style:italic">## we can directly access the file name.</span>
-<span style="color:#60a0b0;font-style:italic">## Download</span>
-election.districts.url.split <span style="color:#666">&lt;-</span> str_split(
-    election.districts.url, <span style="color:#4070a0">&#34;/&#34;</span> )[[ <span style="color:#40a070">1</span> ]]
-download.file( url <span style="color:#666">=</span> election.districts.url,
-              destfile <span style="color:#666">=</span> <span style="color:#007020">paste0</span>( download.folder,
-                                election.districts.url.split[ <span style="color:#40a070">7</span> ] ),
-              method <span style="color:#666">=</span> <span style="color:#4070a0">&#34;wget&#34;</span> )
-<span style="color:#60a0b0;font-style:italic">## Extract the data for the election districts</span>
-unzip( <span style="color:#007020">paste0</span>( download.folder, election.districts.url.split[ <span style="color:#40a070">7</span> ] ),
-      exdir <span style="color:#666">=</span> download.folder )</code></pre></div>
+<span style="color:#75715e">## This URL contains all the geographical information.</span>
+election.districts.url <span style="color:#f92672">&lt;-</span> <span style="color:#e6db74">&#34;https://www.bundeswahlleiter.de/dam/jcr/f92e42fa-44f1-47e5-b775-924926b34268/btw17_geometrie_wahlkreise_geo_shp.zip&#34;</span>
+<span style="color:#75715e">## For convenience reason let&#39;s split the URL at all &#39;/&#39;. This way</span>
+<span style="color:#75715e">## we can directly access the file name.</span>
+<span style="color:#75715e">## Download</span>
+election.districts.url.split <span style="color:#f92672">&lt;-</span> str_split(
+    election.districts.url, <span style="color:#e6db74">&#34;/&#34;</span> )[[ <span style="color:#ae81ff">1</span> ]]
+download.file( url <span style="color:#f92672">=</span> election.districts.url,
+              destfile <span style="color:#f92672">=</span> <span style="color:#66d9ef">paste0</span>( download.folder,
+                                election.districts.url.split[ <span style="color:#ae81ff">7</span> ] ),
+              method <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;wget&#34;</span> )
+<span style="color:#75715e">## Extract the data for the election districts</span>
+unzip( <span style="color:#66d9ef">paste0</span>( download.folder, election.districts.url.split[ <span style="color:#ae81ff">7</span> ] ),
+      exdir <span style="color:#f92672">=</span> download.folder )</code></pre></div>
 <p>The data format our polygons are provided in is the so called
 <a href="https://en.wikipedia.org/wiki/Shapefile">Shapefile</a>. It is a vector
 format incorporating associated attribute information and features a
@@ -407,11 +407,11 @@ consists of several files at ones.</p>
 
 <p>Now we import the Shapefile into the R environment using the <strong>rgdal</strong>
 package.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Import all the spatial information into one single data object.</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## Import all the spatial information into one single data object.</span>
 
-<span style="color:#60a0b0;font-style:italic">## https://github.com/tidyverse/ggplot2/wiki/plotting-polygon-shapefiles</span>
-election.districts <span style="color:#666">&lt;-</span> readOGR( dsn <span style="color:#666">=</span> <span style="color:#007020">paste0</span>( download.folder, <span style="color:#4070a0">&#34;.&#34;</span> ),
-                              layer <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Geometrie_Wahlkreise_19DBT_geo&#34;</span> )</code></pre></div>
+<span style="color:#75715e">## https://github.com/tidyverse/ggplot2/wiki/plotting-polygon-shapefiles</span>
+election.districts <span style="color:#f92672">&lt;-</span> readOGR( dsn <span style="color:#f92672">=</span> <span style="color:#66d9ef">paste0</span>( download.folder, <span style="color:#e6db74">&#34;.&#34;</span> ),
+                              layer <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Geometrie_Wahlkreise_19DBT_geo&#34;</span> )</code></pre></div>
 <h3 id="handling-spatial-objects-in-r">Handling spatial objects in R</h3>
 
 <p>The <em>election.districts</em> object is not an ordinary R object like a
@@ -431,22 +431,22 @@ metadata as well as the <em>data</em> slot holding a data.frame with the
 numbers and names of the individual election districts and the numbers
 and names of the corresponding states. The latter is also called an
 &lsquo;attribute table&rsquo;.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">slotNames( election.districts )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">slotNames( election.districts )</code></pre></div>
 <blockquote>
 <p>[1] &ldquo;data&rdquo;        &ldquo;polygons&rdquo;    &ldquo;plotOrder&rdquo;   &ldquo;bbox&rdquo;        &ldquo;proj4string&rdquo;</p>
 </blockquote>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Slot names of the first polygon stored in election.districts</span>
-slotNames( election.districts<span style="color:#666">@</span>polygons[[ <span style="color:#40a070">1</span> ]] )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## Slot names of the first polygon stored in election.districts</span>
+slotNames( election.districts<span style="color:#f92672">@</span>polygons[[ <span style="color:#ae81ff">1</span> ]] )</code></pre></div>
 <blockquote>
 <p>[1] &ldquo;Polygons&rdquo;  &ldquo;plotOrder&rdquo; &ldquo;labpt&rdquo;     &ldquo;ID&rdquo;        &ldquo;area&rdquo;</p>
 </blockquote>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## ID of the first polygon</span>
-election.districts<span style="color:#666">@</span>polygons[[ <span style="color:#40a070">1</span> ]]<span style="color:#666">@</span>ID</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## ID of the first polygon</span>
+election.districts<span style="color:#f92672">@</span>polygons[[ <span style="color:#ae81ff">1</span> ]]<span style="color:#f92672">@</span>ID</code></pre></div>
 <blockquote>
 <p>[1] &ldquo;0&rdquo;</p>
 </blockquote>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## First rows of the data slot</span>
-<span style="color:#007020">head</span>( election.districts<span style="color:#666">@</span>data )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## First rows of the data slot</span>
+<span style="color:#66d9ef">head</span>( election.districts<span style="color:#f92672">@</span>data )</code></pre></div>
 <blockquote>
 <pre><code> WKR_NR LAND_NR LAND_NAME                          WKR_NAME
 
@@ -480,42 +480,42 @@ into our current R environment. Note: we will use the last version of
 the <em>data.separated</em> object renamed to <em>election.results</em>. It&rsquo;s a
 little bit inconsistent, but I decided to give it a more descriptive
 name to make things more clear within this and all following posts.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">download.file( url <span style="color:#666">=</span> <span style="color:#4070a0">&#34;https://github.com/theGreatWhiteShark/blog-resources/blob/master/coding/bundestag-election/election.results.RData?raw=true&#34;</span>,
-              destfile <span style="color:#666">=</span> <span style="color:#007020">paste0</span>( download.folder,
-                                <span style="color:#4070a0">&#34;election.results.RData&#34;</span> ) )
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">download.file( url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://github.com/theGreatWhiteShark/blog-resources/blob/master/coding/bundestag-election/election.results.RData?raw=true&#34;</span>,
+              destfile <span style="color:#f92672">=</span> <span style="color:#66d9ef">paste0</span>( download.folder,
+                                <span style="color:#e6db74">&#34;election.results.RData&#34;</span> ) )
 
-<span style="color:#60a0b0;font-style:italic">## Load the cleaned results of the election</span>
-<span style="color:#60a0b0;font-style:italic">## Include a link to Github!</span>
-<span style="color:#007020">load</span>( <span style="color:#007020">paste0</span>( download.folder, <span style="color:#4070a0">&#34;election.results.RData&#34;</span> ) )</code></pre></div>
+<span style="color:#75715e">## Load the cleaned results of the election</span>
+<span style="color:#75715e">## Include a link to Github!</span>
+<span style="color:#66d9ef">load</span>( <span style="color:#66d9ef">paste0</span>( download.folder, <span style="color:#e6db74">&#34;election.results.RData&#34;</span> ) )</code></pre></div>
 <h3 id="selecting-the-results-we-want-to-display">Selecting the results we want to display</h3>
 
 <p>In this example we will work again with the preliminary total number
 of second votes for the leftists and another party called &ldquo;Die
 Partei&rdquo;.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Exclude the states (since they cause the</span>
-<span style="color:#60a0b0;font-style:italic">## election.district.number to be not unique )</span>
-election.results.no.states <span style="color:#666">&lt;-</span> filter( election.results,
-                                       state.number <span style="color:#666">!=</span> <span style="color:#40a070">99</span> )
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## Exclude the states (since they cause the</span>
+<span style="color:#75715e">## election.district.number to be not unique )</span>
+election.results.no.states <span style="color:#f92672">&lt;-</span> filter( election.results,
+                                       state.number <span style="color:#f92672">!=</span> <span style="color:#ae81ff">99</span> )
 
-<span style="color:#60a0b0;font-style:italic">## The amount of 2nd votes for the leftists (die Linke)</span>
-counts.leftists.second.vote <span style="color:#666">&lt;-</span>
+<span style="color:#75715e">## The amount of 2nd votes for the leftists (die Linke)</span>
+counts.leftists.second.vote <span style="color:#f92672">&lt;-</span>
   filter( election.results.no.states,
-         confirmation.status <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Vorläufig&#34;</span> <span style="color:#666">&amp;</span>
-         type.of.vote <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Zweitstimmen&#34;</span> <span style="color:#666">&amp;</span>
-         party <span style="color:#666">==</span> <span style="color:#4070a0">&#34;DIE LINKE&#34;</span> )
+         confirmation.status <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Vorläufig&#34;</span> <span style="color:#f92672">&amp;</span>
+         type.of.vote <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Zweitstimmen&#34;</span> <span style="color:#f92672">&amp;</span>
+         party <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;DIE LINKE&#34;</span> )
 
-<span style="color:#60a0b0;font-style:italic">## The amount of 2nd votes for die Partei</span>
-counts.partei.second.vote <span style="color:#666">&lt;-</span>
+<span style="color:#75715e">## The amount of 2nd votes for die Partei</span>
+counts.partei.second.vote <span style="color:#f92672">&lt;-</span>
   filter( election.results.no.states,
-         confirmation.status <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Vorläufig&#34;</span> <span style="color:#666">&amp;</span>
-         type.of.vote <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Zweitstimmen&#34;</span> <span style="color:#666">&amp;</span>
-         party <span style="color:#666">==</span> <span style="color:#4070a0">&#34;Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative&#34;</span> )</code></pre></div>
+         confirmation.status <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Vorläufig&#34;</span> <span style="color:#f92672">&amp;</span>
+         type.of.vote <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Zweitstimmen&#34;</span> <span style="color:#f92672">&amp;</span>
+         party <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative&#34;</span> )</code></pre></div>
 <h1 id="plotting">Plotting</h1>
 
 <p>Generally speaking it is possible to use the base <code>plot()</code> function
 for plotting your polygons and to add additional layers representing
 the information you want to display.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">plot( election.districts )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">plot( election.districts )</code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl2/plot-raw.jpeg" alt="raw plot" /></p>
 
 <p>But I would highly recommend using more advanced packages instead.</p>
@@ -578,9 +578,9 @@ district according to the party, which received the majority of votes.</p>
 <p>The first thing we have to do when dealing with the <strong>ggmap</strong> or
 <strong>ggplot2</strong> package is to convert our data into a data.frame. Spatial
 data formats are not supported.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Converting the spatial object into a data.frame better suited</span>
-<span style="color:#60a0b0;font-style:italic">## for the &#39;ggplot2&#39; package.</span>
-election.districts.df <span style="color:#666">&lt;-</span> fortify( election.districts )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## Converting the spatial object into a data.frame better suited</span>
+<span style="color:#75715e">## for the &#39;ggplot2&#39; package.</span>
+election.districts.df <span style="color:#f92672">&lt;-</span> fortify( election.districts )</code></pre></div>
 <p>The resulting data.frame contains a separate row for each of the
 vertices containing the columns longitude, latitude, id, and group
 among others. The <em>group</em> column is used to associate all points to a
@@ -589,37 +589,37 @@ corresponding row in the <em>election.districts</em> attribute table. To
 obtain the numbers of the election districts, which we need to relate
 the points to the election results, we have to increment the <em>id</em>
 column ones.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Convert the IDs of the polygons to the same key used to</span>
-<span style="color:#60a0b0;font-style:italic">## identify the election districts.</span>
-election.districts.df<span style="color:#666">$</span>election.district.number <span style="color:#666">&lt;-</span>
-  <span style="color:#007020">as.numeric</span>( election.districts.df<span style="color:#666">$</span>id ) <span style="color:#666">+</span> <span style="color:#40a070">1</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## Convert the IDs of the polygons to the same key used to</span>
+<span style="color:#75715e">## identify the election districts.</span>
+election.districts.df<span style="color:#f92672">$</span>election.district.number <span style="color:#f92672">&lt;-</span>
+  <span style="color:#66d9ef">as.numeric</span>( election.districts.df<span style="color:#f92672">$</span>id ) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span></code></pre></div>
 <p>Now we can relate the election results to the points constituting the
 election districts.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Add the counts to all points of the corresponding polygons</span>
-election.districts.df <span style="color:#666">&lt;-</span> left_join( election.districts.df,
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## Add the counts to all points of the corresponding polygons</span>
+election.districts.df <span style="color:#f92672">&lt;-</span> left_join( election.districts.df,
                                    counts.leftists.second.vote,
-                                   by <span style="color:#666">=</span><span style="color:#4070a0">&#34;election.district.number&#34;</span>)</code></pre></div>
+                                   by <span style="color:#f92672">=</span><span style="color:#e6db74">&#34;election.district.number&#34;</span>)</code></pre></div>
 <p>For the final plot we first get map tiles we will use as a basis for
 our map with the <code>get_map()</code> function. But be careful: this one is
 quite buggy! The true boundaries of the supplied polygons do not
 work. So instead we have to adjust them carefully by hand.</p>
 
 <p>Afterwards we&rsquo;ll plot the districts on top of the tiles.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Download map tiles. Be careful: this interface is quite buggy!</span>
-<span style="color:#60a0b0;font-style:italic">## The true boundaries of the supplied polygons do not work. Instead</span>
-<span style="color:#60a0b0;font-style:italic">## One has adjust the boundaries careful by hand.</span>
-map.tiles <span style="color:#666">&lt;-</span> get_map( location <span style="color:#666">=</span> <span style="color:#60a0b0;font-style:italic">#bbox( election.districts ) )</span>
-                        <span style="color:#902000">c</span>( left <span style="color:#666">=</span> <span style="color:#40a070">0</span>, bottom <span style="color:#666">=</span> <span style="color:#40a070">47</span>,
-                          right <span style="color:#666">=</span> <span style="color:#40a070">20</span>, top <span style="color:#666">=</span> <span style="color:#40a070">56</span> ) )
-<span style="color:#60a0b0;font-style:italic">## Plotting the polygons on top of the map tiles.</span>
-ggmap( map.tiles ) <span style="color:#666">+</span> geom_polygon( data <span style="color:#666">=</span> election.districts.df,
-                        aes( x <span style="color:#666">=</span> long, y <span style="color:#666">=</span> lat, group <span style="color:#666">=</span> group,
-                            alpha <span style="color:#666">=</span> counts ),
-                        color <span style="color:#666">=</span> <span style="color:#4070a0">&#39;black&#39;</span>, fill <span style="color:#666">=</span> <span style="color:#4070a0">&#39;#df0404&#39;</span> ) <span style="color:#666">+</span>
-coord_quickmap() <span style="color:#666">+</span> theme_minimal() <span style="color:#666">+</span> xlab( <span style="color:#4070a0">&#34;&#34;</span> ) <span style="color:#666">+</span> ylab( <span style="color:#4070a0">&#34;&#34;</span> ) <span style="color:#666">+</span>
-  scale_alpha_continuous( guide <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span> )
-<span style="color:#60a0b0;font-style:italic">## &#39;coord_quickmap()&#39; ensures the axis to be of the right ratio</span>
-<span style="color:#60a0b0;font-style:italic">## to prevent a stretching of the displayed map.</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## Download map tiles. Be careful: this interface is quite buggy!</span>
+<span style="color:#75715e">## The true boundaries of the supplied polygons do not work. Instead</span>
+<span style="color:#75715e">## One has adjust the boundaries careful by hand.</span>
+map.tiles <span style="color:#f92672">&lt;-</span> get_map( location <span style="color:#f92672">=</span> <span style="color:#75715e">#bbox( election.districts ) )</span>
+                        <span style="color:#66d9ef">c</span>( left <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, bottom <span style="color:#f92672">=</span> <span style="color:#ae81ff">47</span>,
+                          right <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>, top <span style="color:#f92672">=</span> <span style="color:#ae81ff">56</span> ) )
+<span style="color:#75715e">## Plotting the polygons on top of the map tiles.</span>
+ggmap( map.tiles ) <span style="color:#f92672">+</span> geom_polygon( data <span style="color:#f92672">=</span> election.districts.df,
+                        aes( x <span style="color:#f92672">=</span> long, y <span style="color:#f92672">=</span> lat, group <span style="color:#f92672">=</span> group,
+                            alpha <span style="color:#f92672">=</span> counts ),
+                        color <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;black&#39;</span>, fill <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;#df0404&#39;</span> ) <span style="color:#f92672">+</span>
+coord_quickmap() <span style="color:#f92672">+</span> theme_minimal() <span style="color:#f92672">+</span> xlab( <span style="color:#e6db74">&#34;&#34;</span> ) <span style="color:#f92672">+</span> ylab( <span style="color:#e6db74">&#34;&#34;</span> ) <span style="color:#f92672">+</span>
+  scale_alpha_continuous( guide <span style="color:#f92672">=</span> <span style="color:#66d9ef">FALSE</span> )
+<span style="color:#75715e">## &#39;coord_quickmap()&#39; ensures the axis to be of the right ratio</span>
+<span style="color:#75715e">## to prevent a stretching of the displayed map.</span></code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl2/ggmap-leftists.jpeg" alt="plot ggmap" /></p>
 
 <h3 id="plotting-using-tmap">Plotting using tmap</h3>
@@ -638,29 +638,29 @@ the format of our data. Since every row in the attribute table is
 related to a specific polygon, we have to add the election results for
 different parties in separate columns (instead of one with an addition
 column specifying the name of the party).</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Renaming the column</span>
-counts.leftists.districts <span style="color:#666">&lt;-</span> mutate( counts.leftists.second.vote,
-                                    WKR_NR <span style="color:#666">=</span> election.district.number,
-                                    counts.leftists <span style="color:#666">=</span> counts )
-counts.partei.districts <span style="color:#666">&lt;-</span> mutate( counts.partei.second.vote,
-                                    WKR_NR <span style="color:#666">=</span> election.district.number,
-                                    counts.partei <span style="color:#666">=</span> counts )
-<span style="color:#60a0b0;font-style:italic">## Extracting only the relevant information</span>
-counts.leftists.districts <span style="color:#666">&lt;-</span> select( counts.leftists.districts,
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## Renaming the column</span>
+counts.leftists.districts <span style="color:#f92672">&lt;-</span> mutate( counts.leftists.second.vote,
+                                    WKR_NR <span style="color:#f92672">=</span> election.district.number,
+                                    counts.leftists <span style="color:#f92672">=</span> counts )
+counts.partei.districts <span style="color:#f92672">&lt;-</span> mutate( counts.partei.second.vote,
+                                    WKR_NR <span style="color:#f92672">=</span> election.district.number,
+                                    counts.partei <span style="color:#f92672">=</span> counts )
+<span style="color:#75715e">## Extracting only the relevant information</span>
+counts.leftists.districts <span style="color:#f92672">&lt;-</span> select( counts.leftists.districts,
                                     WKR_NR, counts.leftists )
-counts.partei.districts <span style="color:#666">&lt;-</span> select( counts.partei.districts,
+counts.partei.districts <span style="color:#f92672">&lt;-</span> select( counts.partei.districts,
                                   WKR_NR, counts.partei )
-<span style="color:#60a0b0;font-style:italic">## Combining the results by adding them into different columns.</span>
-counts.districts <span style="color:#666">&lt;-</span> left_join( counts.leftists.districts,
+<span style="color:#75715e">## Combining the results by adding them into different columns.</span>
+counts.districts <span style="color:#f92672">&lt;-</span> left_join( counts.leftists.districts,
                               counts.partei.districts,
-                              by <span style="color:#666">=</span> <span style="color:#4070a0">&#34;WKR_NR&#34;</span> )
-counts.districts <span style="color:#666">&lt;-</span> select( counts.districts, WKR_NR,
+                              by <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;WKR_NR&#34;</span> )
+counts.districts <span style="color:#f92672">&lt;-</span> select( counts.districts, WKR_NR,
                            counts.leftists, counts.partei )
-<span style="color:#60a0b0;font-style:italic">## Join the information about each polygon with the number of votes</span>
-<span style="color:#60a0b0;font-style:italic">## by the unique number of the election district.</span>
-election.districts<span style="color:#666">@</span>data <span style="color:#666">&lt;-</span> left_join( election.districts<span style="color:#666">@</span>data,
+<span style="color:#75715e">## Join the information about each polygon with the number of votes</span>
+<span style="color:#75715e">## by the unique number of the election district.</span>
+election.districts<span style="color:#f92672">@</span>data <span style="color:#f92672">&lt;-</span> left_join( election.districts<span style="color:#f92672">@</span>data,
                               counts.districts,
-                              by <span style="color:#666">=</span> <span style="color:#4070a0">&#34;WKR_NR&#34;</span> )</code></pre></div>
+                              by <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;WKR_NR&#34;</span> )</code></pre></div>
 <p>This may sounds quite frustrating and the resulting object is not
 &lsquo;clean&rsquo; in the way we considered it throughout the last post. But
 different packages prefer different data structures and formats and in
@@ -673,18 +673,18 @@ of codes possible, the <strong>tmap</strong> package features the function <code
 which behaves similar as the <code>qplot()</code> function in <strong>ggplot2</strong>. But
 this is not the only commonality. The <strong>tmap</strong> package as a whole is
 very similar to <strong>ggplot2</strong>.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Using the number of votes to fill the polygons with color</span>
-qtm( election.districts, fill <span style="color:#666">=</span> <span style="color:#902000">c</span>( <span style="color:#4070a0">&#34;counts.leftists&#34;</span>, <span style="color:#4070a0">&#34;counts.partei&#34;</span> ),
-    fill.palette <span style="color:#666">=</span> <span style="color:#902000">list</span>( <span style="color:#4070a0">&#34;Reds&#34;</span>, <span style="color:#4070a0">&#34;Blues&#34;</span> ), cols <span style="color:#666">=</span> <span style="color:#40a070">2</span> )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## Using the number of votes to fill the polygons with color</span>
+qtm( election.districts, fill <span style="color:#f92672">=</span> <span style="color:#66d9ef">c</span>( <span style="color:#e6db74">&#34;counts.leftists&#34;</span>, <span style="color:#e6db74">&#34;counts.partei&#34;</span> ),
+    fill.palette <span style="color:#f92672">=</span> <span style="color:#66d9ef">list</span>( <span style="color:#e6db74">&#34;Reds&#34;</span>, <span style="color:#e6db74">&#34;Blues&#34;</span> ), cols <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> )</code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl2/quick-tmap.jpeg" alt="quick tmap plot" /></p>
 
 <p>Next we will introduce map tiles provided by the OpenStreetMap project
 and plot the polygons of the election districts on top of them.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Using the more verbose version of the writing code of the tmap package</span>
-tm_shape( tmaptools<span style="color:#666">::</span>read_osm( bbox( election.districts ) ) ) <span style="color:#666">+</span>
-  tm_raster() <span style="color:#666">+</span> tm_shape( election.districts ) <span style="color:#666">+</span>
-  tm_polygons( <span style="color:#4070a0">&#34;counts.leftists&#34;</span>, palette <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Reds&#34;</span>, alpha <span style="color:#666">=</span> <span style="color:#40a070">.5</span>,
-              fill.title <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Number of second votes for the leftists&#34;</span> )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## Using the more verbose version of the writing code of the tmap package</span>
+tm_shape( tmaptools<span style="color:#f92672">::</span>read_osm( bbox( election.districts ) ) ) <span style="color:#f92672">+</span>
+  tm_raster() <span style="color:#f92672">+</span> tm_shape( election.districts ) <span style="color:#f92672">+</span>
+  tm_polygons( <span style="color:#e6db74">&#34;counts.leftists&#34;</span>, palette <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Reds&#34;</span>, alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">.5</span>,
+              fill.title <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Number of second votes for the leftists&#34;</span> )</code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl2/tmap-osm-leftists.jpeg" alt="tmap osm" /></p>
 
 <p>The <strong>tmap</strong> package features two different <a href="https://cran.r-project.org/web/packages/tmap/vignettes/tmap-modes.html">drawing
@@ -692,12 +692,12 @@ modes</a>. Beforehand
 we were using the <em>plot</em> mode generating highly customizable maps in
 X11 device windows. Alternatively, we can use <strong>tmap</strong> as a wrapper around the
 JavaScript package leaflet via the <em>view</em> mode.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Displayed in the browser using leaflet package</span>
-tm_shape( tmaptools<span style="color:#666">::</span>read_osm( bbox( election.districts ) ) ) <span style="color:#666">+</span>
-  tm_raster() <span style="color:#666">+</span> tm_shape( election.districts ) <span style="color:#666">+</span>
-  tm_polygons( <span style="color:#4070a0">&#34;counts.leftists&#34;</span>, palette <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Reds&#34;</span>, alpha <span style="color:#666">=</span> <span style="color:#40a070">.5</span>,
-              fill.title <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Number of second votes for the leftists&#34;</span> ) <span style="color:#666">+</span>
-  tmap_mode( <span style="color:#4070a0">&#34;view&#34;</span> )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## Displayed in the browser using leaflet package</span>
+tm_shape( tmaptools<span style="color:#f92672">::</span>read_osm( bbox( election.districts ) ) ) <span style="color:#f92672">+</span>
+  tm_raster() <span style="color:#f92672">+</span> tm_shape( election.districts ) <span style="color:#f92672">+</span>
+  tm_polygons( <span style="color:#e6db74">&#34;counts.leftists&#34;</span>, palette <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Reds&#34;</span>, alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">.5</span>,
+              fill.title <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Number of second votes for the leftists&#34;</span> ) <span style="color:#f92672">+</span>
+  tmap_mode( <span style="color:#e6db74">&#34;view&#34;</span> )</code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl2/screenshot-leftists-tmap.jpeg" alt="tmap shiny" /></p>
 
 <p>Now let&rsquo;s plot something more advanced. For example the top 20
@@ -740,27 +740,27 @@ election.districts@data$WKR_NAME )</code> we see that they are indeed
 ordered alphabetically. So we have to (you might already guessed it)
 change the order of the levels to represent the top 20 election
 districts.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Displaying the election districts, which received the most votes.</span>
-<span style="color:#60a0b0;font-style:italic">## Extract the ordered names of the top 20 districts for the leftists.</span>
-top.20.districts <span style="color:#666">&lt;-</span> <span style="color:#007020">as.character</span>(
-    arrange( election.districts<span style="color:#666">@</span>data,
-            desc( counts.leftists ) )<span style="color:#666">$</span>WKR_NAME[ <span style="color:#40a070">1</span> <span style="color:#666">:</span> <span style="color:#40a070">20</span> ] )
-<span style="color:#60a0b0;font-style:italic">## Selecting the spatial information for those 20 districts</span>
-election.districts.top.20 <span style="color:#666">&lt;-</span> election.districts[
-    election.districts<span style="color:#666">@</span>data<span style="color:#666">$</span>WKR_NAME <span style="color:#666">%in%</span> top.20.districts, ]
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## Displaying the election districts, which received the most votes.</span>
+<span style="color:#75715e">## Extract the ordered names of the top 20 districts for the leftists.</span>
+top.20.districts <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">as.character</span>(
+    arrange( election.districts<span style="color:#f92672">@</span>data,
+            desc( counts.leftists ) )<span style="color:#f92672">$</span>WKR_NAME[ <span style="color:#ae81ff">1</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">20</span> ] )
+<span style="color:#75715e">## Selecting the spatial information for those 20 districts</span>
+election.districts.top.20 <span style="color:#f92672">&lt;-</span> election.districts[
+    election.districts<span style="color:#f92672">@</span>data<span style="color:#f92672">$</span>WKR_NAME <span style="color:#f92672">%in%</span> top.20.districts, ]
 
-<span style="color:#60a0b0;font-style:italic">## Reordering the factor levels of the election districts according to</span>
-<span style="color:#60a0b0;font-style:italic">## the number of votes</span>
-election.districts.top.20<span style="color:#666">@</span>data<span style="color:#666">$</span>WKR_NAME <span style="color:#666">&lt;-</span>
-  <span style="color:#007020">factor</span>( election.districts.top.20<span style="color:#666">@</span>data<span style="color:#666">$</span>WKR_NAME, levels <span style="color:#666">=</span> top.20.districts ) 
+<span style="color:#75715e">## Reordering the factor levels of the election districts according to</span>
+<span style="color:#75715e">## the number of votes</span>
+election.districts.top.20<span style="color:#f92672">@</span>data<span style="color:#f92672">$</span>WKR_NAME <span style="color:#f92672">&lt;-</span>
+  <span style="color:#66d9ef">factor</span>( election.districts.top.20<span style="color:#f92672">@</span>data<span style="color:#f92672">$</span>WKR_NAME, levels <span style="color:#f92672">=</span> top.20.districts ) 
 
-<span style="color:#60a0b0;font-style:italic">## Reordering of the factors according to the number of votes</span>
-tm_shape( tmaptools<span style="color:#666">::</span>read_osm( bbox( election.districts ),
-                              type <span style="color:#666">=</span> <span style="color:#4070a0">&#34;maptoolkit-topo&#34;</span>) ) <span style="color:#666">+</span>
-  tm_raster() <span style="color:#666">+</span> tm_shape( election.districts.top.20 ) <span style="color:#666">+</span>
-  tm_polygons( <span style="color:#4070a0">&#34;counts.leftists&#34;</span>, legend.show <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span>,
-              alpha <span style="color:#666">=</span> <span style="color:#40a070">.5</span>, palette <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Reds&#34;</span> ) <span style="color:#666">+</span>
-  tm_facets( <span style="color:#4070a0">&#34;WKR_NAME&#34;</span>, free.coords <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span> ) <span style="color:#666">+</span> tmap_mode( <span style="color:#4070a0">&#34;plot&#34;</span> )</code></pre></div>
+<span style="color:#75715e">## Reordering of the factors according to the number of votes</span>
+tm_shape( tmaptools<span style="color:#f92672">::</span>read_osm( bbox( election.districts ),
+                              type <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;maptoolkit-topo&#34;</span>) ) <span style="color:#f92672">+</span>
+  tm_raster() <span style="color:#f92672">+</span> tm_shape( election.districts.top.20 ) <span style="color:#f92672">+</span>
+  tm_polygons( <span style="color:#e6db74">&#34;counts.leftists&#34;</span>, legend.show <span style="color:#f92672">=</span> <span style="color:#66d9ef">FALSE</span>,
+              alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">.5</span>, palette <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Reds&#34;</span> ) <span style="color:#f92672">+</span>
+  tm_facets( <span style="color:#e6db74">&#34;WKR_NAME&#34;</span>, free.coords <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span> ) <span style="color:#f92672">+</span> tmap_mode( <span style="color:#e6db74">&#34;plot&#34;</span> )</code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl2/tmap-facets.jpeg" alt="tmap districts" /></p>
 
 <p>In our final example for the <strong>tmap</strong> package we will check out one of
@@ -770,28 +770,28 @@ might remember from your textbooks in school. Since we do the plotting
 for two different columns/data sets, it&rsquo;s best practice to avoid writing
 two very similar chunks of code, but to instead to write a function
 handling the job.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Function for generating a classical plot.</span>
-classic.map <span style="color:#666">&lt;-</span> <span style="color:#007020;font-weight:bold">function</span>( column.name, color.palette, title ){
-  <span style="color:#60a0b0;font-style:italic">## In order to feature &#39;counts&#39; as the heading of the legend, we have</span>
-  <span style="color:#60a0b0;font-style:italic">## to generate/rename the corresponding column.</span>
-  election.districts<span style="color:#666">@</span>data<span style="color:#666">$</span>counts <span style="color:#666">&lt;-</span> election.districts<span style="color:#666">@</span>data[,column.name]
-  tm_shape( election.districts ) <span style="color:#666">+</span>
-    tm_polygons( <span style="color:#4070a0">&#34;counts&#34;</span>, palette <span style="color:#666">=</span> color.palette ) <span style="color:#666">+</span>
-    tm_compass( position <span style="color:#666">=</span> <span style="color:#902000">c</span>( <span style="color:#4070a0">&#34;right&#34;</span>, <span style="color:#4070a0">&#34;bottom&#34;</span> ),
-               color.light <span style="color:#666">=</span> <span style="color:#4070a0">&#34;grey90&#34;</span> ) <span style="color:#666">+</span>
-    tm_style_classic( inner.margins <span style="color:#666">=</span> <span style="color:#902000">c</span>( <span style="color:#40a070">.04</span>, <span style="color:#40a070">.03</span>, <span style="color:#40a070">.02</span>, <span style="color:#40a070">.01</span> ),
-                     legend.position <span style="color:#666">=</span> <span style="color:#902000">c</span>( <span style="color:#4070a0">&#34;left&#34;</span>, <span style="color:#4070a0">&#34;bottom&#34;</span> ), 
-                     legend.frame <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>, bg.color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#f2d5b8&#34;</span>,
-                     legend.bg.color<span style="color:#666">=</span> <span style="color:#4070a0">&#34;#f2d5b8&#34;</span>, legend.bg.alpha <span style="color:#666">=</span> <span style="color:#40a070">.3</span>,
-                     legend.text.size <span style="color:#666">=</span> <span style="color:#40a070">.55</span>, title <span style="color:#666">=</span> title,
-                     legend.width <span style="color:#666">=</span> <span style="color:#40a070">-.16</span>,
-                     earth.boundary <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>, space.color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;grey90&#34;</span>,
-                     sepia.intensity <span style="color:#666">=</span> <span style="color:#40a070">.4</span>, fontfamily <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Courier&#34;</span> )
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## Function for generating a classical plot.</span>
+classic.map <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">function</span>( column.name, color.palette, title ){
+  <span style="color:#75715e">## In order to feature &#39;counts&#39; as the heading of the legend, we have</span>
+  <span style="color:#75715e">## to generate/rename the corresponding column.</span>
+  election.districts<span style="color:#f92672">@</span>data<span style="color:#f92672">$</span>counts <span style="color:#f92672">&lt;-</span> election.districts<span style="color:#f92672">@</span>data[,column.name]
+  tm_shape( election.districts ) <span style="color:#f92672">+</span>
+    tm_polygons( <span style="color:#e6db74">&#34;counts&#34;</span>, palette <span style="color:#f92672">=</span> color.palette ) <span style="color:#f92672">+</span>
+    tm_compass( position <span style="color:#f92672">=</span> <span style="color:#66d9ef">c</span>( <span style="color:#e6db74">&#34;right&#34;</span>, <span style="color:#e6db74">&#34;bottom&#34;</span> ),
+               color.light <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;grey90&#34;</span> ) <span style="color:#f92672">+</span>
+    tm_style_classic( inner.margins <span style="color:#f92672">=</span> <span style="color:#66d9ef">c</span>( <span style="color:#ae81ff">.04</span>, <span style="color:#ae81ff">.03</span>, <span style="color:#ae81ff">.02</span>, <span style="color:#ae81ff">.01</span> ),
+                     legend.position <span style="color:#f92672">=</span> <span style="color:#66d9ef">c</span>( <span style="color:#e6db74">&#34;left&#34;</span>, <span style="color:#e6db74">&#34;bottom&#34;</span> ), 
+                     legend.frame <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>, bg.color <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;#f2d5b8&#34;</span>,
+                     legend.bg.color<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;#f2d5b8&#34;</span>, legend.bg.alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">.3</span>,
+                     legend.text.size <span style="color:#f92672">=</span> <span style="color:#ae81ff">.55</span>, title <span style="color:#f92672">=</span> title,
+                     legend.width <span style="color:#f92672">=</span> <span style="color:#ae81ff">-.16</span>,
+                     earth.boundary <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>, space.color <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;grey90&#34;</span>,
+                     sepia.intensity <span style="color:#f92672">=</span> <span style="color:#ae81ff">.4</span>, fontfamily <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Courier&#34;</span> )
 }
-<span style="color:#60a0b0;font-style:italic">## Generate the two plots (without actually plotting them)</span>
-map.leftists <span style="color:#666">&lt;-</span> classic.map( <span style="color:#4070a0">&#34;counts.leftists&#34;</span>, <span style="color:#4070a0">&#34;YlOrRd&#34;</span>, <span style="color:#4070a0">&#34;Leftists&#34;</span> )
-map.partei <span style="color:#666">&lt;-</span> classic.map( <span style="color:#4070a0">&#34;counts.partei&#34;</span>, <span style="color:#4070a0">&#34;YlGnBu&#34;</span>, <span style="color:#4070a0">&#34;Die Partei&#34;</span> )
-<span style="color:#60a0b0;font-style:italic">## Plot both figures next to eachother.</span>
+<span style="color:#75715e">## Generate the two plots (without actually plotting them)</span>
+map.leftists <span style="color:#f92672">&lt;-</span> classic.map( <span style="color:#e6db74">&#34;counts.leftists&#34;</span>, <span style="color:#e6db74">&#34;YlOrRd&#34;</span>, <span style="color:#e6db74">&#34;Leftists&#34;</span> )
+map.partei <span style="color:#f92672">&lt;-</span> classic.map( <span style="color:#e6db74">&#34;counts.partei&#34;</span>, <span style="color:#e6db74">&#34;YlGnBu&#34;</span>, <span style="color:#e6db74">&#34;Die Partei&#34;</span> )
+<span style="color:#75715e">## Plot both figures next to eachother.</span>
 tmap_arrange( map.leftists, map.partei )</code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl2/tmap-classic.jpeg" alt="tmap vintage" /></p>
 
@@ -813,29 +813,29 @@ total number of votes. Whenever you hover your mouse over one of the
 polygons this label will be displayed. But of course not for the plot
 you can see below, which is just a screenshot (since I&rsquo;m writing this
 as a static web page). So try it yourself!</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#60a0b0;font-style:italic">## Defining a custom palette for the map.</span>
-color.palette <span style="color:#666">&lt;-</span> colorBin( <span style="color:#4070a0">&#34;YlOrRd&#34;</span>,
-                          domain <span style="color:#666">=</span> election.districts<span style="color:#666">@</span>data<span style="color:#666">$</span>counts.leftists )
-labels <span style="color:#666">&lt;-</span> <span style="color:#007020">lapply</span>( <span style="color:#007020">sprintf</span>(
-    <span style="color:#4070a0">&#34;&lt;strong&gt;%s&lt;/strong&gt;&lt;br/&gt;number of votes: %g&#34;</span>,
-    election.districts<span style="color:#666">$</span>WKR_NAME, election.districts<span style="color:#666">$</span>counts.leftists ),
-    htmltools<span style="color:#666">::</span>HTML )
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## Defining a custom palette for the map.</span>
+color.palette <span style="color:#f92672">&lt;-</span> colorBin( <span style="color:#e6db74">&#34;YlOrRd&#34;</span>,
+                          domain <span style="color:#f92672">=</span> election.districts<span style="color:#f92672">@</span>data<span style="color:#f92672">$</span>counts.leftists )
+labels <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">lapply</span>( <span style="color:#66d9ef">sprintf</span>(
+    <span style="color:#e6db74">&#34;&lt;strong&gt;%s&lt;/strong&gt;&lt;br/&gt;number of votes: %g&#34;</span>,
+    election.districts<span style="color:#f92672">$</span>WKR_NAME, election.districts<span style="color:#f92672">$</span>counts.leftists ),
+    htmltools<span style="color:#f92672">::</span>HTML )
 
-leaflet( election.districts ) <span style="color:#666">%&gt;%</span>
-  addProviderTiles( <span style="color:#4070a0">&#34;OpenStreetMap&#34;</span> ) <span style="color:#666">%&gt;%</span>
-  addPolygons( data <span style="color:#666">=</span> election.districts,
-              fillColor <span style="color:#666">=</span> <span style="color:#666">~</span>color.palette( counts.leftists ),
-              opacity <span style="color:#666">=</span> <span style="color:#40a070">1</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;black&#34;</span>, fillOpacity <span style="color:#666">=</span> <span style="color:#40a070">.5</span>,
-              weight <span style="color:#666">=</span> <span style="color:#40a070">1</span>,
-              highlight <span style="color:#666">=</span> highlightOptions(
-                  weight <span style="color:#666">=</span> <span style="color:#40a070">3</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#555&#34;</span>, fillOpacity <span style="color:#666">=</span> <span style="color:#40a070">.8</span>,
-                  bringToFront <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span> ),
-              label <span style="color:#666">=</span> <span style="color:#007020">labels</span>,
-              labelOption <span style="color:#666">=</span> labelOptions(
-                  style <span style="color:#666">=</span> <span style="color:#902000">list</span>( <span style="color:#4070a0">&#34;font-weight&#34;</span> <span style="color:#666">=</span> <span style="color:#4070a0">&#34;normal&#34;</span>,
-                               padding <span style="color:#666">=</span> <span style="color:#4070a0">&#34;3px 8px&#34;</span> ),
-                  textsize <span style="color:#666">=</span> <span style="color:#4070a0">&#34;15px&#34;</span>,
-                  direction <span style="color:#666">=</span> <span style="color:#4070a0">&#34;auto&#34;</span> ) )
+leaflet( election.districts ) <span style="color:#f92672">%&gt;%</span>
+  addProviderTiles( <span style="color:#e6db74">&#34;OpenStreetMap&#34;</span> ) <span style="color:#f92672">%&gt;%</span>
+  addPolygons( data <span style="color:#f92672">=</span> election.districts,
+              fillColor <span style="color:#f92672">=</span> <span style="color:#f92672">~</span>color.palette( counts.leftists ),
+              opacity <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, color <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;black&#34;</span>, fillOpacity <span style="color:#f92672">=</span> <span style="color:#ae81ff">.5</span>,
+              weight <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>,
+              highlight <span style="color:#f92672">=</span> highlightOptions(
+                  weight <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>, color <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;#555&#34;</span>, fillOpacity <span style="color:#f92672">=</span> <span style="color:#ae81ff">.8</span>,
+                  bringToFront <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span> ),
+              label <span style="color:#f92672">=</span> <span style="color:#66d9ef">labels</span>,
+              labelOption <span style="color:#f92672">=</span> labelOptions(
+                  style <span style="color:#f92672">=</span> <span style="color:#66d9ef">list</span>( <span style="color:#e6db74">&#34;font-weight&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;normal&#34;</span>,
+                               padding <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;3px 8px&#34;</span> ),
+                  textsize <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;15px&#34;</span>,
+                  direction <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;auto&#34;</span> ) )
               </code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/bundestagswahl2/leaflet.jpeg" alt="leaflet" /></p>
 
