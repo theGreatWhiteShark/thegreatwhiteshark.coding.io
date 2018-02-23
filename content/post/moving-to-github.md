@@ -3,7 +3,7 @@ date = "2018-02-23T22:27:35+01:00"
 draft = false
 comment = true
 type = "post"
-slug = "life-beyond-google"
+slug = "moving-to-github"
 title = "Moving from Wordpress to Github Pages+Hugo"
 description = "I'm moving the blog from Wordpress to Github Pages where I deploy it on my own using the static web package. If you encounter any strange behavior, bugs, bad rendering, or you are not able to follow me or subscribe using RSS, please write me a mail. Sorry for that. I'm still new to this kind of technology :blush:"
 
