@@ -12,16 +12,16 @@
 
     {{if .Params.description }}
       <section class="post-description">
-        <p>{{.Params.description | markdownify }}
+        <p>{{.Params.description | markdownify | emojify }}
 	  <a class="read-more" href="{{.RelPermalink}}">&raquo;</a>
         </p>
       </section>
     {{else}}
       <section class="post-excerpt">
         {{if .Params.excerpt }}
-          <p>{{ .Params.excerpt | markdownify }} <a class="read-more" href="{{.RelPermalink}}">&raquo;</a></p>
+          <p>{{ .Params.excerpt | markdownify | emojify }} <a class="read-more" href="{{.RelPermalink}}">&raquo;</a></p>
         {{else}}
-          <p>{{ .Summary | markdownify }} <a class="read-more" href="{{.RelPermalink}}">&raquo;</a></p>
+          <p>{{ .Summary | markdownify | emojify }} <a class="read-more" href="{{.RelPermalink}}">&raquo;</a></p>
         {{end}}
       </section>
     {{end}}  

@@ -36,7 +36,7 @@
 	    {{end}}
 	    <hr class="post-description-separator"/>
 	    <section class="post-description-single">  
-	      <p>{{.Description | markdownify}}
+	      <p>{{.Description | markdownify | emojify}}
 	    </section>
 	    <hr class="post-description-separator"/>
             <section class="post-meta">
@@ -52,7 +52,7 @@
 	  </header>
 
 	  <section class="post-content">
-	    {{ .Content }}
+	    {{ .Content | emojify }}
 	  </section>
 
 
