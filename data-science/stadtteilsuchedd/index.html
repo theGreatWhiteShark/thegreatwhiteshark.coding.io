@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="Which part of town fits me best?"/>
+<meta name="twitter:description" content="Our award-winning contribution to the hackathon at the Datenspuren 2016. The task was to show how publicly available statistical data of the German city of Dresden could be used for the benefit of the general public."/>
+<meta name="twitter:site" content="@"/>
+
+
+
+  	<meta property="og:title" content="Which part of town fits me best?" />
+  	<meta property="og:site_name" content="theGreatWhiteShark" />
+  	<meta property="og:url" content="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/stadtteilsuchedd/" />
+
+    
+        
+            <meta property="og:image" content="/thegreatwhiteshark.coding.io/images/moses-banner.png"/>
+        
+    
+
+    
+    <meta property="og:description" content="Our award-winning contribution to the hackathon at the Datenspuren 2016. The task was to show how publicly available statistical data of the German city of Dresden could be used for the benefit of the general public." />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2016-10-29T16:16:55&#43;01:00" />
+
+    
+    <meta property="article:tag" content="data science" />
+    
+    <meta property="article:tag" content="R" />
+    
+    <meta property="article:tag" content="JavaScript" />
+    
+    
+
+    <title>Which part of town fits me best?</title>
+
+    
+    <meta name="description" content="Our award-winning contribution to the hackathon at the Datenspuren 2016. The task was to show how publicly available statistical data of the German city of Dresden could be used for the benefit of the general public." />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/thegreatwhiteshark.coding.io/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="/thegreatwhiteshark.coding.io/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/custom.css" />
+
+    
+
+    
+
+    
+      
+          <link href="/thegreatwhiteshark.coding.io/index.xml" rel="alternate" type="application/rss+xml" title="theGreatWhiteShark" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.32.2" />
+
+    <link rel="canonical" href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/stadtteilsuchedd/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": 
+    },
+    "author": {
+        "@type": "Person",
+        "name": ,
+        
+        "url": https://thegreatwhiteshark.github.io/,
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ]
+    },
+    "headline": Which part of town fits me best?,
+    "name": Which part of town fits me best?,
+    "wordCount": 737,
+    "timeRequired": "PT4M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": en
+    },
+    "url": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/stadtteilsuchedd/,
+    "datePublished": 2016-10-29T16:16Z,
+    "dateModified": 2016-10-29T16:16Z,
+    
+    "keywords": data science, R, JavaScript,
+    "description": Our award-winning contribution to the hackathon at the Datenspuren 2016. The task was to show how publicly available statistical data of the German city of Dresden could be used for the benefit of the general public.,
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/stadtteilsuchedd/
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/">Home</a>
+            </li>
+        
+            <h3>Topics</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/data-science">Data Science</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/hacks">Hacks</a>
+            </li>
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/theGreatWhiteShark">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://thegreatwhiteshark.github.io/">Blogs</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/about">About me</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="/thegreatwhiteshark.coding.io/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+      <header class="main-header post-head no-cover">
+	<nav class="main-nav clearfix">
+	  
+
+	  
+	  
+	  <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+	  
+	</nav>
+      </header>
+
+
+
+      <main class="content" role="main">
+
+	<article class="post data-science">
+
+	  <header class="post-header">
+	    <h1 class="post-title">Which part of town fits me best?</h1>
+	    
+	    <hr class="post-description-separator"/>
+	    <section class="post-description-single">  
+	      <p>Our award-winning contribution to the hackathon at the Datenspuren 2016. The task was to show how publicly available statistical data of the German city of Dresden could be used for the benefit of the general public.
+	    </section>
+	    <hr class="post-description-separator"/>
+            <section class="post-meta">
+              
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/data-science/">#data science</a></span>
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/r/">#R</a></span>
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/javascript/">#JavaScript</a></span>
+              
+            </section>
+	  </header>
+
+	  <section class="post-content">
+	    
+
+<p>It was in mid autumn when I heard there will be a local version of the
+Chaos Computer Congress, the annual conference of the German hacker
+association <a href="https://www.ccc.de/en/">Chaos Computer Club</a>, called
+<a href="https://datenspuren.de/">Datenspuren</a> in the city of Dresden. Since I
+was living in Dresden back then, my attendance was somewhat
+mandatory. But when I check the program one day in advance I saw
+something even better: There would be a <a href="http://www.dresden.de/de/wirtschaft/wirtschaftsstandort/projekte-kooperationen/open-data-crunch.php">hackathon organized
+by the city of
+Dresden</a>
+and they would award prices worth of 7000€ in total. Even better: The
+topic was about handling data!</p>
+
+<p>So I quit work early that Friday and headed over to the office of
+<a href="https://github.com/jusjusjus">ol&rsquo; Justus</a>, who was in
+immediately. The goal of the hackathon was as follows.</p>
+
+<p>The city of Dresden has a number of infrastructural, election, and
+general statistical data. But they do not really know how to use
+it. Sure, they do have a web page where you can have a look at the
+data. But this is it. Back then there was no API to access the raw
+data or whatsoever. Some people in the city council might have
+thought: <em>&ldquo;Why don&rsquo;t we hand a big portion of the data to the nerds
+and look what they would do with it.&rdquo;</em></p>
+
+<p>In its essence the data provided by the city was the underlying files
+of the so-called <a href="http://stadtplan2.dresden.de/">Themenstadtplan</a>, the
+interactive map of the city of Dresden to display information. Since
+they were made available beforehand, Justus and me took a deep dive
+into it to come up with a catchy idea. And we did.</p>
+
+<h1 id="which-part-of-town-fits-me-best">Which part of town fits me best?</h1>
+
+<p>This is a question asked especially by young students, who are about
+to start their studies at the local university. You have never been to
+the city but yet you have to search for a place to live at.</p>
+
+<p>In our project we want to condense most of the data of the city into 3-5
+plausible
+variables, which can be used to describe the overall lifestyle and
+atmosphere in a district and are independent of each other. The choice
+of the user should be displayed as a heatmap on Openstreetmap tiles
+showing Dresden and she should be able to alter her choice of the
+variables interactively using some sliders. Since I had some
+experience in creating such interactive widgets from writing my
+<a href="https://github.com/theGreatWhiteShark/climex">climex</a> app, we were
+convinced to pull it off in just one day. Unfortunately this is all the
+time you have at a hackathon.</p>
+
+<p>Next day around 15:00 we started the project. Fortunately Stephan, a
+very talented college, joined too and he brought another person
+capable of programming some JavaScript. Some hours later, at 00:45, we
+had two working versions of the application! A JavaScript-based
+Leaflet application and a R-based fallback solution written by me. It
+consumed a lot of strength but it was one of the most adventurous
+weekends I had in Dresden.</p>
+
+<p>We decided to let the user specify five different input variables.</p>
+
+<ol>
+<li>&ldquo;Ländlich vs. städtisch&rdquo; (rural vs. urban) - which is calculated
+using the density of the population</li>
+<li>&ldquo;Monochrom vs. bunt&rdquo; (monochrome vs. colorful) - whether there are
+lots of persons of color in the district or not</li>
+<li>&ldquo;Nationalbewusst vs. alternativ&rdquo; (patriotic vs. alternative) -
+calculated via election results</li>
+<li>&ldquo;Familie vs. Selbstverwirklichung&rdquo; (family vs. self-fulfillment) -
+this variable is computed from the weighted densities of different
+sites like playgrounds, pubs, fitness studios etc. in the region
+(calculated via a point in polygon method using the borders of the
+districts and Openstreetmap data)</li>
+<li>&ldquo;ÖPNV Verfügbarkeit&rdquo; (access to the public transportation) - number
+of bus and tram stops in a district</li>
+</ol>
+
+<p>The first three variables are dimensions for which the user has the
+choice to incorporate them or not. Variable 4 and 5 will always be
+present and weight the resulting density obtained by the first three.</p>
+
+<p>In case you are wondering about variable 2 and 3: Dresden, the capital
+of the state of Sachsen, is so damn right-winged and conservative it
+actually hurts. No one should have to live next to a fascist!</p>
+
+<h1 id="result">Result</h1>
+
+<p>In the end we won one of the main prices and the price for the best
+visualization! Only team with to awards FTW!</p>
+
+<p>You can find the awesome talk of Stephan presenting the project on <a href="https://www.youtube.com/watch?v=znWmLYXqkpQ&amp;feature=youtu.be">YouTube</a>.</p>
+
+<p>By now you must be pretty excited about trying the
+application. Fortunately
+there is Github Pages to host static web pages. So <a href="https://thegreatwhiteshark.github.io/StadtteilsucheDD/index.html">try it</a>.</p>
+
+	  </section>
+
+
+	  <footer class="post-footer">
+
+
+	    
+
+
+
+
+	    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Which%20part%20of%20town%20fits%20me%20best%3f&nbsp;-&nbsp;theGreatWhiteShark&amp;url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fdata-science%2fstadtteilsuchedd%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fdata-science%2fstadtteilsuchedd%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fdata-science%2fstadtteilsuchedd%2f&amp;description=Which%20part%20of%20town%20fits%20me%20best%3f"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fdata-science%2fstadtteilsuchedd%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+	    
+
+<div id="disqus_thread"></div>
+<script>
+
+
+
+
+var disqus_config = function () {
+this.page.url = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/data-science\/stadtteilsuchedd\/";  
+this.page.identifier = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/data-science\/stadtteilsuchedd\/"; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://thegreatwhiteshark-coding-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+
+	  </footer>
+	</article>
+
+      </main>
+
+      
+      <aside class="read-next">
+  
+  <a class="read-next-story" style="no-cover" href="/thegreatwhiteshark.coding.io/data-science/bundestagswahl-pt-i/">
+    <section class="post">
+      <h2>A data scientist’s view on the election for the Bundestag Pt. I</h2>
+      
+        <h4>Obtaining and cleaning the data</h4>
+      
+      
+    </section>
+  </a>
+  
+  
+</aside>
+
+      
+
+          <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">theGreatWhiteShark</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/index.js"></script>
+    
+</body>
+</html>
+

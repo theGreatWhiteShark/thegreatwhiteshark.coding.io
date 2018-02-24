@@ -13,10 +13,10 @@
     
     <item>
       <title>Moving from Wordpress to Github Pages&#43;Hugo</title>
-      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/life-beyond-google/</link>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/moving-to-github/</link>
       <pubDate>Fri, 23 Feb 2018 22:27:35 +0100</pubDate>
       
-      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/life-beyond-google/</guid>
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/moving-to-github/</guid>
       <description>I moved my blog from Wordpress to Github Pages.
 In addition, I also decided to split the blog in three different parts. Art, coding, and music are just a little too diverse and I intend to do further posts in all of these subjects.
 You can find the blogs via the following links
@@ -119,6 +119,15 @@ Introduction Since NFC and RFID is imho a quite nice way to communicate with thi
       
       <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/vasp2r/</guid>
       <description>It is about my endeavors to create some neat plots of the results obtained using the proprietary DFT program VASP one and a half years ago. Since these files are usually pretty big it is important for your plotting script to rely on compiled C, C++ or Fortran code under the hood of a high level language like R or python. And you definitely want to have one of the latter ones for creating you plots since it is way more easy and beautiful.</description>
+    </item>
+    
+    <item>
+      <title>Which part of town fits me best?</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/stadtteilsuchedd/</link>
+      <pubDate>Sat, 29 Oct 2016 16:16:55 +0100</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/stadtteilsuchedd/</guid>
+      <description>It was in mid autumn when I heard there will be a local version of the Chaos Computer Congress, the annual conference of the German hacker association Chaos Computer Club, called Datenspuren in the city of Dresden. Since I was living in Dresden back then, my attendance was somewhat mandatory. But when I check the program one day in advance I saw something even better: There would be a hackathon organized by the city of Dresden and they would award prices worth of 7000€ in total.</description>
     </item>
     
   </channel>
