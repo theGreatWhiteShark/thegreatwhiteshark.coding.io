@@ -33,6 +33,11 @@
   </url>
   
   <url>
+    <loc>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/wxart/</loc>
+    <lastmod>2017-07-12T17:55:38+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/mensacard-pt-iii/</loc>
     <lastmod>2017-02-20T20:02:00+01:00</lastmod>
   </url>
@@ -86,6 +91,12 @@
   </url>
   
   <url>
+    <loc>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/tags/deep-learning/</loc>
+    <lastmod>2017-07-12T17:55:38+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/</loc>
     <lastmod>2017-02-20T20:02:00+01:00</lastmod>
     <priority>0</priority>
@@ -106,6 +117,12 @@
   <url>
     <loc>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/post/</loc>
     <lastmod>2018-02-23T22:27:35+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/tags/python/</loc>
+    <lastmod>2017-07-12T17:55:38+01:00</lastmod>
     <priority>0</priority>
   </url>
   

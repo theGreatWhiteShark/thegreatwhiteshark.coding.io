@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="wxArt"/>
+<meta name="twitter:description" content="In this project some friends of mine created a python-based GUI to take photographs via a camera of a laptop or an external one, to perform a Neural style transfer using a deep convolutional neuronal network, and to print a postcard of the result."/>
+<meta name="twitter:site" content="@"/>
+
+
+
+  	<meta property="og:title" content="wxArt" />
+  	<meta property="og:site_name" content="theGreatWhiteShark" />
+  	<meta property="og:url" content="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/wxart/" />
+
+    
+        
+            <meta property="og:image" content="/thegreatwhiteshark.coding.io/images/moses-banner.png"/>
+        
+    
+
+    
+    <meta property="og:description" content="In this project some friends of mine created a python-based GUI to take photographs via a camera of a laptop or an external one, to perform a Neural style transfer using a deep convolutional neuronal network, and to print a postcard of the result." />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2017-07-12T17:55:38&#43;01:00" />
+
+    
+    <meta property="article:tag" content="python" />
+    
+    <meta property="article:tag" content="deep learning" />
+    
+    
+
+    <title>wxArt</title>
+
+    
+    <meta name="description" content="In this project some friends of mine created a python-based GUI to take photographs via a camera of a laptop or an external one, to perform a Neural style transfer using a deep convolutional neuronal network, and to print a postcard of the result." />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/thegreatwhiteshark.coding.io/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="/thegreatwhiteshark.coding.io/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/custom.css" />
+
+    
+
+    
+
+    
+      
+          <link href="/thegreatwhiteshark.coding.io/index.xml" rel="alternate" type="application/rss+xml" title="theGreatWhiteShark" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.32.2" />
+
+    <link rel="canonical" href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/wxart/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": 
+    },
+    "author": {
+        "@type": "Person",
+        "name": ,
+        
+        "url": https://thegreatwhiteshark.github.io/,
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ]
+    },
+    "headline": wxArt,
+    "name": wxArt,
+    "wordCount": 311,
+    "timeRequired": "PT2M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": en
+    },
+    "url": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/wxart/,
+    "datePublished": 2017-07-12T17:55Z,
+    "dateModified": 2017-07-12T17:55Z,
+    
+    "keywords": python, deep learning,
+    "description": In this project some friends of mine created a python-based GUI to take photographs via a camera of a laptop or an external one, to perform a Neural style transfer using a deep convolutional neuronal network, and to print a postcard of the result.,
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/wxart/
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/">Home</a>
+            </li>
+        
+            <h3>Topics</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/data-science">Data Science</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/hacks">Hacks</a>
+            </li>
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/theGreatWhiteShark">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://thegreatwhiteshark.github.io/">Blogs</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/about">About me</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="/thegreatwhiteshark.coding.io/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+      <header class="main-header post-head no-cover">
+	<nav class="main-nav clearfix">
+	  
+
+	  
+	  
+	  <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+	  
+	</nav>
+      </header>
+
+
+
+      <main class="content" role="main">
+
+	<article class="post post">
+
+	  <header class="post-header">
+	    <h1 class="post-title">wxArt</h1>
+	    
+	      <h3 class="post-subtitle">A wxpython interface to the Neural art style transfer</h3>
+	    
+	    <hr class="post-description-separator"/>
+	    <section class="post-description-single">  
+	      <p>In this project some friends of mine created a python-based GUI to take photographs via a camera of a laptop or an external one, to perform a Neural style transfer using a deep convolutional neuronal network, and to print a postcard of the result.
+	    </section>
+	    <hr class="post-description-separator"/>
+            <section class="post-meta">
+              
+              <time class="post-date" datetime="2017-07-12T17:55:38&#43;01:00">
+		Jul 12, 2017
+              </time>
+              
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/python/">#python</a></span>
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/deep-learning/">#deep learning</a></span>
+              
+            </section>
+	  </header>
+
+	  <section class="post-content">
+	    <p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/wxArt/screenshot.jpg" alt="wxArt" /></p>
+
+<p>The paper <a href="https://arxiv.org/abs/1508.06576">A Neural Algorithm of Artistic
+Style</a> by Leon A. Gatys, Alexander
+S. Ecker, and Matthias Bethge in 2015 was a game changer. It was not
+just one of the major sparks to light up the interest in deep
+learning in general, it also was one of the reasons Stephan and I
+started a reading group on machine learning back in the beginning of
+2016. And we are still committed to it and meet at an almost weekly
+basis at time of writing (24.2.2018).</p>
+
+<p>Some friends of mine created a wrapper around the code of
+<a href="https://github.com/yusuketomoto/chainer-fast-neuralstyle">yusuketomoto</a>
+using the models given by
+<a href="https://github.com/gafr/chainer-fast-neuralstyle-models">gafr</a> to
+have their own wxpython-based GUI to perform the style transfer. This
+software was presented at the German day of unification in 2016 in
+Dresden. Since then it became a tradition to use it during the
+annually exhibition of projects at our institute in Dresden.</p>
+
+<p>In 2017 it was my turn to organize our groups part of the exhibition
+<a href="http://www.wissenschaftsnacht-dresden.de/">Dresdner Lange Nacht der
+Wissenschaften</a> (the long
+night of science in Dresden) and it came along with repairing and
+polishing some parts of the code. But all the credit belongs to Justus
+and Bene. Not me.</p>
+
+<p>Using the software you can make a photograph with either the internal
+camera of your laptop or an external one, perform a style transfer,
+and printing the result as a postcard. Due to this giveaway this
+project is always one of the main attraction using the
+exhibition. There are 11 different styles to pick, which were trained
+on great pieces of famous painters or iconic works, like
+Kandinsky, Kirchner, Dürrer, or the Great Wave off Kanagawa (and that&rsquo;s
+the story of my <a href="https://github.com/theGreatWhiteShark">Github profile picture</a>).</p>
+
+<p>The setup for the image above, on the other hand, was done by me and
+just for this single picture my whole contribution did pay off 😄 .</p>
+
+	  </section>
+
+
+	  <footer class="post-footer">
+
+
+	    
+
+
+
+
+	    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=wxArt&nbsp;-&nbsp;theGreatWhiteShark&amp;url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fwxart%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fwxart%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fwxart%2f&amp;description=wxArt"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fwxart%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+	    
+
+<div id="disqus_thread"></div>
+<script>
+
+
+
+
+var disqus_config = function () {
+this.page.url = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/wxart\/";  
+this.page.identifier = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/wxart\/"; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://thegreatwhiteshark-coding-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+
+	  </footer>
+	</article>
+
+      </main>
+
+      
+      <aside class="read-next">
+  
+  <a class="read-next-story" style="no-cover" href="/thegreatwhiteshark.coding.io/moving-to-github/">
+    <section class="post">
+      <h2>Moving from Wordpress to Github Pages&#43;Hugo</h2>
+      
+      
+    </section>
+  </a>
+  
+  
+  <a class="read-next-story prev" style="no-cover" href="/thegreatwhiteshark.coding.io/how-much-computer-skills/">
+    <section class="post">
+      <h2>How much computer skills does a physicist need?</h2>
+      
+    </section>
+  </a>
+  
+</aside>
+
+      
+
+          <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">theGreatWhiteShark</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/index.js"></script>
+    
+</body>
+</html>
+
