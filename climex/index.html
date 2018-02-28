@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="Climex"/>
+<meta name="twitter:description" content="In this post I present my R package climex for fitting extreme value distributions. It provides a more robust fit of the generalized extreme value and generalized Pareto distribution than other packages, convenience functions to download and import all daily observation data provided by the German weather service, and a neat Shiny-based web application to analyze the tails of the distributions of various station data."/>
+<meta name="twitter:site" content="@"/>
+
+
+
+  	<meta property="og:title" content="Climex" />
+  	<meta property="og:site_name" content="theGreatWhiteShark" />
+  	<meta property="og:url" content="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/climex/" />
+
+    
+        
+            <meta property="og:image" content="/thegreatwhiteshark.coding.io/images/moses-banner.png"/>
+        
+    
+
+    
+    <meta property="og:description" content="In this post I present my R package climex for fitting extreme value distributions. It provides a more robust fit of the generalized extreme value and generalized Pareto distribution than other packages, convenience functions to download and import all daily observation data provided by the German weather service, and a neat Shiny-based web application to analyze the tails of the distributions of various station data." />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2017-11-03T20:02:00&#43;01:00" />
+
+    
+    <meta property="article:tag" content="R" />
+    
+    
+
+    <title>Climex</title>
+
+    
+    <meta name="description" content="In this post I present my R package climex for fitting extreme value distributions. It provides a more robust fit of the generalized extreme value and generalized Pareto distribution than other packages, convenience functions to download and import all daily observation data provided by the German weather service, and a neat Shiny-based web application to analyze the tails of the distributions of various station data." />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/thegreatwhiteshark.coding.io/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="/thegreatwhiteshark.coding.io/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/custom.css" />
+
+    
+
+    
+
+    
+      
+          <link href="/thegreatwhiteshark.coding.io/index.xml" rel="alternate" type="application/rss+xml" title="theGreatWhiteShark" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.32.2" />
+
+    <link rel="canonical" href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/climex/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": 
+    },
+    "author": {
+        "@type": "Person",
+        "name": ,
+        
+        "url": https://thegreatwhiteshark.github.io/,
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ]
+    },
+    "headline": Climex,
+    "name": Climex,
+    "wordCount": 959,
+    "timeRequired": "PT5M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": en
+    },
+    "url": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/climex/,
+    "datePublished": 2017-11-03T20:02Z,
+    "dateModified": 2017-11-03T20:02Z,
+    
+    "keywords": R,
+    "description": In this post I present my R package climex for fitting extreme value distributions. It provides a more robust fit of the generalized extreme value and generalized Pareto distribution than other packages, convenience functions to download and import all daily observation data provided by the German weather service, and a neat Shiny-based web application to analyze the tails of the distributions of various station data.,
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/climex/
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/">Home</a>
+            </li>
+        
+            <h3>Topics</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/data-science">Data Science</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/hacks">Hacks</a>
+            </li>
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/theGreatWhiteShark">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://thegreatwhiteshark.github.io/">Blogs</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/about">About me</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="/thegreatwhiteshark.coding.io/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+      <header class="main-header post-head no-cover">
+	<nav class="main-nav clearfix">
+	  
+
+	  
+	  
+	  <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+	  
+	</nav>
+      </header>
+
+
+
+      <main class="content" role="main">
+
+	<article class="post post">
+
+	  <header class="post-header">
+	    <h1 class="post-title">Climex</h1>
+	    
+	      <h3 class="post-subtitle">Extreme value analysis on climatic time series using R and Shiny</h3>
+	    
+	    <hr class="post-description-separator"/>
+	    <section class="post-description-single">  
+	      <p>In this post I present my R package climex for fitting extreme value distributions. It provides a more robust fit of the generalized extreme value and generalized Pareto distribution than other packages, convenience functions to download and import all daily observation data provided by the German weather service, and a neat Shiny-based web application to analyze the tails of the distributions of various station data.
+	    </section>
+	    <hr class="post-description-separator"/>
+            <section class="post-meta">
+              
+              <time class="post-date" datetime="2017-11-03T20:02:00&#43;01:00">
+		Nov 3, 2017
+              </time>
+              
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/r/">#R</a></span>
+              
+            </section>
+	  </header>
+
+	  <section class="post-content">
+	    
+
+<p>The <strong>Climex</strong> app is my longest and most comprehensive endeavor in
+the realm of programming and software development up to now. It
+started as a couple of wrapper functions in the beginning of my PhD in
+2015 and is still under active development.</p>
+
+<p>In this post I won&rsquo;t explain the motivation and basics of the extreme
+value analysis (EVA). But I intend to do a separate post dedicated to
+this topic.</p>
+
+<h1 id="motivation">Motivation</h1>
+
+<p>But there are already a bunch of R packages for the fitting of extreme
+value distributions. So, why did I decided to write my own one?</p>
+
+<p>Right from the start I wanted to perform EVA on a massive
+parallel scale by fitting the generalized extreme value (GEV) and
+generalized Pareto (GP) distribution to all stations within a country
+or region or to all grid points of a climate model/reanalysis
+data. But I always encountered some errors and numerical
+artifacts. Exchanging the fitting functions and packages helped for
+specific stations. But then again all packages produced errors. Just
+for different stations. So I decided to dive into this topic and to
+write a package, which is more robust and fits my needs and permits a
+massive parallel application.</p>
+
+<h1 id="more-robust-parameter-estimation">More robust parameter estimation</h1>
+
+<p>The very details of what went wrong and how I fixed it will be
+presented in my thesis. I also intend to upload it to, but
+it won&rsquo;t happen before September 2018. Therefore, I will only provide
+a brief description of how I implemented the fitting procedure in the
+package.</p>
+
+<p>The fitting of GEV and GP parameters using unconstrained optimization
+(done by all other R packages dedicated to EVA) tends to
+produce numerical artifacts. This is due to the presence of logarithms
+in the negative log-likelihood functions and a limited range of shape
+parameters
+for which the maximum likelihood estimator is defined. While producing
+absurdly large parameters or causing the optimization to fail when
+using the <strong>BFGS</strong> algorithm (<em>extRemes</em>), the differences using the
+<strong>Nelder-Mead</strong> algorithm (all other packages) might be small, barely
+noticeable, and totally plausible.</p>
+
+<p>In order to avoid those numerical artifacts, the <strong>augmented
+Lagrangian method</strong> is used to incorporate both the logarithms and the
+limited range of shape parameters as nonlinear constraints. With this
+approach the optimization can be started at arbitrary initial
+parameter combinations and will almost always converge to the global
+optimum.</p>
+
+<h1 id="interface-to-the-ftp-server-of-the-german-weather-service">Interface to the FTP server of the German weather service</h1>
+
+<p>The German weather service (DWD) hosts a <a href="ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/climate/daily/kl/recent/">FTP
+server</a>
+providing the measurement data of all the German weather stations as
+.csv file with daily resolution. Since the number of stations is quite
+large, 1081 in total, I wrote a couple of functions to download and
+format the data, as well as to import them into a R session.</p>
+
+<p>For an introduction into how to download and handle the data, please
+see the package&rsquo;s vignette on its <a href="https://github.com/theGreatWhiteShark/climex/blob/v1.2.0/vignettes/data_dwd_and_usage.Rmd">general
+usage</a>.</p>
+
+<h1 id="shiny-based-web-application">Shiny-based web application</h1>
+
+<p>Since it&rsquo;s quite cumbersome to handle dozens, not to mention many
+hundreds of time series, I also built a
+<a href="https://shiny.rstudio.com/">Shiny</a>-based web application to perform
+the EVA on the individual series.</p>
+
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/climex/climex_map.jpeg" alt="leaflet-tab" /></p>
+
+<p>It features two different tabs. The first one holds a
+<a href="https://rstudio.github.io/leaflet/">leaflet</a> map the user can
+interactively choose the station she want to perform the analysis
+on from. Also the most important information concerning the chosen series
+is displayed in a box.</p>
+
+<p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/climex/climex_time-series.png" alt="time-series-tab" /></p>
+
+<p>The second tab provides full control over all steps involved in the
+fitting of the station data via an intuitive GUI in a persistent way
+(changes will be applied to the analysis of all following time
+series). You can e.g. pick either the GEV or GP distribution, exclude
+single points or whole parts of a time series from the analysis, or
+calculate the return level for the minimum values instead of the
+maximum ones.</p>
+
+<p>A detailed description of the different features is given in the
+corresponding
+<a href="https://github.com/theGreatWhiteShark/climex/blob/v1.2.0/vignettes/climex_app.Rmd">vignette</a>.</p>
+
+<h1 id="installation">Installation</h1>
+
+<p>You are curious and want to try the package or the web application?</p>
+
+<p>Using the following link you can test the <a href="http://climex.pks.mpg.de/">web
+application</a>.</p>
+
+<p>To use the package, you have to have R installed on your operation
+system. Since the <a href="https://shiny.rstudio.com/">Shiny</a>-based web app
+uses
+rather new features of the R programming language, you have to have
+<strong>at least R-3.3.0</strong> or newer (you can check your version by running
+<code>R --version</code> in the terminal). If you don&rsquo;t fulfill this condition
+yet, be sure to get the binary or source of an appropriate R version
+via <a href="https://CRAN.R-project.org/">CRAN</a>.</p>
+
+<p>In order to install this package, you have to use the <em>install_github</em>
+function from the <strong>devtools</strong> package.</p>
+
+<p>Just open a R shell on your computer and type in the following commands</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e">## Installing the devtools package (in case your haven&#39;t done it yet).</span>
+install.packages( <span style="color:#e6db74">&#34;devtools&#34;</span> )
+
+<span style="color:#75715e">## Installing the climex package from Github.</span>
+devtools<span style="color:#f92672">::</span>install_github( <span style="color:#e6db74">&#34;theGreatWhiteShark/climex&#34;</span> )</code></pre></div>
+<p>This will install the climex package residing on the <strong>master</strong> branch
+of this git repository. If you instead want to download and install a
+different branch, use the <em>ref</em> argument to specify it. E.g.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">devtools<span style="color:#f92672">::</span>install_github( <span style="color:#e6db74">&#34;theGreatWhiteShark/climex&#34;</span>, ref <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;v1.2.0&#34;</span> )</code></pre></div>
+<p>Even if you do not intend to use the full capabilities of the package
+but just parts like the download of the DWD data, be sure to
+nevertheless install the whole package via the commands listed
+above. It just uses 1.4 MB of space and you this way you ensure that
+all required packages will be installed and all environmental
+variables will be set.</p>
+
+<h1 id="usage">Usage</h1>
+
+<p>You are new to <strong>R</strong>? Then check out the <a href="https://www.rstudio.com/online-learning/#R">compiled list of
+resources</a> from RStudio or
+the <a href="https://CRAN.R-project.org/doc/manuals/R-intro.pdf">official
+introduction</a>.</p>
+
+<p>A thorough introduction is provided for the <a href="res/README_data_dwd_and_usage.Rmd">general
+usage</a> of the package and the
+Shiny-based <a href="res/climex_app.Rmd">web application</a>, as mentioned
+beforehand.</p>
+
+<p>When using this package in your own analysis, keep in mind that its
+functions expect your time series to be of class
+<a href="https://CRAN.R-project.org/web/packages/xts/index.html">xts</a> and not
+numeric!</p>
+
+	  </section>
+
+
+	  <footer class="post-footer">
+
+
+	    
+
+
+
+
+	    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Climex&nbsp;-&nbsp;theGreatWhiteShark&amp;url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fclimex%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fclimex%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fclimex%2f&amp;description=Climex"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fclimex%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+	    
+
+<div id="disqus_thread"></div>
+<script>
+
+
+
+
+var disqus_config = function () {
+this.page.url = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/climex\/";  
+this.page.identifier = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/climex\/"; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://thegreatwhiteshark-coding-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+
+	  </footer>
+	</article>
+
+      </main>
+
+      
+      <aside class="read-next">
+  
+  <a class="read-next-story" style="no-cover" href="/thegreatwhiteshark.coding.io/moving-to-github/">
+    <section class="post">
+      <h2>Moving from Wordpress to Github Pages&#43;Hugo</h2>
+      
+      
+    </section>
+  </a>
+  
+  
+  <a class="read-next-story prev" style="no-cover" href="/thegreatwhiteshark.coding.io/wxart/">
+    <section class="post">
+      <h2>wxArt</h2>
+      
+        <h4>A wxpython interface to the Neural art style transfer</h4>
+      
+    </section>
+  </a>
+  
+</aside>
+
+      
+
+          <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">theGreatWhiteShark</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/index.js"></script>
+    
+</body>
+</html>
+

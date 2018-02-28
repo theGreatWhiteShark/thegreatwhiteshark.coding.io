@@ -6,10 +6,20 @@
     <description>Recent content in R on theGreatWhiteShark</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Oct 2017 20:02:00 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 03 Nov 2017 20:02:00 +0100</lastBuildDate>
     
 	<atom:link href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/tags/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Climex</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/climex/</link>
+      <pubDate>Fri, 03 Nov 2017 20:02:00 +0100</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/climex/</guid>
+      <description>The Climex app is my longest and most comprehensive endeavor in the realm of programming and software development up to now. It started as a couple of wrapper functions in the beginning of my PhD in 2015 and is still under active development.
+In this post I won&amp;rsquo;t explain the motivation and basics of the extreme value analysis (EVA). But I intend to do a separate post dedicated to this topic.</description>
+    </item>
     
     <item>
       <title>A data scientist’s view on the election for the Bundestag Pt. II</title>
