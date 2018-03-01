@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Emacs on theGreatWhiteShark</title>
+    <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/tags/emacs/</link>
+    <description>Recent content in Emacs on theGreatWhiteShark</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 01 Mar 2018 19:00:00 +0100</lastBuildDate>
+    
+	<atom:link href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/tags/emacs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>lightning-keymap-mode</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/lightning-keymap-mode/</link>
+      <pubDate>Thu, 01 Mar 2018 19:00:00 +0100</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/lightning-keymap-mode/</guid>
+      <description>Let&amp;rsquo;s face it, the navigation in plain Emacs is not that sophisticated. Actually, it&amp;rsquo;s almost unusable. The approach of Evil-mode, on the other hand, is not a bad idea but I never really liked the way VI is doing things. Context switches are just not my style. I definitely prefer the key combination approach of Emacs.
+So what can be done instead? Well, why not creating a mixture of both worlds?</description>
+    </item>
+    
+  </channel>
+</rss>

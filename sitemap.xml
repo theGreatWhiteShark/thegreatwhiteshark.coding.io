@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/lightning-keymap-mode/</loc>
+    <lastmod>2018-03-01T19:00:00+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/moving-to-github/</loc>
     <lastmod>2018-02-23T22:27:35+01:00</lastmod>
   </url>
@@ -102,6 +107,12 @@
   </url>
   
   <url>
+    <loc>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/tags/emacs/</loc>
+    <lastmod>2018-03-01T19:00:00+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/hacks/</loc>
     <lastmod>2017-02-20T20:02:00+01:00</lastmod>
     <priority>0</priority>
@@ -121,7 +132,7 @@
   
   <url>
     <loc>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/post/</loc>
-    <lastmod>2018-02-23T22:27:35+01:00</lastmod>
+    <lastmod>2018-03-01T19:00:00+01:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -145,7 +156,7 @@
   
   <url>
     <loc>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/</loc>
-    <lastmod>2018-02-23T22:27:35+01:00</lastmod>
+    <lastmod>2018-03-01T19:00:00+01:00</lastmod>
     <priority>0</priority>
   </url>
   

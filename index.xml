@@ -6,10 +6,20 @@
     <description>Recent content on theGreatWhiteShark</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Feb 2018 22:27:35 +0100</lastBuildDate>
+    <lastBuildDate>Thu, 01 Mar 2018 19:00:00 +0100</lastBuildDate>
     
 	<atom:link href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>lightning-keymap-mode</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/lightning-keymap-mode/</link>
+      <pubDate>Thu, 01 Mar 2018 19:00:00 +0100</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/lightning-keymap-mode/</guid>
+      <description>Let&amp;rsquo;s face it, the navigation in plain Emacs is not that sophisticated. Actually, it&amp;rsquo;s almost unusable. The approach of Evil-mode, on the other hand, is not a bad idea but I never really liked the way VI is doing things. Context switches are just not my style. I definitely prefer the key combination approach of Emacs.
+So what can be done instead? Well, why not creating a mixture of both worlds?</description>
+    </item>
     
     <item>
       <title>Moving from Wordpress to Github Pages&#43;Hugo</title>
