@@ -1,3 +1,7 @@
+I'm leaving this sinking ship. If you like this project, checked out the maintained version on [GitLab.com](https://gitlab.com/theGreatWhiteShark/thegreatwhiteshark.coding.io).
+
+---
+
 This repositories covers most of the parts of my
 [blog](https://thegreatwhiteshark.github.io/) on coding, hacking, and
 data science. 
