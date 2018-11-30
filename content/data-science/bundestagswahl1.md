@@ -6,7 +6,7 @@ type = "post"
 slug = "bundestagswahl-pt-i"
 title = "A data scientist’s view on the election for the Bundestag Pt. I"
 subtitle = "Obtaining and cleaning the data"
-tags = ["R", "data science"]
+tags = ["R", "data science", "data"]
 description = "In this series of blog posts I want to show you how to retrieve, handle, and visualize publicly available data on the example of the recent election for the Bundestag (the German parliament)."
 
 +++

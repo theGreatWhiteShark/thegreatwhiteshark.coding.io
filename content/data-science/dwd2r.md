@@ -6,7 +6,7 @@ type = "post"
 slug = "dwd2r"
 title = "dwd2r"
 subtitle = "Download and import climatological data sets of the German weather service (DWD)"
-tags = ["R", "data science"]
+tags = ["R", "data science", "data", "climate"]
 description = "The one thing a data scientist is needing most is, of course, data itself. Vast and well-formatted data. If you are interested in climatological one from Germany, the DWD will provide you with tons of files by the means of their [FTP server](http://ftp-cdc.dwd.de/). To ease the task of downloading, importing, and converting all the data into **R**, I wrote a package called [dwd2r](https://github.com/theGreatWhiteShark/dwd2r)."
 +++
 
