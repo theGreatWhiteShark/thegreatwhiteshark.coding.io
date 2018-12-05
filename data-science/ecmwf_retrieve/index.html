@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="ecmwf_retrieve"/>
+<meta name="twitter:description" content="The European Centre for Medium-Range Weather Forecasts (ECMWF) allows you to access its vast set of model data via a free account and a Python 3 package they provide as well. Unfortunately, a download limit of 30GB prevents the user to retrieve all public data. To circumvent this restriction, I wrote the package [ecmwf_retrieve](https://gitlab.com/theGreatWhiteShark/ecmwf_retrieve), which chops your request in small parts, sends all of them to the API of the ECMWF, and joins the retrieved data into one single file."/>
+<meta name="twitter:site" content="@"/>
+
+
+
+  	<meta property="og:title" content="ecmwf_retrieve" />
+  	<meta property="og:site_name" content="theGreatWhiteShark" />
+  	<meta property="og:url" content="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/ecmwf_retrieve/" />
+
+    
+        
+            <meta property="og:image" content="/thegreatwhiteshark.coding.io/images/moses-banner.png"/>
+        
+    
+
+    
+    <meta property="og:description" content="The European Centre for Medium-Range Weather Forecasts (ECMWF) allows you to access its vast set of model data via a free account and a Python 3 package they provide as well. Unfortunately, a download limit of 30GB prevents the user to retrieve all public data. To circumvent this restriction, I wrote the package [ecmwf_retrieve](https://gitlab.com/theGreatWhiteShark/ecmwf_retrieve), which chops your request in small parts, sends all of them to the API of the ECMWF, and joins the retrieved data into one single file." />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2018-11-30T12:41:45&#43;01:00" />
+
+    
+    <meta property="article:tag" content="R" />
+    
+    <meta property="article:tag" content="data science" />
+    
+    <meta property="article:tag" content="data" />
+    
+    <meta property="article:tag" content="climate" />
+    
+    
+
+    <title>ecmwf_retrieve</title>
+
+    
+    <meta name="description" content="The European Centre for Medium-Range Weather Forecasts (ECMWF) allows you to access its vast set of model data via a free account and a Python 3 package they provide as well. Unfortunately, a download limit of 30GB prevents the user to retrieve all public data. To circumvent this restriction, I wrote the package [ecmwf_retrieve](https://gitlab.com/theGreatWhiteShark/ecmwf_retrieve), which chops your request in small parts, sends all of them to the API of the ECMWF, and joins the retrieved data into one single file." />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/thegreatwhiteshark.coding.io/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="/thegreatwhiteshark.coding.io/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/custom.css" />
+
+    
+
+    
+
+    
+      
+          <link href="/thegreatwhiteshark.coding.io/index.xml" rel="alternate" type="application/rss+xml" title="theGreatWhiteShark" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.32.2" />
+
+    <link rel="canonical" href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/ecmwf_retrieve/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": 
+    },
+    "author": {
+        "@type": "Person",
+        "name": ,
+        
+        "url": https://thegreatwhiteshark.github.io/,
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ]
+    },
+    "headline": ecmwf_retrieve,
+    "name": ecmwf_retrieve,
+    "wordCount": 922,
+    "timeRequired": "PT5M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": en
+    },
+    "url": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/ecmwf_retrieve/,
+    "datePublished": 2018-11-30T12:41Z,
+    "dateModified": 2018-11-30T12:41Z,
+    
+    "keywords": R, data science, data, climate,
+    "description": The European Centre for Medium-Range Weather Forecasts (ECMWF) allows you to access its vast set of model data via a free account and a Python 3 package they provide as well. Unfortunately, a download limit of 30GB prevents the user to retrieve all public data. To circumvent this restriction, I wrote the package [ecmwf_retrieve](https://gitlab.com/theGreatWhiteShark/ecmwf_retrieve), which chops your request in small parts, sends all of them to the API of the ECMWF, and joins the retrieved data into one single file.,
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/ecmwf_retrieve/
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/">Home</a>
+            </li>
+        
+            <h3>Topics</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/data-science">Data Science</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/hacks">Hacks</a>
+            </li>
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/theGreatWhiteShark">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://thegreatwhiteshark.github.io/">Blogs</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/about">About me</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="/thegreatwhiteshark.coding.io/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+      <header class="main-header post-head no-cover">
+	<nav class="main-nav clearfix">
+	  
+
+	  
+	  
+	  <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+	  
+	</nav>
+      </header>
+
+
+
+      <main class="content" role="main">
+
+	<article class="post data-science">
+
+	  <header class="post-header">
+	    <h1 class="post-title">ecmwf_retrieve</h1>
+	    
+	      <h3 class="post-subtitle">A package enabling you to download <em>all</em> public data from the ECMWF servers</h3>
+	    
+	    <hr class="post-description-separator"/>
+	    <section class="post-description-single">  
+	      <p>The European Centre for Medium-Range Weather Forecasts (ECMWF) allows you to access its vast set of model data via a free account and a Python 3 package they provide as well. Unfortunately, a download limit of 30GB prevents the user to retrieve all public data. To circumvent this restriction, I wrote the package <a href="https://gitlab.com/theGreatWhiteShark/ecmwf_retrieve">ecmwf_retrieve</a>, which chops your request in small parts, sends all of them to the API of the ECMWF, and joins the retrieved data into one single file.
+	    </section>
+	    <hr class="post-description-separator"/>
+            <section class="post-meta">
+              
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/r/">#R</a></span>
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/data-science/">#data science</a></span>
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/data/">#data</a></span>
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/climate/">#climate</a></span>
+              
+            </section>
+	  </header>
+
+	  <section class="post-content">
+	    
+
+<p>In the last post about the <a href="../dwd2r">dwd2r</a> <strong>R</strong> package I showed
+you how to retrieve large amount of observational data from within
+Germany. This is one of the highest quality data sets available and
+certainly a very nice starting point for your climatological
+analysis. But it only covers Germany. If you intend to analysis data
+from another location on the globe, hopefully the government of the
+corresponding country shares their data with you. This is, however,
+not that likely. In such cases, or when the locations of interest are
+over the sea, we can use so-called reanalysis data sets, as the ones
+provided by the European Centre for Medium-Range Weather Forecasts
+(ECMWF).</p>
+
+<h2 id="reanalysis-data">Reanalysis data</h2>
+
+<p>The general idea is that you want/have to use different sources of
+observational data all around the world, like satellites, buoys,
+classical measurement stations on land, or temperature measurements of
+the sea water by the intake of the engine of various ships. This data
+can be projected on a grid spanning the globe and thus allows you to
+analysis the weather of the whole earth at once. But in order to make
+studies about the overall climate, we need more than a mere snapshot
+of the current state of the atmosphere in time and more climatological
+information at all grid points than measured.</p>
+
+<p>Both shortcomings will be coped with the usage of <em>reanalysis
+data</em>. Essentially, we use consecutive snapshots of the atmosphere,
+which are mainly composed out of temperatures and pressures at both
+ground and sea-level, feed them into a state-of-the-art global weather
+model, and make it run smoothly through all its input. We start with
+the first snapshot in time and use it as the initial condition of the
+weather model. It will calculate the global state of the atmosphere
+based on the input and evolves it further in time. This way we started
+with just ground-level observations but can now extract all quantities
+included in the model, like air pressures at various heights, cloud
+coverage etc. But with this few initial conditions the temporal
+evolution of the atmosphere will probably take off in an arbitrary
+direction, which is very far from reality. To prevent this from
+happening, we force the modelled state of the atmosphere to resemble
+the next snapshot as close as possible. This way we are using the
+model to interpolate between the observations rather than for
+simulation itself. We thus now have a more complete picture of the atmosphere
+in both time, vertical resolution, and climatological quantities but
+still base it on real-world observations.</p>
+
+<p>To be able to study the climate of the earth with a consistent set of
+data, the reanalysis is run with a single global weather model on all
+<em>trustworthy</em> observations from the past. Since satellites are a
+rather new invention, the most popular data set of the
+<a href="https://confluence.ecmwf.int/display/WEBAPI">ECMWF</a>, the so-called
+<strong>ERA-Interim</strong>, only starts in 1979. For a complete introduction into
+the topic of reanalysis data sets and all technical details of their
+implementation at the ECMWF please see
+<a href="https://www.ecmwf.int/en/research/climate-reanalysis">their</a>
+explanations, papers, and wiki.</p>
+
+<h2 id="the-ecmwf-retrieve-package">The <code>ecmwf_retrieve</code> package</h2>
+
+<p>It is rather easy and convenient to get a <a href="https://apps.ecmwf.int/registration/">free
+account</a> at the ECMWF and to use
+their <strong>Python 3</strong> package to download publicly available data sets,
+like ERA-Interim or CERA-20C, via their <a href="https://confluence.ecmwf.int/display/WEBAPI/Access+MARS">MARS
+API</a>. But if
+you want to include multiple parameters at all time steps, dates, and
+grid points, you very soon reach the <strong>download limit of 30GB</strong>
+superimposed onto the free account.</p>
+
+<p>My
+<a href="https://gitlab.com/theGreatWhiteShark/ecmwf_retrieve">ecmwf_retrieve</a>
+package helps you to circumvent this download restriction by splitting
+your requests into separated ones (one for every year) and combining
+all the downloaded netCDF files into a single file afterwards. Note:
+<strong>this only works with netCDF</strong> and not with the GRIB data type.</p>
+
+<h4 id="requirements">Requirements</h4>
+
+<p>Before you attempt to install the package, make sure you have the
+<a href="http://nco.sourceforge.net/">netCDF operator</a> tools and the
+<code>setuptools</code> Python package installed on your system.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">## On Debian-based systems
+</span><span style="color:#75715e"></span>sudo apt install nco python3-setuptools</code></pre></div>
+<p>Or, if you are working with Anaconda</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">conda install -c conda-forge nco setuptools</code></pre></div>
+<p>In addition, we need the <code>netcdf4</code> package to handle the format of
+choice of the ECMWF and their custom package <code>ecmwfapi</code> to talk with
+the MARS API.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip3 install netcdf4 ecmwf-api-client</code></pre></div>
+<p>Apart from the requirements on the software side you still need to
+register a free account at the ECMWF. See
+<a href="https://software.ecmwf.int/wiki/display/WEBAPI/Access+ECMWF+Public+Datasets">this</a>
+guide for instructions.</p>
+
+<h4 id="installation">Installation</h4>
+
+<p>First, clone the package to your local computer</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone https://gitlab.com/theGreatWhiteShark/ecmwf_retrieve</code></pre></div>
+<p>jump to the folder containing the project, and install it using the
+<em>setup.py</em>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd ecmwf_retrieve
+python setup.py install</code></pre></div>
+<h4 id="documentation">Documentation</h4>
+
+<p>The documentation of the project is provided as a <em>HTML</em> file and can
+be accessed (from the root of the repository) via</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">firefox doc/_build/html/index.html</code></pre></div>
+<p>If you want to build the documentation on your own, be sure you have
+both <code>sphinx</code> and <code>sphinxcontrib-napoleon</code> installed. Afterwards, jump
+to the <em>doc</em> folder and compile the it to the format you are
+interested in. E.g.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">## Compile the HTML version of the documentation.
+</span><span style="color:#75715e"></span>cd doc
+make html</code></pre></div>
+<h4 id="usage">Usage</h4>
+
+<p>The main function of the <strong>ecmwf_retrieve</strong> package is called
+<code>retrieve</code> as in the package provided by the ECMWF it wraps
+around. But it also comes with some convenience functions specifying
+default parameters for a ERA-Interim requests allowing the user to
+just specify the key-value pairs she wants to alter.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Load the module as &#39;ec&#39;</span>
+<span style="color:#f92672">import</span> ecmwf_retrieve.ecmwf_retrieve <span style="color:#f92672">as</span> ec
+
+<span style="color:#75715e"># View the default options</span>
+ec<span style="color:#f92672">.</span>erainterim_default_options()
+
+<span style="color:#75715e"># Download data from the ECMWF</span>
+ec<span style="color:#f92672">.</span>retrieve( options <span style="color:#f92672">=</span> { 
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;date&#39;</span> : <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;1979-01-01/to/1981-02-28&#39;</span>,
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;param&#39;</span> : <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;2t&#39;</span>, 
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;target&#39;</span> : <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;era-interim-analysis.nc&#39;</span> } )</code></pre></div>
+<p>More examples can be found in the <a href="https://gitlab.com/theGreatWhiteShark/ecmwf_retrieve/tree/master/examples/">examples</a> folder.</p>
+
+	  </section>
+
+
+	  <footer class="post-footer">
+
+
+	    
+
+
+
+
+	    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=ecmwf_retrieve&nbsp;-&nbsp;theGreatWhiteShark&amp;url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fdata-science%2fecmwf_retrieve%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fdata-science%2fecmwf_retrieve%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fdata-science%2fecmwf_retrieve%2f&amp;description=ecmwf_retrieve"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fdata-science%2fecmwf_retrieve%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+	    
+
+<div id="disqus_thread"></div>
+<script>
+
+
+
+
+var disqus_config = function () {
+this.page.url = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/data-science\/ecmwf_retrieve\/";  
+this.page.identifier = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/data-science\/ecmwf_retrieve\/"; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://thegreatwhiteshark-coding-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+
+	  </footer>
+	</article>
+
+      </main>
+
+      
+      <aside class="read-next">
+  
+  
+  <a class="read-next-story prev" style="no-cover" href="/thegreatwhiteshark.coding.io/data-science/dwd2r/">
+    <section class="post">
+      <h2>dwd2r</h2>
+      
+        <h4>Download and import climatological data sets of the German weather service (DWD)</h4>
+      
+    </section>
+  </a>
+  
+</aside>
+
+      
+
+          <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">theGreatWhiteShark</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/index.js"></script>
+    
+</body>
+</html>
+

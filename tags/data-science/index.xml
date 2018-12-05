@@ -6,10 +6,19 @@
     <description>Recent content in Data Science on theGreatWhiteShark</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Nov 2018 12:44:15 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 30 Nov 2018 12:41:45 +0100</lastBuildDate>
     
 	<atom:link href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/tags/data-science/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ecmwf_retrieve</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/ecmwf_retrieve/</link>
+      <pubDate>Fri, 30 Nov 2018 12:41:45 +0100</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/ecmwf_retrieve/</guid>
+      <description>In the last post about the dwd2r R package I showed you how to retrieve large amount of observational data from within Germany. This is one of the highest quality data sets available and certainly a very nice starting point for your climatological analysis. But it only covers Germany. If you intend to analysis data from another location on the globe, hopefully the government of the corresponding country shares their data with you.</description>
+    </item>
     
     <item>
       <title>dwd2r</title>
