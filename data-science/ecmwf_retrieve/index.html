@@ -70,7 +70,7 @@
       
       
     
-    <meta name="generator" content="Hugo 0.32.2" />
+    <meta name="generator" content="Hugo 0.52" />
 
     <link rel="canonical" href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/ecmwf_retrieve/" />
 
@@ -307,14 +307,24 @@ all the downloaded netCDF files into a single file afterwards. Note:
 <p>Before you attempt to install the package, make sure you have the
 <a href="http://nco.sourceforge.net/">netCDF operator</a> tools and the
 <code>setuptools</code> Python package installed on your system.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">## On Debian-based systems
-</span><span style="color:#75715e"></span>sudo apt install nco python3-setuptools</code></pre></div>
+
+<pre><code class="language-bash">## On Debian-based systems
+sudo apt install nco python3-setuptools
+</code></pre>
+
 <p>Or, if you are working with Anaconda</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">conda install -c conda-forge nco setuptools</code></pre></div>
+
+<pre><code class="language-bash">conda install -c conda-forge nco setuptools
+
+</code></pre>
+
 <p>In addition, we need the <code>netcdf4</code> package to handle the format of
 choice of the ECMWF and their custom package <code>ecmwfapi</code> to talk with
 the MARS API.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip3 install netcdf4 ecmwf-api-client</code></pre></div>
+
+<pre><code class="language-bash">pip3 install netcdf4 ecmwf-api-client
+</code></pre>
+
 <p>Apart from the requirements on the software side you still need to
 register a free account at the ECMWF. See
 <a href="https://software.ecmwf.int/wiki/display/WEBAPI/Access+ECMWF+Public+Datasets">this</a>
@@ -323,23 +333,35 @@ guide for instructions.</p>
 <h4 id="installation">Installation</h4>
 
 <p>First, clone the package to your local computer</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone https://gitlab.com/theGreatWhiteShark/ecmwf_retrieve</code></pre></div>
+
+<pre><code class="language-bash">git clone https://gitlab.com/theGreatWhiteShark/ecmwf_retrieve
+</code></pre>
+
 <p>jump to the folder containing the project, and install it using the
 <em>setup.py</em>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd ecmwf_retrieve
-python setup.py install</code></pre></div>
+
+<pre><code class="language-bash">cd ecmwf_retrieve
+python setup.py install
+</code></pre>
+
 <h4 id="documentation">Documentation</h4>
 
 <p>The documentation of the project is provided as a <em>HTML</em> file and can
 be accessed (from the root of the repository) via</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">firefox doc/_build/html/index.html</code></pre></div>
+
+<pre><code class="language-bash">firefox doc/_build/html/index.html
+</code></pre>
+
 <p>If you want to build the documentation on your own, be sure you have
 both <code>sphinx</code> and <code>sphinxcontrib-napoleon</code> installed. Afterwards, jump
 to the <em>doc</em> folder and compile the it to the format you are
 interested in. E.g.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">## Compile the HTML version of the documentation.
-</span><span style="color:#75715e"></span>cd doc
-make html</code></pre></div>
+
+<pre><code class="language-bash">## Compile the HTML version of the documentation.
+cd doc
+make html
+</code></pre>
+
 <h4 id="usage">Usage</h4>
 
 <p>The main function of the <strong>ecmwf_retrieve</strong> package is called
@@ -347,17 +369,20 @@ make html</code></pre></div>
 around. But it also comes with some convenience functions specifying
 default parameters for a ERA-Interim requests allowing the user to
 just specify the key-value pairs she wants to alter.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Load the module as &#39;ec&#39;</span>
-<span style="color:#f92672">import</span> ecmwf_retrieve.ecmwf_retrieve <span style="color:#f92672">as</span> ec
 
-<span style="color:#75715e"># View the default options</span>
-ec<span style="color:#f92672">.</span>erainterim_default_options()
+<pre><code class="language-python"># Load the module as 'ec'
+import ecmwf_retrieve.ecmwf_retrieve as ec
 
-<span style="color:#75715e"># Download data from the ECMWF</span>
-ec<span style="color:#f92672">.</span>retrieve( options <span style="color:#f92672">=</span> { 
-	<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;date&#39;</span> : <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;1979-01-01/to/1981-02-28&#39;</span>,
-	<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;param&#39;</span> : <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;2t&#39;</span>, 
-	<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;target&#39;</span> : <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;era-interim-analysis.nc&#39;</span> } )</code></pre></div>
+# View the default options
+ec.erainterim_default_options()
+
+# Download data from the ECMWF
+ec.retrieve( options = { 
+	'date' : '1979-01-01/to/1981-02-28',
+	'param' : '2t', 
+	'target' : 'era-interim-analysis.nc' } )
+</code></pre>
+
 <p>More examples can be found in the <a href="https://gitlab.com/theGreatWhiteShark/ecmwf_retrieve/tree/master/examples/">examples</a> folder.</p>
 
 	  </section>

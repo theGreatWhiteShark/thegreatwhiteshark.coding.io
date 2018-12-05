@@ -70,7 +70,7 @@
       
       
     
-    <meta name="generator" content="Hugo 0.32.2" />
+    <meta name="generator" content="Hugo 0.52" />
 
     <link rel="canonical" href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/data-science/dwd2r/" />
 
@@ -250,12 +250,21 @@ usable format, I wrote the software package
 
 <p>To install the package, you have to clone the repository using a
 command line/terminal,</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone https://gitlab.com/theGreatWhiteShark/dwd2r</code></pre></div>
+
+<pre><code class="language-bash">git clone https://gitlab.com/theGreatWhiteShark/dwd2r
+</code></pre>
+
 <p>open a <strong>R</strong> shell in the newly created folder,</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd dwd2r
-R</code></pre></div>
+
+<pre><code class="language-bash">cd dwd2r
+R
+</code></pre>
+
 <p>and install the package using <code>devtools</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-R" data-lang="R">devtools<span style="color:#f92672">::</span>install()</code></pre></div>
+
+<pre><code class="language-R">devtools::install()
+</code></pre>
+
 <h2 id="features-and-usage">Features and usage</h2>
 
 <h4 id="convenient-interface-to-the-ftp-server">Convenient interface to the FTP server</h4>
@@ -267,22 +276,31 @@ hierarchy of the FTP server, prints the folder structure of the
 current level into the <strong>R</strong> shell, and prompts for a selection of one of
 those options. All data located in the selected terminal node will be
 downloaded afterwards.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-R" data-lang="R">dwd.download()</code></pre></div>
+
+<pre><code class="language-R">dwd.download()
+</code></pre>
+
 <p>You also can circumvent the user interface and provide all the choices
 you would select via the input argument <code>batch.choices</code>. The following
 call will, e.g., download the aggregated, daily observation data
 throughout German.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-R" data-lang="R">dwd.download( batch.choices <span style="color:#f92672">=</span> <span style="color:#66d9ef">c</span>( <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span> ) )</code></pre></div>
+
+<pre><code class="language-R">dwd.download( batch.choices = c( 1, 1, 5, 1 ) )
+</code></pre>
+
 <p>As a second way, you can use the listing of all folders on the FTP
 server returned by the <code>dwd2r:::cat.dwd.ftp.url()</code> function and use
 commands like <code>grep()</code> to select only the URLs you are interested
 in. These can be provided to the <code>dwd.download()</code> function using the
 <code>url</code> input argument. This code snippet will download the same data as
 the former one.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-R" data-lang="R">dwd.download( 
-  url <span style="color:#f92672">=</span> <span style="color:#66d9ef">grep</span>( <span style="color:#e6db74">&#34;daily/kl&#34;</span>, 
-              dwd2r<span style="color:#f92672">:::</span>cat.dwd.ftp.url()<span style="color:#f92672">$</span>observations.germany,
-              value<span style="color:#f92672">=</span><span style="color:#66d9ef">TRUE</span> ) )</code></pre></div>
+
+<pre><code class="language-R">dwd.download( 
+  url = grep( &quot;daily/kl&quot;, 
+              dwd2r:::cat.dwd.ftp.url()$observations.germany,
+              value=TRUE ) )
+</code></pre>
+
 <p>After downloading the selected data the <code>dwd.download()</code> function will
 handle its conversion internally and stores the results in <em>.RData</em>
 files.</p>
@@ -342,7 +360,10 @@ string specifying the path to your favored destination using the
 <p>As an alternative you can also overwrite the global option <strong>dwd2r</strong>
 uses to store its download path in. Just add the following line to
 the <em>.Rprofile</em> file in your home directory.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-R" data-lang="R"><span style="color:#66d9ef">options</span>( dwd2r.download.path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;PATH&#34;</span> )</code></pre></div>
+
+<pre><code class="language-R">options( dwd2r.download.path = &quot;PATH&quot; )
+</code></pre>
+
 <p>All downloads will now be stored in the <em>PATH</em> directory.</p>
 
 <h4 id="loading-the-converted-data">Loading the converted data</h4>

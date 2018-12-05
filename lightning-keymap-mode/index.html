@@ -64,7 +64,7 @@
       
       
     
-    <meta name="generator" content="Hugo 0.32.2" />
+    <meta name="generator" content="Hugo 0.52" />
 
     <link rel="canonical" href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/lightning-keymap-mode/" />
 
@@ -299,12 +299,18 @@ supported for <strong>ESS</strong> and <strong>python-mode</strong>.</p>
 
 <p>In order to use the lightning-keymap-mode, you have to clone this
 repository to your local device</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone git@github.com:theGreatWhiteShark/lightning-keymap-mode.git</code></pre></div>
+
+<pre><code class="language-bash">git clone git@github.com:theGreatWhiteShark/lightning-keymap-mode.git
+</code></pre>
+
 <p>and add the following lines to your <em>.emacs</em> file in your home
 folder.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cl" data-lang="cl">(add-to-list <span style="color:#e6db74">&#39;load-path</span> <span style="color:#e6db74">&#34;~/PATH-YOU-CLONED-LIGHTNING-KEYMAP-MODE-TO&#34;</span>)
-(require <span style="color:#e6db74">&#39;lightning-keymap-mode</span>)
-(lightning-keymap-mode <span style="color:#ae81ff">1</span>)</code></pre></div>
+
+<pre><code class="language-cl">(add-to-list 'load-path &quot;~/PATH-YOU-CLONED-LIGHTNING-KEYMAP-MODE-TO&quot;)
+(require 'lightning-keymap-mode)
+(lightning-keymap-mode 1)
+</code></pre>
+
 <h1 id="customization">Customization</h1>
 
 <p>By setting the <strong>lightning-basic-keymap</strong> variable to non-nil, the
