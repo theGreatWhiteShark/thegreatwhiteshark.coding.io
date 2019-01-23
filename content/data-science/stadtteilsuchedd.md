@@ -21,7 +21,7 @@ Dresden](http://www.dresden.de/de/wirtschaft/wirtschaftsstandort/projekte-kooper
 and they would award prices worth of 7000€ in total. Even better: The
 topic was about handling data!
 
-So I quit work early that Friday and headed over to the office of
+So, I quit work early that Friday and headed over to the office of
 [ol' Justus](https://github.com/jusjusjus), who was in
 immediately. The goal of the hackathon was as follows.
 
@@ -38,6 +38,8 @@ of the so-called [Themenstadtplan](http://stadtplan2.dresden.de/), the
 interactive map of the city of Dresden to display information. Since
 they were made available beforehand, Justus and me took a deep dive
 into it to come up with a catchy idea. And we did.
+
+![snapshot](/thegreatwhiteshark.coding.io/images/posts/2016/stadtteilsuchedd/snapshot/jpeg]
 
 # Which part of town fits me best?
 
