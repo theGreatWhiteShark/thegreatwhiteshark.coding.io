@@ -153,3 +153,26 @@ mkdir -m 0700 ~/.getmail
 ```
 https://www.linode.com/docs/tools-reference/tools/schedule-tasks-with-cron/
 https://www.linode.com/docs/email/clients/retrieve-email-using-getmail/
+
+
+# borg
+
+Creates a folder called *borg_backups*, which will contain all
+archives.
+
+``` bash
+borg init --info -e repokey --show-rc borg_backups
+```
+
+``` bash
+borg create --info --show-rc --exclude-if-present tmp/ --exclude-if-present Download/ --progress --list -x --compression lzma --dry-run borg_backups::archive1 ~/Documents
+```
+
+Creates an archive called *archive1* in *borg_backups*, which will contain your *Documents* folder.
+
+The archive will consume almost no disk space for files or parts of
+files that have already been stored in other archives. Therefore, why not putting the folders in different archives?
+
+``` bash
+borg create --show-rc --progress --compression lzma --list --info borg_backups::dotedAbyzou ~/.[A-Z]* --exclude ~/.anaconda3 --exclude ~/.cache --exclude ~/.ccache --exclude ~/.npm --exclude ~/.go1.4 --exclude ~/.go1.11
+```
