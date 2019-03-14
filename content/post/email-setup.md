@@ -74,7 +74,7 @@ internally by the *gpgsm* package.
 ./configure --enable-pgp --enable-gpgme --enable-compressed --enable-hcache --enable-smtp --enable-imap --enable-sidebar --with-gnutls --with-curses=/usr/lib/x86_64-linux-gnu/
 ```
 
- # GPG
+# GPG
  
  ``` bash
  sudo apt install dirmngr
@@ -90,13 +90,49 @@ internally by the *gpgsm* package.
  automatically and will be thus issued for the autoremoval as soon as
  no other package is depending on them anymore.
  
- Generate key
+### Generate key
+
+``` bash
+gpg2 --full-gen-key
+```
+
+Choose 
+
+> Please select what kind of key you want:
+> (1) RSA and RSA (default)
+
+a keysize as long as possible
+
+> What keysize do you want? (3072)
+> 4096
+
+Set an expiration date
+
+> Please specify how long the key should be valid.
+> 0
+
+Enter email address, your real name, and a comment.
+
+Next, pick a secure passphrase (long! but also big and small letters
+and punctuation signs). Since we will use this passphrase to access
+our password store, using `pass generate` unfortunately is off the
+table.
+
+
  
- Publish key
+### Publish key
+
+``` bash
+gpg --send-keys <KEY_ID>
+```
  
- Create revokation certificate.
+### Create revokation certificate.
+
+``` bash
+gpg --output revoke.asc --gen-revoke <KEY_ID>
+```
  
- Export and import. Be sure to `shred` the copied private key.
+### Export and import. Be sure to `shred` the copied private key.
 
 To use it with `pass`:
 
@@ -175,4 +211,30 @@ files that have already been stored in other archives. Therefore, why not puttin
 
 ``` bash
 borg create --show-rc --progress --compression lzma --list --info borg_backups::dotedAbyzou ~/.[A-Z]* --exclude ~/.anaconda3 --exclude ~/.cache --exclude ~/.ccache --exclude ~/.npm --exclude ~/.go1.4 --exclude ~/.go1.11
+```
+
+# LUKS encryption
+
+
+``` bash
+sudo cryptsetup luksFormat /dev/sdX
+sudo cryptsetup luksOpen /dev/sdX label
+
+sudo dd if=/dev/zero of=/dev/mapper/label
+
+sudo mkfs.ext4 /dev/mapper/label
+```
+
+
+# pass
+
+Generate safe passwords
+
+``` bash
+pass generate Email/provider 48 -n
+```
+
+Access the password
+``` bash
+pass show Email/provider
 ```
