@@ -49,7 +49,7 @@ email = "thetruephil@googlemail.com"
 description = "A collection of my various projects involving coding, hacking, and data"
 githubName = "theGreatWhiteShark"
 hideHUGOSupport = false
-pygmentsCodefences = true
+pygmentsCodeFences = true
 pygmentsStyle = "monokai"
 [permalinks]
 post = "/:slug/"
