@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="Encryption, password management, and backups in Linux"/>
+<meta name="twitter:description" content="Be it malicious crackers, evil governments, or all-devouring US companies, we have to protect our data from their greedy grasps. But in the beginning it seems to be such a hard task. There are tons of tools and one does neither want to spend several weeks on reading documentation nor to use insecure ones. To alleviate this pain, I will give a short introduction by presenting four simple but essential tools: **dm-crypt/LUKS** for hard disk encryption, **GnuPG** for encrypting individual files, emails etc., **borg** to securely and efficiently backup your data, and **pass** to manage and store your passwords."/>
+<meta name="twitter:site" content="@"/>
+
+
+
+  	<meta property="og:title" content="Encryption, password management, and backups in Linux" />
+  	<meta property="og:site_name" content="theGreatWhiteShark" />
+  	<meta property="og:url" content="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/encryption-and-backup/" />
+
+    
+        
+            <meta property="og:image" content="/thegreatwhiteshark.coding.io/images/moses-banner.png"/>
+        
+    
+
+    
+    <meta property="og:description" content="Be it malicious crackers, evil governments, or all-devouring US companies, we have to protect our data from their greedy grasps. But in the beginning it seems to be such a hard task. There are tons of tools and one does neither want to spend several weeks on reading documentation nor to use insecure ones. To alleviate this pain, I will give a short introduction by presenting four simple but essential tools: **dm-crypt/LUKS** for hard disk encryption, **GnuPG** for encrypting individual files, emails etc., **borg** to securely and efficiently backup your data, and **pass** to manage and store your passwords." />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2019-03-17T13:49:50&#43;01:00" />
+
+    
+    <meta property="article:tag" content="Linux" />
+    
+    <meta property="article:tag" content="data" />
+    
+    
+
+    <title>Encryption, password management, and backups in Linux</title>
+
+    
+    <meta name="description" content="Be it malicious crackers, evil governments, or all-devouring US companies, we have to protect our data from their greedy grasps. But in the beginning it seems to be such a hard task. There are tons of tools and one does neither want to spend several weeks on reading documentation nor to use insecure ones. To alleviate this pain, I will give a short introduction by presenting four simple but essential tools: **dm-crypt/LUKS** for hard disk encryption, **GnuPG** for encrypting individual files, emails etc., **borg** to securely and efficiently backup your data, and **pass** to manage and store your passwords." />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/thegreatwhiteshark.coding.io/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="/thegreatwhiteshark.coding.io/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/custom.css" />
+
+    
+
+    
+
+    
+      
+          <link href="/thegreatwhiteshark.coding.io/index.xml" rel="alternate" type="application/rss+xml" title="theGreatWhiteShark" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.52" />
+
+    <link rel="canonical" href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/encryption-and-backup/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": 
+    },
+    "author": {
+        "@type": "Person",
+        "name": ,
+        
+        "url": https://thegreatwhiteshark.github.io/,
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ]
+    },
+    "headline": Encryption, password management, and backups in Linux,
+    "name": Encryption, password management, and backups in Linux,
+    "wordCount": 1832,
+    "timeRequired": "PT9M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": en
+    },
+    "url": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/encryption-and-backup/,
+    "datePublished": 2019-03-17T13:49Z,
+    "dateModified": 2019-03-17T13:49Z,
+    
+    "keywords": Linux, data,
+    "description": Be it malicious crackers, evil governments, or all-devouring US companies, we have to protect our data from their greedy grasps. But in the beginning it seems to be such a hard task. There are tons of tools and one does neither want to spend several weeks on reading documentation nor to use insecure ones. To alleviate this pain, I will give a short introduction by presenting four simple but essential tools: **dm-crypt/LUKS** for hard disk encryption, **GnuPG** for encrypting individual files, emails etc., **borg** to securely and efficiently backup your data, and **pass** to manage and store your passwords.,
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/encryption-and-backup/
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/">Home</a>
+            </li>
+        
+            <h3>Topics</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/data-science">Data Science</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/hacks">Hacks</a>
+            </li>
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/theGreatWhiteShark">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://thegreatwhiteshark.github.io/">Blogs</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/about">About me</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="/thegreatwhiteshark.coding.io/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+      <header class="main-header post-head no-cover">
+	<nav class="main-nav clearfix">
+	  
+
+	  
+	  
+	  <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+	  
+	</nav>
+      </header>
+
+
+
+      <main class="content" role="main">
+
+	<article class="post post">
+
+	  <header class="post-header">
+	    <h1 class="post-title">Encryption, password management, and backups in Linux</h1>
+	    
+	      <h3 class="post-subtitle">An easy introduction to some of the most important tools and concepts</h3>
+	    
+	    <hr class="post-description-separator"/>
+	    <section class="post-description-single">  
+	      <p>Be it malicious crackers, evil governments, or all-devouring US companies, we have to protect our data from their greedy grasps. But in the beginning it seems to be such a hard task. There are tons of tools and one does neither want to spend several weeks on reading documentation nor to use insecure ones. To alleviate this pain, I will give a short introduction by presenting four simple but essential tools: <strong>dm-crypt/LUKS</strong> for hard disk encryption, <strong>GnuPG</strong> for encrypting individual files, emails etc., <strong>borg</strong> to securely and efficiently backup your data, and <strong>pass</strong> to manage and store your passwords.
+	    </section>
+	    <hr class="post-description-separator"/>
+            <section class="post-meta">
+              
+              <time class="post-date" datetime="2019-03-17T13:49:50&#43;01:00">
+		Mar 17, 2019
+              </time>
+              
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/linux/">#Linux</a></span>
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/data/">#data</a></span>
+              
+            </section>
+	  </header>
+
+	  <section class="post-content">
+	    
+
+<p>Since at least the revelations of Edward Snowden we know that
+encryption is not just an important but also a quite pressing
+issue. But, unfortunately, there is no one size fits all algorithm
+that works with all kinds of data and communication protocols. We are
+therefore bound to at least peek into different topics of this rather
+complex field. But don&rsquo;t be afraid. I wrote this introduction with
+people at a beginner level in Linux in mind and won&rsquo;t touch a single
+bit of mathematical theory on encryption in here.</p>
+
+<p>Most of the tools presented here work independent of each other except
+of the <em>pass</em> program, which depends on a proper <em>GnuPG</em> setup. For
+the remaining parts you don&rsquo;t have to read the post as a whole but can
+only pick those topics you are most interested in. We will start with
+the encryption of entire disks using
+<a href="https://gitlab.com/cryptsetup/cryptsetup/wikis/DMCrypt">dm-crypt/LUKS</a>. Then
+a guide to set up the <a href="https://gnupg.org/">GnuPG</a> either from scratch
+or by importing an existing key is presented in addition with some
+remarks of how to use it for encrypting files and emails. The same
+encryption mechanism will be also used when backing up your system
+using <a href="https://borgbackup.readthedocs.io/en/stable/">borg</a> and storing
+and managing your passwords using
+<a href="https://www.passwordstore.org/">pass</a>, which both will be explained
+in the two remaining sections.</p>
+
+<h1 id="dm-crypt-luks-encryption">dm-crypt/LUKS encryption</h1>
+
+<p>Whether you hard disk or laptop gets stolen, you have to save personal
+data under the jurisdiction of the <a href="https://en.wikipedia.org/wiki/General_Data_Protection_Regulation">General Data Protection
+Regulation</a>
+(in Europe), or there is a policy search and massive seizures in your
+local hackspace or at home, you don&rsquo;t want your data to be accessed by
+unauthorized persons. But since you might use these devices on a daily
+basis and maybe even in combination with different platforms, you want
+the tools to be both convenient and independent of a particular
+operation system.</p>
+
+<p>This is where
+<a href="https://gitlab.com/cryptsetup/cryptsetup/wikis/DMCrypt">dm-crypt/LUKS</a>
+and its Linux frontend <code>cryptsetup</code> comes into play. There is an
+implementation for Windows systems, although I never tried it, and it
+allows you to access and use your hard disk as usual after providing
+your password once per startup independent on your particular choice
+of file system of that disk. It is also used when you decide to encrypt
+your home folder during the installation of Linux.</p>
+
+<p>To encrypt a disk using LUKS, we will use the following command in a
+bash shell. Note that you have to exchange the <em>/dev/sdX</em> with your
+particular file representation. Use the commands <code>lsblk -f</code> or
+<code>ls -ctAl /dev/disk/by-id</code> to find the disk you are looking for. Also
+note that after this step you can not access the data present on your
+disk anymore. So be sure to back them up properly.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">sudo cryptsetup luksFormat /dev/sdX</code></pre></div>
+
+<p>The command will ask you twice for a passphrase required to decrypt
+the device later on. Be sure to not forget this one!</p>
+
+<p>To decrypt disk, we will use the <code>cryptsetup luksOpen</code> command.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">sudo cryptsetup luksOpen /dev/sdX label</code></pre></div>
+
+<p>It will use the device mapper to allow access to the encrypted device
+under the path <em>/dev/mapper/label</em>. All data read from or written to
+this location will be de- or encrypted on the fly. So, accessing such
+an encrypted device is bound to be both slower and to consume more
+energy.</p>
+
+<p>If you already set up a file system on the device, jump right to the
+mounting of the device and use it like an unencrypted one. If you, on
+the other hand, just used the <code>cryptsetup luksFormat</code> command, the
+device has no file system and we have to create one. Which one is
+totally up to you. You can either create the default
+<a href="https://en.wikipedia.org/wiki/Ext4">ext4</a> one using <code>mkfs.ext4</code> or a
+more advanced one like <a href="https://en.wikipedia.org/wiki/Btrfs">btrfs</a>
+with <code>mkfs.btrfs</code>. Optionally, you can override all existing data
+remaining on the disk (hidden and inaccessible).</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">sudo apt install dirmngr
+sudo apt-mark auto gpgsm dirmngr</code></pre></div>
+
+<p><em>dirmngr</em> takes care of talking to the GPG keyserver since version
+ 2.1 All the examples you can find in the internet using the
+ <em>&ndash;keyserver</em> argument to <code>gpg</code> are obsolete.</p>
+
+<p><code>apt-mark</code> is a unified interface to set the properties of installed
+ package. Using the <em>auto</em> command, they are handled as installed
+ automatically and will be thus issued for the autoremoval as soon as
+ no other package is depending on them anymore.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash"><span style="color:#75715e">## Override all existing data</span>
+sudo dd <span style="color:#66d9ef">if</span><span style="color:#f92672">=</span>/dev/zero of<span style="color:#f92672">=</span>/dev/mapper/label
+
+<span style="color:#75715e">## Create a file system on the device.</span>
+sudo mkfs.btrfs /dev/mapper/label</code></pre></div>
+
+<p>Now you can mount the device and use it as usual.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">sudo mount /dev/mapper/label /mnt</code></pre></div>
+
+<h1 id="gpg">GPG</h1>
+
+<p>Now we know how to encrypt the whole disk with all data it
+contains. But as soon as we use it the data is not encrypted anymore.
+Also when we either want to transmit the data via a public network or
+upload it to some sort of server we definitely want it to be
+protected. But how to do it? One very prominent way is the asymmetric
+encryption using GPG. Asymmetric, because each party has both a public
+key it has to distribute to all persons it want to share the data with
+and a secret key no one else should ever have access to. Using the
+public key of another person a file can be encrypted in such a way it
+can only be decrypted using the corresponding secret key. By using
+your own public key, you can, of course, encrypt a file in such a way
+only you can access its content. This way you can upload sensitive and
+confidential data to servers like e.g. GitLab. But first, we have to
+generate a key if you do not have one yet.</p>
+
+<h3 id="generate-key">Generate key</h3>
+
+<p>We will do so using the command below. If you have <code>gpg2</code> installed,
+don&rsquo;t hesitate using it instead.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">gpg --full-gen-key</code></pre></div>
+
+<p>You will be asked a couple of questions. If you have no experience,</p>
+
+<h1 id="just-choose">just choose</h1>
+
+<pre><code>
+Now you can mount the device and use it as usual.
+
+``` bash
+sudo mount /dev/mapper/label /mnt
+</code></pre>
+
+<p>In case you plan to always decrypt the device using the same label,
+you can also create a corresponding entry in the <em>bottom</em> (since the
+file it getting parsed from top to bottom) of your <em>/etc/fstab</em>. This
+allows more easy mounting using particular permission. E.g. the
+following line allows a user to mount and unmount the device without
+<code>sudo</code>, to execute binaries located on it, and provides her read and
+write access.</p>
+
+<pre><code>## Be sure that the /media/label folder does exist
+/dev/mapper/label /media/label btrfs rw,exec,noauto,user,async,dev,suid 0 2
+</code></pre>
+
+<h1 id="gpg-1">GPG</h1>
+
+<pre><code class="language-bash"> sudo apt install dirmngr
+ sudo apt-mark auto gpgsm dirmngr
+</code></pre>
+
+<p><em>dirmngr</em> takes care of talking to the GPG keyserver since version
+ 2.1 All the examples you can find in the internet using the
+ <em>&ndash;keyserver</em> argument to <code>gpg</code> are obsolete.</p>
+
+<p><code>apt-mark</code> is a unified interface to set the properties of installed
+ package. Using the <em>auto</em> command, they are handled as installed
+ automatically and will be thus issued for the autoremoval as soon as
+ no other package is depending on them anymore.</p>
+
+<h3 id="generate-key-1">Generate key</h3>
+
+<pre><code class="language-bash">gpg2 --full-gen-key
+</code></pre>
+
+<p>Choose</p>
+
+<blockquote>
+<p>Please select what kind of key you want:
+(1) RSA and RSA (default)</p>
+</blockquote>
+
+<p>a keysize of 4096</p>
+
+<blockquote>
+<p>What keysize do you want? (3072)
+4096</p>
+</blockquote>
+
+<p>and expiration date in the near future.</p>
+
+<blockquote>
+<p>Please specify how long the key should be valid.
+0</p>
+</blockquote>
+
+<p>Enter email address, your real name, and a comment.</p>
+
+<p>Next, pick a secure passphrase (long! but also big and small letters
+and punctuation signs). Since we will use this passphrase to access
+our password store, using <code>pass generate</code>, which will be covered
+later, unfortunately is off the table. So set one you will still
+remember in a year.</p>
+
+<h3 id="publish-key">Publish key</h3>
+
+<p>In order for others encrypt data, like emails, with your public key,
+they, of course, have to get a hold of it first. A common thing to do
+is to upload it to a GPG keyserver. The command handling it does live
+outside of the GPG package nowadays and is not installed per default
+on most devices.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">sudo apt install dirmngr
+sudo apt-mark auto gpgsm dirmngr</code></pre></div>
+
+<p><code>dirmngr</code> takes care of talking to the GPG keyserver since version
+2.1 All the examples you can find in the internet using the
+<em>&ndash;keyserver</em> argument to <code>gpg</code> are obsolete.</p>
+
+<p><code>apt-mark</code> is a unified interface to set the properties of installed
+package. Using the <em>auto</em> command, they are handled as installed
+automatically and will be thus issued for the autoremoval as soon as
+no other package is depending on them anymore.</p>
+
+<p>Now, the following command will upload the public key associated with
+the key ID &lt;KEY_ID&gt;. You can find the ID by running <code>gpg --list-keys</code>.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">gpg --send-keys &lt;KEY_ID&gt;</code></pre></div>
+
+<h3 id="create-a-revokation-certificate">Create a revokation certificate.</h3>
+
+<p>But what if you loose your secret key or the corresponding passphrase?
+People will use your public key from one of the key servers and keep
+sending you encrypted files and email you are not able to open
+anymore. To get your key removed from the server, you need a so-called
+revokation certificate. It&rsquo;s best practice to generate it right away
+and store it on all your private hard disks and backups.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">gpg --output revoke.asc --gen-revoke &lt;KEY_ID&gt;</code></pre></div>
+
+<h3 id="export-and-import">Export and import</h3>
+
+<p>Instead, you can also import your key generated on another device. But
+be sure to <a href="https://linux.die.net/man/1/shred">shred</a> any intermediate
+copies of your private key.</p>
+
+<p>To be able to use it properly with local applications, you have to
+tell the system the secret key is actually yours.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gpg --edit-key &lt;KEY_ID&gt;
+gpg&gt; trust</code></pre></div>
+
+<p>You will be asked to select the trust level from one of following
+options:</p>
+
+<blockquote>
+<p>1 = I don&rsquo;t know or won&rsquo;t say <br />
+2 = I do NOT trust <br />
+3 = I trust marginally  <br />
+4 = I trust fully <br />
+5 = I trust ultimately <br />
+m = back to the main menu</p>
+</blockquote>
+
+<p>For further information check out the following <a href="https://easyengine.io/tutorials/linux/gpg-keys">link</a>.</p>
+
+<h3 id="encrypt-and-decrypt-a-single-file">Encrypt and decrypt a single file</h3>
+
+<p>Now, let&rsquo;s use our private key to encrypt a file just for ourselves.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">## Encrypting a file</span>
+gpg --encrypt -a --recipient &lt;KEY_ID&gt; file
+<span style="color:#75715e">## Decrypting a file</span>                               
+gpg --decrypt --output file file.asc</code></pre></div>
+
+<p>When en- and decrypting email using Thunderbird, you should use the
+<a href="https://addons.thunderbird.net/de/thunderbird/addon/lightning/">Lightning</a> plugin.</p>
+
+<h1 id="borg">borg</h1>
+
+<p>We already know how to secure our data and protect it from being
+accessed by unauthorized persons. But we also have to secure the data
+from possible crashes and degrading of hard disks in time. There are
+many different programs, which can handle backing up your data in
+Linux. I would recommend the usage of
+<a href="https://borgbackup.readthedocs.io/en/stable/#">borg</a>.</p>
+
+<p>Creates a folder called <em>borg_backups</em>, which will contain all
+archives.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">borg init --info -e repokey --show-rc borg_backups</code></pre></div>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">borg create --info --show-rc --exclude-if-present tmp/ --exclude-if-present Download/ --progress --list -x --compression lzma --dry-run borg_backups::archive1 ~/Documents</code></pre></div>
+
+<p>Creates an archive called <em>archive1</em> in <em>borg_backups</em>, which will contain your <em>Documents</em> folder.</p>
+
+<p>The archive will consume almost no disk space for files or parts of
+files that have already been stored in other archives. Therefore, why not putting the folders in different archives?</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">borg create --show-rc --progress --compression lzma --list --info borg_backups::dotedAbyzou ~/.<span style="color:#f92672">[</span>A-Z<span style="color:#f92672">]</span>* --exclude ~/.anaconda3 --exclude ~/.cache --exclude ~/.ccache --exclude ~/.npm --exclude ~/.go1.4 --exclude ~/.go1.11</code></pre></div>
+
+<h1 id="pass">pass</h1>
+
+<p>Generate safe passwords</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pass generate Email/provider <span style="color:#ae81ff">48</span> -n</code></pre></div>
+
+<p>Access the password
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pass show Email/provider</code></pre></div></p>
+
+	  </section>
+
+
+	  <footer class="post-footer">
+
+
+	    
+
+
+
+
+	    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Encryption%2c%20password%20management%2c%20and%20backups%20in%20Linux&nbsp;-&nbsp;theGreatWhiteShark&amp;url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fencryption-and-backup%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fencryption-and-backup%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fencryption-and-backup%2f&amp;description=Encryption%2c%20password%20management%2c%20and%20backups%20in%20Linux"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2fencryption-and-backup%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+	    
+
+<div id="disqus_thread"></div>
+<script>
+
+
+
+
+var disqus_config = function () {
+this.page.url = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/encryption-and-backup\/";  
+this.page.identifier = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/encryption-and-backup\/"; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://thegreatwhiteshark-coding-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+
+	  </footer>
+	</article>
+
+      </main>
+
+      
+      <aside class="read-next">
+  
+  
+  <a class="read-next-story prev" style="no-cover" href="/thegreatwhiteshark.coding.io/lightning-keymap-mode/">
+    <section class="post">
+      <h2>lightning-keymap-mode</h2>
+      
+        <h4>Reinventing navigation in Emacs</h4>
+      
+    </section>
+  </a>
+  
+</aside>
+
+      
+
+          <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">theGreatWhiteShark</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/index.js"></script>
+    
+</body>
+</html>
+
