@@ -91,7 +91,6 @@ more advanced one like [btrfs](https://en.wikipedia.org/wiki/Btrfs)
 with `mkfs.btrfs`. Optionally, you can override all existing data
 remaining on the disk (hidden and inaccessible).
 
- 
 {{< highlight Bash >}}
 sudo apt install dirmngr
 sudo apt-mark auto gpgsm dirmngr
@@ -148,6 +147,52 @@ gpg --full-gen-key
 
 You will be asked a couple of questions. If you have no experience,
 just choose 
+=======
+```
+
+Now you can mount the device and use it as usual.
+
+``` bash
+sudo mount /dev/mapper/label /mnt
+```
+
+In case you plan to always decrypt the device using the same label,
+you can also create a corresponding entry in the *bottom* (since the
+file it getting parsed from top to bottom) of your */etc/fstab*. This
+allows more easy mounting using particular permission. E.g. the
+following line allows a user to mount and unmount the device without
+`sudo`, to execute binaries located on it, and provides her read and
+write access. 
+
+```
+## Be sure that the /media/label folder does exist
+/dev/mapper/label /media/label btrfs rw,exec,noauto,user,async,dev,suid 0 2
+```
+
+
+# GPG
+ 
+ ``` bash
+ sudo apt install dirmngr
+ sudo apt-mark auto gpgsm dirmngr
+ ```
+ 
+ *dirmngr* takes care of talking to the GPG keyserver since version
+ 2.1 All the examples you can find in the internet using the
+ *--keyserver* argument to `gpg` are obsolete.
+ 
+ `apt-mark` is a unified interface to set the properties of installed
+ package. Using the *auto* command, they are handled as installed
+ automatically and will be thus issued for the autoremoval as soon as
+ no other package is depending on them anymore.
+ 
+### Generate key
+
+``` bash
+gpg2 --full-gen-key
+```
+
+Choose 
 
 > Please select what kind of key you want:
 > (1) RSA and RSA (default)
@@ -157,7 +202,7 @@ a keysize of 4096
 > What keysize do you want? (3072)
 > 4096
 
-and no expiration date
+and expiration date in the near future.
 
 > Please specify how long the key should be valid.
 > 0
@@ -280,7 +325,6 @@ files that have already been stored in other archives. Therefore, why not puttin
 {{< highlight bash >}}
 borg create --show-rc --progress --compression lzma --list --info borg_backups::dotedAbyzou ~/.[A-Z]* --exclude ~/.anaconda3 --exclude ~/.cache --exclude ~/.ccache --exclude ~/.npm --exclude ~/.go1.4 --exclude ~/.go1.11
 {{< / highlight >}}
-
 
 # pass
 
