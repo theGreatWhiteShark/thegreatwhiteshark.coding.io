@@ -31,12 +31,14 @@
     
     <meta property="og:description" content="Be it malicious crackers, evil governments, or all-devouring US companies, we have to protect our data from their greedy grasps. But in the beginning it seems to be such a hard task. There are tons of tools and one does neither want to spend several weeks on reading documentation nor to use insecure ones. To alleviate this pain, I will give a short introduction by presenting four simple but essential tools: **dm-crypt/LUKS** for hard disk encryption, **GnuPG** for encrypting individual files, emails etc., **borg** to securely and efficiently backup your data, and **pass** to manage and store your passwords." />
   	<meta property="og:type" content="article" />
-    <meta property="article:published_time" content="2019-03-17T13:49:50&#43;01:00" />
+    <meta property="article:published_time" content="2019-03-22T13:49:50&#43;01:00" />
 
     
     <meta property="article:tag" content="Linux" />
     
     <meta property="article:tag" content="data" />
+    
+    <meta property="article:tag" content="encryption" />
     
     
 
@@ -99,17 +101,17 @@
     },
     "headline": Encryption, password management, and backups in Linux,
     "name": Encryption, password management, and backups in Linux,
-    "wordCount": 1832,
-    "timeRequired": "PT9M",
+    "wordCount": 1977,
+    "timeRequired": "PT10M",
     "inLanguage": {
       "@type": "Language",
       "alternateName": en
     },
     "url": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/encryption-and-backup/,
-    "datePublished": 2019-03-17T13:49Z,
-    "dateModified": 2019-03-17T13:49Z,
+    "datePublished": 2019-03-22T13:49Z,
+    "dateModified": 2019-03-22T13:49Z,
     
-    "keywords": Linux, data,
+    "keywords": Linux, data, encryption,
     "description": Be it malicious crackers, evil governments, or all-devouring US companies, we have to protect our data from their greedy grasps. But in the beginning it seems to be such a hard task. There are tons of tools and one does neither want to spend several weeks on reading documentation nor to use insecure ones. To alleviate this pain, I will give a short introduction by presenting four simple but essential tools: **dm-crypt/LUKS** for hard disk encryption, **GnuPG** for encrypting individual files, emails etc., **borg** to securely and efficiently backup your data, and **pass** to manage and store your passwords.,
     "mainEntityOfPage": {
         "@type": "WebPage",
@@ -210,14 +212,16 @@
 	    <hr class="post-description-separator"/>
             <section class="post-meta">
               
-              <time class="post-date" datetime="2019-03-17T13:49:50&#43;01:00">
-		Mar 17, 2019
+              <time class="post-date" datetime="2019-03-22T13:49:50&#43;01:00">
+		Mar 22, 2019
               </time>
               
               
               <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/linux/">#Linux</a></span>
               
               <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/data/">#data</a></span>
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/encryption/">#encryption</a></span>
               
             </section>
 	  </header>
@@ -227,24 +231,24 @@
 
 <p>Since at least the revelations of Edward Snowden we know that
 encryption is not just an important but also a quite pressing
-issue. But, unfortunately, there is no one size fits all algorithm
+issue. But, unfortunately, there is no one-size-fits-all algorithm
 that works with all kinds of data and communication protocols. We are
 therefore bound to at least peek into different topics of this rather
 complex field. But don&rsquo;t be afraid. I wrote this introduction with
 people at a beginner level in Linux in mind and won&rsquo;t touch a single
-bit of mathematical theory on encryption in here.</p>
+bit of mathematical theory on encryption.</p>
 
 <p>Most of the tools presented here work independent of each other except
-of the <em>pass</em> program, which depends on a proper <em>GnuPG</em> setup. For
+of <code>pass</code>, which depends on a proper <em>GnuPG</em> setup. For
 the remaining parts you don&rsquo;t have to read the post as a whole but can
-only pick those topics you are most interested in. We will start with
+pick those topics instead you are most interested in. We will start with
 the encryption of entire disks using
 <a href="https://gitlab.com/cryptsetup/cryptsetup/wikis/DMCrypt">dm-crypt/LUKS</a>. Then
 a guide to set up the <a href="https://gnupg.org/">GnuPG</a> either from scratch
 or by importing an existing key is presented in addition with some
 remarks of how to use it for encrypting files and emails. The same
-encryption mechanism will be also used when backing up your system
-using <a href="https://borgbackup.readthedocs.io/en/stable/">borg</a> and storing
+encryption mechanism will also be used when backing up your system
+with <a href="https://borgbackup.readthedocs.io/en/stable/">borg</a> and storing
 and managing your passwords using
 <a href="https://www.passwordstore.org/">pass</a>, which both will be explained
 in the two remaining sections.</p>
@@ -254,7 +258,7 @@ in the two remaining sections.</p>
 <p>Whether you hard disk or laptop gets stolen, you have to save personal
 data under the jurisdiction of the <a href="https://en.wikipedia.org/wiki/General_Data_Protection_Regulation">General Data Protection
 Regulation</a>
-(in Europe), or there is a policy search and massive seizures in your
+(in Europe), or there is a police search and massive seizures in your
 local hackspace or at home, you don&rsquo;t want your data to be accessed by
 unauthorized persons. But since you might use these devices on a daily
 basis and maybe even in combination with different platforms, you want
@@ -263,15 +267,15 @@ operation system.</p>
 
 <p>This is where
 <a href="https://gitlab.com/cryptsetup/cryptsetup/wikis/DMCrypt">dm-crypt/LUKS</a>
-and its Linux frontend <code>cryptsetup</code> comes into play. There is an
-implementation for Windows systems, although I never tried it, and it
-allows you to access and use your hard disk as usual after providing
-your password once per startup independent on your particular choice
-of file system of that disk. It is also used when you decide to encrypt
-your home folder during the installation of Linux.</p>
+and its Linux frontend <code>cryptsetup</code> enters. There is an implementation
+for Windows systems, although I never tried it, and it allows you to
+access and use your hard disk as usual after providing your password
+once per startup independent on your particular choice of file system
+of that disk. It is also used when you decide to encrypt your home
+folder during the installation of Linux.</p>
 
 <p>To encrypt a disk using LUKS, we will use the following command in a
-bash shell. Note that you have to exchange the <em>/dev/sdX</em> with your
+bash shell. Note that you have to exchange the <em>/dev/sdX</em> with the
 particular file representation. Use the commands <code>lsblk -f</code> or
 <code>ls -ctAl /dev/disk/by-id</code> to find the disk you are looking for. Also
 note that after this step you can not access the data present on your
@@ -286,15 +290,15 @@ the device later on. Be sure to not forget this one!</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">sudo cryptsetup luksOpen /dev/sdX label</code></pre></div>
 
-<p>It will use the device mapper to allow access to the encrypted device
-under the path <em>/dev/mapper/label</em>. All data read from or written to
-this location will be de- or encrypted on the fly. So, accessing such
-an encrypted device is bound to be both slower and to consume more
-energy.</p>
+<p>It will use the device mapper to allow the access to the encrypted
+device via the path <em>/dev/mapper/label</em>. All data read from or
+written to this location will be de- or encrypted on the fly. So,
+accessing such an encrypted device is bound to be both slower and to
+consume more energy.</p>
 
-<p>If you already set up a file system on the device, jump right to the
-mounting of the device and use it like an unencrypted one. If you, on
-the other hand, just used the <code>cryptsetup luksFormat</code> command, the
+<p>If you had already set up a file system on the device, jump right to
+the mounting of the device and use it like an unencrypted one. If you,
+on the other hand, just used the <code>cryptsetup luksFormat</code> command, the
 device has no file system and we have to create one. Which one is
 totally up to you. You can either create the default
 <a href="https://en.wikipedia.org/wiki/Ext4">ext4</a> one using <code>mkfs.ext4</code> or a
@@ -302,21 +306,8 @@ more advanced one like <a href="https://en.wikipedia.org/wiki/Btrfs">btrfs</a>
 with <code>mkfs.btrfs</code>. Optionally, you can override all existing data
 remaining on the disk (hidden and inaccessible).</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">sudo apt install dirmngr
-sudo apt-mark auto gpgsm dirmngr</code></pre></div>
-
-<p><em>dirmngr</em> takes care of talking to the GPG keyserver since version
- 2.1 All the examples you can find in the internet using the
- <em>&ndash;keyserver</em> argument to <code>gpg</code> are obsolete.</p>
-
-<p><code>apt-mark</code> is a unified interface to set the properties of installed
- package. Using the <em>auto</em> command, they are handled as installed
- automatically and will be thus issued for the autoremoval as soon as
- no other package is depending on them anymore.</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash"><span style="color:#75715e">## Override all existing data</span>
 sudo dd <span style="color:#66d9ef">if</span><span style="color:#f92672">=</span>/dev/zero of<span style="color:#f92672">=</span>/dev/mapper/label
-
 <span style="color:#75715e">## Create a file system on the device.</span>
 sudo mkfs.btrfs /dev/mapper/label</code></pre></div>
 
@@ -326,20 +317,21 @@ sudo mkfs.btrfs /dev/mapper/label</code></pre></div>
 
 <h1 id="gpg">GPG</h1>
 
-<p>Now we know how to encrypt the whole disk with all data it
-contains. But as soon as we use it the data is not encrypted anymore.
-Also when we either want to transmit the data via a public network or
-upload it to some sort of server we definitely want it to be
-protected. But how to do it? One very prominent way is the asymmetric
-encryption using GPG. Asymmetric, because each party has both a public
-key it has to distribute to all persons it want to share the data with
-and a secret key no one else should ever have access to. Using the
-public key of another person a file can be encrypted in such a way it
-can only be decrypted using the corresponding secret key. By using
-your own public key, you can, of course, encrypt a file in such a way
-only you can access its content. This way you can upload sensitive and
-confidential data to servers like e.g. GitLab. But first, we have to
-generate a key if you do not have one yet.</p>
+<p>We know how to encrypt the whole disk with all data it contains. But
+as soon as we use it, the data is not encrypted anymore. Also when we
+either want to transmit the data via a public network or upload it to
+some sort of server, we definitely want it to be protected. But how to
+do it? One very prominent way is the asymmetric encryption using
+GPG. Asymmetric, because each party has both a <em>public key</em> it has to
+distribute to all persons it want to share the data with and a <em>secret
+key</em> no one else should ever have access to. Using the public key of
+another person a file can be encrypted in such a way it can only be
+decrypted using by the person itself with the help of the
+corresponding secret key. By using your own public key, you can also
+encrypt a file in such a way only you can access its content. This way
+you can upload sensitive and confidential data to servers like
+e.g. GitLab. But first, we have to generate a key if you do not have
+one yet.</p>
 
 <h3 id="generate-key">Generate key</h3>
 
@@ -348,50 +340,8 @@ don&rsquo;t hesitate using it instead.</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">gpg --full-gen-key</code></pre></div>
 
-<p>You will be asked a couple of questions. If you have no experience,</p>
-
-<h1 id="just-choose">just choose</h1>
-
-<pre><code>
-Now you can mount the device and use it as usual.
-
-``` bash
-sudo mount /dev/mapper/label /mnt
-</code></pre>
-
-<p>In case you plan to always decrypt the device using the same label,
-you can also create a corresponding entry in the <em>bottom</em> (since the
-file it getting parsed from top to bottom) of your <em>/etc/fstab</em>. This
-allows more easy mounting using particular permission. E.g. the
-following line allows a user to mount and unmount the device without
-<code>sudo</code>, to execute binaries located on it, and provides her read and
-write access.</p>
-
-<pre><code>## Be sure that the /media/label folder does exist
-/dev/mapper/label /media/label btrfs rw,exec,noauto,user,async,dev,suid 0 2
-</code></pre>
-
-<h1 id="gpg-1">GPG</h1>
-
-<pre><code class="language-bash"> sudo apt install dirmngr
- sudo apt-mark auto gpgsm dirmngr
-</code></pre>
-
-<p><em>dirmngr</em> takes care of talking to the GPG keyserver since version
- 2.1 All the examples you can find in the internet using the
- <em>&ndash;keyserver</em> argument to <code>gpg</code> are obsolete.</p>
-
-<p><code>apt-mark</code> is a unified interface to set the properties of installed
- package. Using the <em>auto</em> command, they are handled as installed
- automatically and will be thus issued for the autoremoval as soon as
- no other package is depending on them anymore.</p>
-
-<h3 id="generate-key-1">Generate key</h3>
-
-<pre><code class="language-bash">gpg2 --full-gen-key
-</code></pre>
-
-<p>Choose</p>
+<p>You will be asked a couple of questions. If you have no experience,
+just choose</p>
 
 <blockquote>
 <p>Please select what kind of key you want:
@@ -405,24 +355,18 @@ write access.</p>
 4096</p>
 </blockquote>
 
-<p>and expiration date in the near future.</p>
-
-<blockquote>
-<p>Please specify how long the key should be valid.
-0</p>
-</blockquote>
-
-<p>Enter email address, your real name, and a comment.</p>
+<p>and expiration date in the near future. Enter your email address, your
+real name, and a comment if you wish to.</p>
 
 <p>Next, pick a secure passphrase (long! but also big and small letters
 and punctuation signs). Since we will use this passphrase to access
 our password store, using <code>pass generate</code>, which will be covered
-later, unfortunately is off the table. So set one you will still
-remember in a year.</p>
+later, unfortunately is off the table. So, be sure to set one you will
+still remember in years.</p>
 
 <h3 id="publish-key">Publish key</h3>
 
-<p>In order for others encrypt data, like emails, with your public key,
+<p>In order for others to encrypt data, like emails, with your public key,
 they, of course, have to get a hold of it first. A common thing to do
 is to upload it to a GPG keyserver. The command handling it does live
 outside of the GPG package nowadays and is not installed per default
@@ -432,13 +376,15 @@ on most devices.</p>
 sudo apt-mark auto gpgsm dirmngr</code></pre></div>
 
 <p><code>dirmngr</code> takes care of talking to the GPG keyserver since version
-2.1 All the examples you can find in the internet using the
-<em>&ndash;keyserver</em> argument to <code>gpg</code> are obsolete.</p>
+2.1. All the examples you can find in the internet using the
+<code>--keyserver</code> argument to <code>gpg</code> are obsolete.</p>
 
 <p><code>apt-mark</code> is a unified interface to set the properties of installed
 package. Using the <em>auto</em> command, they are handled as installed
 automatically and will be thus issued for the autoremoval as soon as
-no other package is depending on them anymore.</p>
+no other package is depending on them anymore. We run it here since we
+do not have any use of the dirmngr package after removing our GPG
+toolchain.</p>
 
 <p>Now, the following command will upload the public key associated with
 the key ID &lt;KEY_ID&gt;. You can find the ID by running <code>gpg --list-keys</code>.</p>
@@ -449,7 +395,7 @@ the key ID &lt;KEY_ID&gt;. You can find the ID by running <code>gpg --list-keys<
 
 <p>But what if you loose your secret key or the corresponding passphrase?
 People will use your public key from one of the key servers and keep
-sending you encrypted files and email you are not able to open
+sending you encrypted files and emails you are not able to open
 anymore. To get your key removed from the server, you need a so-called
 revokation certificate. It&rsquo;s best practice to generate it right away
 and store it on all your private hard disks and backups.</p>
@@ -458,9 +404,10 @@ and store it on all your private hard disks and backups.</p>
 
 <h3 id="export-and-import">Export and import</h3>
 
-<p>Instead, you can also import your key generated on another device. But
-be sure to <a href="https://linux.die.net/man/1/shred">shred</a> any intermediate
-copies of your private key.</p>
+<p>Instead of generating a new key, you can also import your key
+generated on another device. But be sure to
+<a href="https://linux.die.net/man/1/shred">shred</a> any intermediate copies of
+your private key.</p>
 
 <p>To be able to use it properly with local applications, you have to
 tell the system the secret key is actually yours.</p>
@@ -480,19 +427,22 @@ options:</p>
 m = back to the main menu</p>
 </blockquote>
 
-<p>For further information check out the following <a href="https://easyengine.io/tutorials/linux/gpg-keys">link</a>.</p>
+<p>For further information check out the following
+<a href="https://easyengine.io/tutorials/linux/gpg-keys">link</a>.</p>
 
 <h3 id="encrypt-and-decrypt-a-single-file">Encrypt and decrypt a single file</h3>
 
-<p>Now, let&rsquo;s use our private key to encrypt a file just for ourselves.</p>
+<p>Now, let&rsquo;s use our own public key to encrypt a file just for
+ourselves.</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">## Encrypting a file</span>
 gpg --encrypt -a --recipient &lt;KEY_ID&gt; file
-<span style="color:#75715e">## Decrypting a file</span>                               
+<span style="color:#75715e">## Decrypting a file</span>
 gpg --decrypt --output file file.asc</code></pre></div>
 
-<p>When en- and decrypting email using Thunderbird, you should use the
-<a href="https://addons.thunderbird.net/de/thunderbird/addon/lightning/">Lightning</a> plugin.</p>
+<p>When en- and decrypting emails using Thunderbird, you should use the
+<a href="https://addons.thunderbird.net/de/thunderbird/addon/lightning/">Lightning</a>
+plugin.</p>
 
 <h1 id="borg">borg</h1>
 
@@ -501,30 +451,79 @@ accessed by unauthorized persons. But we also have to secure the data
 from possible crashes and degrading of hard disks in time. There are
 many different programs, which can handle backing up your data in
 Linux. I would recommend the usage of
-<a href="https://borgbackup.readthedocs.io/en/stable/#">borg</a>.</p>
+<a href="https://borgbackup.readthedocs.io/en/stable/#">borg</a>. It provides a
+comprehensive documentation, a convenient command line interface, and
+some very attractive features. Most importantly it produces
+dedublicated backups, meaning if you backup one set of folders and
+then backup a second one all data shared between these two sets will
+just be linked and not stored twice. This is very convenient when
+having different machines with similar setups or when performing
+(automated) snapshots.</p>
 
-<p>Creates a folder called <em>borg_backups</em>, which will contain all
-archives.</p>
+<p>First, we have to initialized the repository, which will contain all
+archives and data. I call it <em>borg_backups</em> in here but you can, of
+course, pick a different name.</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">borg init --info -e repokey --show-rc borg_backups</code></pre></div>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">borg create --info --show-rc --exclude-if-present tmp/ --exclude-if-present Download/ --progress --list -x --compression lzma --dry-run borg_backups::archive1 ~/Documents</code></pre></div>
+<p>The <code>-e repokey</code> option enables encryption for the backup and asks you
+for a passphrase to protect it.</p>
 
-<p>Creates an archive called <em>archive1</em> in <em>borg_backups</em>, which will contain your <em>Documents</em> folder.</p>
+<p>The following command now creates an archive called <em>archive1</em> in
+<em>borg_backups</em>, which will contain your <em>Documents</em> folder but
+excludes all folders called &lsquo;Download&rsquo; and &lsquo;tmp&rsquo;.</p>
 
-<p>The archive will consume almost no disk space for files or parts of
-files that have already been stored in other archives. Therefore, why not putting the folders in different archives?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">borg create --info --show-rc --exclude-if-present tmp/ --exclude-if-present Download/ --progress --list -x --compression lzma borg_backups::archive1 ~/Documents</code></pre></div>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">borg create --show-rc --progress --compression lzma --list --info borg_backups::dotedAbyzou ~/.<span style="color:#f92672">[</span>A-Z<span style="color:#f92672">]</span>* --exclude ~/.anaconda3 --exclude ~/.cache --exclude ~/.ccache --exclude ~/.npm --exclude ~/.go1.4 --exclude ~/.go1.11</code></pre></div>
+<p>The <code>--compression zlma</code> option specifies the level of compression of
+the backup, <code>-x</code> excludes all file systems mounted into the specified
+folder tree, and <code>--info --show-rc --list --progress</code> provide you with
+detailed information what borg is doing and if it works properly. You
+can list all archives in a repository using the <code>borg list</code> and mount
+them using the <code>borg mount</code> command. Quite intuitive, isn&rsquo;t it?</p>
 
 <h1 id="pass">pass</h1>
 
-<p>Generate safe passwords</p>
+<p>Last but not least, what do we do about our passwords? It is
+advised to have very long and complicated passwords and to never use
+the same password for web pages or accounts, which are topically
+related. But how to keep track of and remember all these passwords and
+how to come up with safe ones? For all of these problems
+<a href="https://www.passwordstore.org/">pass</a> will be our command line
+solution of choice.</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pass generate Email/provider <span style="color:#ae81ff">48</span> -n</code></pre></div>
+<p>Firstly, we have to initialize the password store using our personal
+GPG key. This means the whole store is encrypted using GPG and only
+you can read it. Even more reason to remember your passphrase and to
+backup your private key.</p>
 
-<p>Access the password
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pass show Email/provider</code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pass init &lt;KEY_ID&gt;</code></pre></div>
+
+<p>Now, we can both insert existing passwords into the store and create
+new and safe ones from scratch.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">## Insert a password</span>
+pass insert Email/provider1
+<span style="color:#75715e">## Generate a password</span>
+pass generate Email/provider2 <span style="color:#ae81ff">48</span> -n</code></pre></div>
+
+<p>It&rsquo;s good practice to keep a structure like &lsquo;Email/provider1&rsquo; and
+&lsquo;Account/service3&rsquo; (with &lsquo;provider1&rsquo; and &lsquo;service3&rsquo; being replaced by
+the actual names, of course ;)) since it introduces a tree-like
+structure in your password store, which is more easy to navigate. The
+generated key will be 48 characters long, completely random, and due
+to the <code>-n</code> option only consisting of ASCII symbols. But such random
+passwords are only applicable if you solely access the associated
+account via a computer containing or at least having access to your
+password store. You certainly do not want to memorise those monsters.</p>
+
+<p>To list all available passwords and access a specific one password,
+you can use the commands below.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">## List all stored passwords</span>
+pass list
+<span style="color:#75715e">## Access a particular password</span>
+pass show Email/provider</code></pre></div>
 
 	  </section>
 

@@ -6,7 +6,7 @@
     <description>Recent content in Post on theGreatWhiteShark</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 Mar 2019 13:49:50 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 22 Mar 2019 13:49:50 +0100</lastBuildDate>
     
 	<atom:link href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/post/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,10 +14,10 @@
     <item>
       <title>Encryption, password management, and backups in Linux</title>
       <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/encryption-and-backup/</link>
-      <pubDate>Sun, 17 Mar 2019 13:49:50 +0100</pubDate>
+      <pubDate>Fri, 22 Mar 2019 13:49:50 +0100</pubDate>
       
       <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/encryption-and-backup/</guid>
-      <description>Since at least the revelations of Edward Snowden we know that encryption is not just an important but also a quite pressing issue. But, unfortunately, there is no one size fits all algorithm that works with all kinds of data and communication protocols. We are therefore bound to at least peek into different topics of this rather complex field. But don&amp;rsquo;t be afraid. I wrote this introduction with people at a beginner level in Linux in mind and won&amp;rsquo;t touch a single bit of mathematical theory on encryption in here.</description>
+      <description>Since at least the revelations of Edward Snowden we know that encryption is not just an important but also a quite pressing issue. But, unfortunately, there is no one-size-fits-all algorithm that works with all kinds of data and communication protocols. We are therefore bound to at least peek into different topics of this rather complex field. But don&amp;rsquo;t be afraid. I wrote this introduction with people at a beginner level in Linux in mind and won&amp;rsquo;t touch a single bit of mathematical theory on encryption.</description>
     </item>
     
     <item>
