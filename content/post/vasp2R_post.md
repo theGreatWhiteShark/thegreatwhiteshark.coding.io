@@ -49,7 +49,7 @@ is smaller in size and I want to keep package’s size at a minimum.
 
 First of all you have to be sure of have the **vasp2R** package
 installed.
-```{r}
+``` r
 check.validity <- try( library( "vasp2R" ), silent = TRUE )
 if ( class( check.validity ) == "try-error" ){
     ## the package is not installed yet
@@ -62,8 +62,7 @@ During installation the CHG files is copied as one of the package's
 assets on the hard disk. We will import it into R using the
 *vasp.import* function.
 
-```{r import, cache = TRUE}
-
+``` r
 data.imported <- vasp.import( system.file( "example/CHG",
                                           package = "vasp2R" ) )
 ```
@@ -101,14 +100,13 @@ entries of a specific row correspond to a specific vector.
 Afterwards we will reproduce the imported VASP results of a single Ni
 atom with periodic boundary conditions to make it actually look like a
 surface.
-```{r reproduce, dependson = 'import', cache = TRUE}
+``` r
 data.reproduced <- vasp.reproduce( data.imported, x.rep = seq( -3, 3 ),
                                   y.rep = seq( -3, 3 ) )
 ## the x.rep, y.rep and z.rep argument of the vasp.reproduce function
 ## have to be supplied using a numerical vector. In the above example
 ## the unit cell is going to be reproduced three times in the positive
 ## and negative direction along both the x and y axis.
-
 ```
 
 
@@ -123,20 +121,16 @@ We can also rotate the positions to change our point of view. For such
 a clean and symmetric surface this is a little bit useless. But for
 more complex structures it will become quite handy.
 
-```{r rotate, dependson = 'reproduce', cache = TRUE}
-
+``` r
 data.rotated <- vasp.rotate.cell( data.reproduced, angle = 45* pi/ 180 )
-
 ```
 
 ## Creating bonds between atoms
 Then we establish bonds between the individual atoms (for a better
 visualization of the results).
 
-```{r bonding, dependson = 'rotate', cache = TRUE}
-
+``` r
 data.bonds <- vasp.bonds( data.rotated, distance = 8 )
-
 ```
 
 The *vasp.bonds* function will create bonds between all atoms closer
@@ -173,8 +167,7 @@ There are two main problems in visualizing the charge density:
 So instead we create an evenly grid of variable size and calculate the
 mean charge density in each of those grid boxes.
 
-```{r plot, dependson = 'bonding', cache = TRUE}
-
+``` r
 library( ggplot2 )
 library( RColorBrewer ) # For nice colors out of the bxo
 color.atom <- "navy"
@@ -253,17 +246,14 @@ vasp.plot <- function( vasp.input, z = 0, grid.point.number = 20 ){
 }
 
 vasp.plot( data.imported, 0, 20 )
-    
 ```
 
 ![unit cell](/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/imported.png)
 
 And for the reproduced one
 
-```{r, dependson = 'plot'}
-
+``` r
 vasp.plot( data.reproduced, 0, 20 )
-
 ```
 
 ![reproduced plot](/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/reproduced.png)
@@ -273,8 +263,7 @@ Pretty good so far. Now lets introduce the bonds to the plotting.
 The *data.bonds$bonds* element contains the point of the beginning and
 end of all the extracted bonds.
 
-```{r, dependson = 'plot'}
-
+``` r
 vasp.plot( data.bonds, 0, 20 ) +
     ## extract just the bonds within the considered plane
     geom_segment( data = data.bonds$bonds[
@@ -282,7 +271,6 @@ vasp.plot( data.bonds, 0, 20 ) +
                       data.bonds$bonds$z.end == 0, ],
                  aes( x = x.begin, y = y.begin, xend = x.end,
                      yend = y.end ), colour = color.atom, size = 1 )
-
 ```
 
 
@@ -294,8 +282,7 @@ If we want to have additional bonds to the next nearest neighbors we
 just have to increase the *distance* argument in the *vasp.bonds*
 function. (this time without rotation)
 
-```{r, dependson = 'plot'}
-
+``` r
 data.plot <- vasp.bonds( data.reproduced, distance = 15 )
 
 vasp.plot( data.plot, 0, 20 ) +
@@ -305,7 +292,6 @@ vasp.plot( data.plot, 0, 20 ) +
                       data.plot$bonds$z.end == 0, ],
                  aes( x = x.begin, y = y.begin, xend = x.end,
                      yend = y.end ), colour = color.atom, size = 1 )
-
 ```
 
 ![bonds](/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/bonds2.png)
