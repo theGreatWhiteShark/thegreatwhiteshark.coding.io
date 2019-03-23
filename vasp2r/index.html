@@ -264,8 +264,8 @@ installed.</p>
 <p>During installation the CHG files is copied as one of the package&rsquo;s
 assets on the hard disk. We will import it into R using the
 <em>vasp.import</em> function.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r import, cache = TRUE" data-lang="r import, cache = TRUE"><span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">imported</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">vasp</span>.<span style="color:#f92672">import</span>( <span style="color:#a6e22e">system</span>.<span style="color:#a6e22e">file</span>( <span style="color:#e6db74">&#34;example/CHG&#34;</span>,
-                                          <span style="color:#f92672">package</span> = <span style="color:#e6db74">&#34;vasp2R&#34;</span> ) )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">data.imported <span style="color:#f92672">&lt;-</span> vasp.import( <span style="color:#66d9ef">system.file</span>( <span style="color:#e6db74">&#34;example/CHG&#34;</span>,
+                                          package <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;vasp2R&#34;</span> ) )</code></pre></div>
 <h2 id="structure-of-the-imported-vasp-object">Structure of the imported vasp object</h2>
 
 <p>The resulting object <em>data.imported</em> is of class <strong>vasp</strong> and inherits
@@ -300,12 +300,12 @@ entries of a specific row correspond to a specific vector.</p>
 <p>Afterwards we will reproduce the imported VASP results of a single Ni
 atom with periodic boundary conditions to make it actually look like a
 surface.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r reproduce, dependson = 'import', cache = TRUE" data-lang="r reproduce, dependson = 'import', cache = TRUE">data.reproduced &lt;- vasp.reproduce( data.imported, x.rep = seq( -3, 3 ),
-                                  y.rep = seq( -3, 3 ) )
-## the x.rep, y.rep and z.rep argument of the vasp.reproduce function
-## have to be supplied using a numerical vector. In the above example
-## the unit cell is going to be reproduced three times in the positive
-## and negative direction along both the x and y axis.</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">data.reproduced <span style="color:#f92672">&lt;-</span> vasp.reproduce( data.imported, x.rep <span style="color:#f92672">=</span> <span style="color:#66d9ef">seq</span>( <span style="color:#ae81ff">-3</span>, <span style="color:#ae81ff">3</span> ),
+                                  y.rep <span style="color:#f92672">=</span> <span style="color:#66d9ef">seq</span>( <span style="color:#ae81ff">-3</span>, <span style="color:#ae81ff">3</span> ) )
+<span style="color:#75715e">## the x.rep, y.rep and z.rep argument of the vasp.reproduce function</span>
+<span style="color:#75715e">## have to be supplied using a numerical vector. In the above example</span>
+<span style="color:#75715e">## the unit cell is going to be reproduced three times in the positive</span>
+<span style="color:#75715e">## and negative direction along both the x and y axis.</span></code></pre></div>
 <p>Most of the functions in vasp2R can be called with either the whole
 object of class <strong>vasp</strong> or with the individual elements. So its also
 possible to call <em>vasp.reproduce( data.imported$atoms )</em> to calculate
@@ -316,12 +316,12 @@ just a reproduced version of the atomic positions.</p>
 <p>We can also rotate the positions to change our point of view. For such
 a clean and symmetric surface this is a little bit useless. But for
 more complex structures it will become quite handy.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r rotate, dependson = 'reproduce', cache = TRUE" data-lang="r rotate, dependson = 'reproduce', cache = TRUE">data.rotated &lt;- vasp.rotate.cell( data.reproduced, angle = 45* pi/ 180 )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">data.rotated <span style="color:#f92672">&lt;-</span> vasp.rotate.cell( data.reproduced, angle <span style="color:#f92672">=</span> <span style="color:#ae81ff">45</span><span style="color:#f92672">*</span> <span style="color:#66d9ef">pi</span><span style="color:#f92672">/</span> <span style="color:#ae81ff">180</span> )</code></pre></div>
 <h2 id="creating-bonds-between-atoms">Creating bonds between atoms</h2>
 
 <p>Then we establish bonds between the individual atoms (for a better
 visualization of the results).</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r bonding, dependson = 'rotate', cache = TRUE" data-lang="r bonding, dependson = 'rotate', cache = TRUE">data.bonds &lt;- vasp.bonds( data.rotated, distance = 8 )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">data.bonds <span style="color:#f92672">&lt;-</span> vasp.bonds( data.rotated, distance <span style="color:#f92672">=</span> <span style="color:#ae81ff">8</span> )</code></pre></div>
 <p>The <em>vasp.bonds</em> function will create bonds between all atoms closer
 together than the supplied distance value within the x-y plane.</p>
 
@@ -357,102 +357,101 @@ of thousand points)</li>
 
 <p>So instead we create an evenly grid of variable size and calculate the
 mean charge density in each of those grid boxes.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r plot, dependson = 'bonding', cache = TRUE" data-lang="r plot, dependson = 'bonding', cache = TRUE">library( ggplot2 )
-library( RColorBrewer ) # For nice colors out of the bxo
-color.atom &lt;- &#34;navy&#34;
-color.gradient &lt;- &#34;YlOrRd&#34; # a RColorBrewer palette
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">library</span>( ggplot2 )
+<span style="color:#f92672">library</span>( RColorBrewer ) <span style="color:#75715e"># For nice colors out of the bxo</span>
+color.atom <span style="color:#f92672">&lt;-</span> <span style="color:#e6db74">&#34;navy&#34;</span>
+color.gradient <span style="color:#f92672">&lt;-</span> <span style="color:#e6db74">&#34;YlOrRd&#34;</span> <span style="color:#75715e"># a RColorBrewer palette</span>
 
-## Here we will create a plot function taking a z value, create
-## a slice at this specific value and plots it along with the atomic
-## positions in the x-y plane
-vasp.plot &lt;- function( vasp.input, z = 0, grid.point.number = 20 ){
-    ## Check out RColorBrewer::brewer.pal.info for different ones
+<span style="color:#75715e">## Here we will create a plot function taking a z value, create</span>
+<span style="color:#75715e">## a slice at this specific value and plots it along with the atomic</span>
+<span style="color:#75715e">## positions in the x-y plane</span>
+vasp.plot <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">function</span>( vasp.input, z <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, grid.point.number <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span> ){
+    <span style="color:#75715e">## Check out RColorBrewer::brewer.pal.info for different ones</span>
 
-    ## Determine the z grid point closed to the supplied z value
-    ## This is not the actual height value but its index in
-    ## vasp.input$charge$z!
-    plot.height &lt;- which( abs( unique( vasp.input$charge$z ) - z ) == 
-                          min( abs( unique( vasp.input$charge$z ) - z ) ) )
-    ## Extract just those values of the charge density corresponding to
-    ## the determined slice grid point
-    slice.charge &lt;-  vasp.input$charge[
-        vasp.input$charge[ &#34;z&#34; ] == unique( vasp.input$charge$z )[
+    <span style="color:#75715e">## Determine the z grid point closed to the supplied z value</span>
+    <span style="color:#75715e">## This is not the actual height value but its index in</span>
+    <span style="color:#75715e">## vasp.input$charge$z!</span>
+    plot.height <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">which</span>( <span style="color:#66d9ef">abs</span>( <span style="color:#66d9ef">unique</span>( vasp.input<span style="color:#f92672">$</span>charge<span style="color:#f92672">$</span>z ) <span style="color:#f92672">-</span> z ) <span style="color:#f92672">==</span> 
+                          <span style="color:#66d9ef">min</span>( <span style="color:#66d9ef">abs</span>( <span style="color:#66d9ef">unique</span>( vasp.input<span style="color:#f92672">$</span>charge<span style="color:#f92672">$</span>z ) <span style="color:#f92672">-</span> z ) ) )
+    <span style="color:#75715e">## Extract just those values of the charge density corresponding to</span>
+    <span style="color:#75715e">## the determined slice grid point</span>
+    slice.charge <span style="color:#f92672">&lt;-</span>  vasp.input<span style="color:#f92672">$</span>charge[
+        vasp.input<span style="color:#f92672">$</span>charge[ <span style="color:#e6db74">&#34;z&#34;</span> ] <span style="color:#f92672">==</span> <span style="color:#66d9ef">unique</span>( vasp.input<span style="color:#f92672">$</span>charge<span style="color:#f92672">$</span>z )[
                                               plot.height ], ]
-    ## Same for the atoms
-    plot.atoms &lt;-  vasp.input$atoms[
-        vasp.input$atoms[ &#34;z&#34; ] == unique( vasp.input$atoms$z )[
+    <span style="color:#75715e">## Same for the atoms</span>
+    plot.atoms <span style="color:#f92672">&lt;-</span>  vasp.input<span style="color:#f92672">$</span>atoms[
+        vasp.input<span style="color:#f92672">$</span>atoms[ <span style="color:#e6db74">&#34;z&#34;</span> ] <span style="color:#f92672">==</span> <span style="color:#66d9ef">unique</span>( vasp.input<span style="color:#f92672">$</span>atoms<span style="color:#f92672">$</span>z )[
                                              plot.height ], ]
 
-    ## Constructing a grid for plotting the charge density
-    ## Boundaries of the charge density
-    limits.x &lt;- c( min( slice.charge$x ), max( slice.charge$x ) )
-    limits.y &lt;- c( min( slice.charge$y ), max( slice.charge$y ) )
+    <span style="color:#75715e">## Constructing a grid for plotting the charge density</span>
+    <span style="color:#75715e">## Boundaries of the charge density</span>
+    limits.x <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">c</span>( <span style="color:#66d9ef">min</span>( slice.charge<span style="color:#f92672">$</span>x ), <span style="color:#66d9ef">max</span>( slice.charge<span style="color:#f92672">$</span>x ) )
+    limits.y <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">c</span>( <span style="color:#66d9ef">min</span>( slice.charge<span style="color:#f92672">$</span>y ), <span style="color:#66d9ef">max</span>( slice.charge<span style="color:#f92672">$</span>y ) )
     
-    ## Creating the grid
-    plot.charge &lt;- expand.grid( x = seq( limits.x[ 1 ],
-                                          limits.x[ 2 ], , 
+    <span style="color:#75715e">## Creating the grid</span>
+    plot.charge <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">expand.grid</span>( x <span style="color:#f92672">=</span> <span style="color:#66d9ef">seq</span>( limits.x[ <span style="color:#ae81ff">1</span> ],
+                                          limits.x[ <span style="color:#ae81ff">2</span> ], , 
                                           grid.point.number ),
-                                 y = seq( limits.y[ 1 ],
-                                         limits.y[ 2 ], ,
+                                 y <span style="color:#f92672">=</span> <span style="color:#66d9ef">seq</span>( limits.y[ <span style="color:#ae81ff">1</span> ],
+                                         limits.y[ <span style="color:#ae81ff">2</span> ], ,
                                          grid.point.number ) )
 
-    ## Width of the grid boxes
-    grid.width.x &lt;- unique( plot.charge$x )[ 2 ] -
-                      unique( plot.charge$x )[ 1 ]
-    grid.width.y &lt;- unique( plot.charge$y )[ 2 ] -
-                      unique( plot.charge$y )[ 1 ]
+    <span style="color:#75715e">## Width of the grid boxes</span>
+    grid.width.x <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">unique</span>( plot.charge<span style="color:#f92672">$</span>x )[ <span style="color:#ae81ff">2</span> ] <span style="color:#f92672">-</span>
+                      <span style="color:#66d9ef">unique</span>( plot.charge<span style="color:#f92672">$</span>x )[ <span style="color:#ae81ff">1</span> ]
+    grid.width.y <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">unique</span>( plot.charge<span style="color:#f92672">$</span>y )[ <span style="color:#ae81ff">2</span> ] <span style="color:#f92672">-</span>
+                      <span style="color:#66d9ef">unique</span>( plot.charge<span style="color:#f92672">$</span>y )[ <span style="color:#ae81ff">1</span> ]
     
-    ## Calculate the mean charge density for all points within one grid
-    ## box
-    plot.charge$charge &lt;- Reduce( c, apply( plot.charge, 1, function( row ){
-        charge &lt;- mean( slice.charge$charge[
-            abs( slice.charge$x - as.numeric( row[ 1 ] ) ) &lt;=
-                grid.width.x &amp;
-            abs( slice.charge$y - as.numeric( row[ 2 ] ) ) &lt;=
+    <span style="color:#75715e">## Calculate the mean charge density for all points within one grid</span>
+    <span style="color:#75715e">## box</span>
+    plot.charge<span style="color:#f92672">$</span>charge <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">Reduce</span>( <span style="color:#66d9ef">c</span>, <span style="color:#66d9ef">apply</span>( plot.charge, <span style="color:#ae81ff">1</span>, <span style="color:#66d9ef">function</span>( row ){
+        charge <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">mean</span>( slice.charge<span style="color:#f92672">$</span>charge[
+            <span style="color:#66d9ef">abs</span>( slice.charge<span style="color:#f92672">$</span>x <span style="color:#f92672">-</span> <span style="color:#66d9ef">as.numeric</span>( <span style="color:#66d9ef">row</span>[ <span style="color:#ae81ff">1</span> ] ) ) <span style="color:#f92672">&lt;=</span>
+                grid.width.x <span style="color:#f92672">&amp;</span>
+            <span style="color:#66d9ef">abs</span>( slice.charge<span style="color:#f92672">$</span>y <span style="color:#f92672">-</span> <span style="color:#66d9ef">as.numeric</span>( <span style="color:#66d9ef">row</span>[ <span style="color:#ae81ff">2</span> ] ) ) <span style="color:#f92672">&lt;=</span>
                 grid.width.y ] )
-        return( charge )
+        <span style="color:#66d9ef">return</span>( charge )
     } ) )
 
-    ## the actual plotting
-    ggplot() +
-        ## Plotting the charge density of the slice
-        geom_raster( data = plot.charge, interpolate = TRUE,
-                  aes( x = x, y = y, fill = charge ) ) +
-        ## Plotting the atoms
-        geom_point( data = plot.atoms, color = color.atom, stroke = 1.5,
-                   aes( x = x, y = y ), shape = 16, size = 4 ) +
-        ## Customized the color scale of the charge density
-        scale_fill_distiller( palette = color.gradient, direction = 1 ) +
-        ## Remove the grid lines in the ggplot plot
-        theme_bw() + 
-        theme( panel.grid.major = element_blank(), 
-              panel.grid.minor = element_blank(), 
-              panel.background = element_blank() )
+    <span style="color:#75715e">## the actual plotting</span>
+    ggplot() <span style="color:#f92672">+</span>
+        <span style="color:#75715e">## Plotting the charge density of the slice</span>
+        geom_raster( data <span style="color:#f92672">=</span> plot.charge, interpolate <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>,
+                  aes( x <span style="color:#f92672">=</span> x, y <span style="color:#f92672">=</span> y, fill <span style="color:#f92672">=</span> charge ) ) <span style="color:#f92672">+</span>
+        <span style="color:#75715e">## Plotting the atoms</span>
+        geom_point( data <span style="color:#f92672">=</span> plot.atoms, color <span style="color:#f92672">=</span> color.atom, stroke <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.5</span>,
+                   aes( x <span style="color:#f92672">=</span> x, y <span style="color:#f92672">=</span> y ), shape <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>, size <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span> ) <span style="color:#f92672">+</span>
+        <span style="color:#75715e">## Customized the color scale of the charge density</span>
+        scale_fill_distiller( palette <span style="color:#f92672">=</span> color.gradient, direction <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> ) <span style="color:#f92672">+</span>
+        <span style="color:#75715e">## Remove the grid lines in the ggplot plot</span>
+        theme_bw() <span style="color:#f92672">+</span> 
+        theme( panel.grid.major <span style="color:#f92672">=</span> element_blank(), 
+              panel.grid.minor <span style="color:#f92672">=</span> element_blank(), 
+              panel.background <span style="color:#f92672">=</span> element_blank() )
 
-    ## Via this functions additional elements can be introduced to the
-    ## plot after calling this function
-    return( last_plot() )
+    <span style="color:#75715e">## Via this functions additional elements can be introduced to the</span>
+    <span style="color:#75715e">## plot after calling this function</span>
+    <span style="color:#66d9ef">return</span>( last_plot() )
 }
 
-vasp.plot( data.imported, 0, 20 )
-    </code></pre></div>
+vasp.plot( data.imported, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">20</span> )</code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/imported.png" alt="unit cell" /></p>
 
 <p>And for the reproduced one</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r, dependson = 'plot'" data-lang="r, dependson = 'plot'">vasp.plot( data.reproduced, 0, 20 )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">vasp.plot( data.reproduced, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">20</span> )</code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/reproduced.png" alt="reproduced plot" /></p>
 
 <p>Pretty good so far. Now lets introduce the bonds to the plotting.</p>
 
 <p>The <em>data.bonds$bonds</em> element contains the point of the beginning and
 end of all the extracted bonds.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r, dependson = 'plot'" data-lang="r, dependson = 'plot'">vasp.plot( data.bonds, 0, 20 ) +
-    ## extract just the bonds within the considered plane
-    geom_segment( data = data.bonds$bonds[
-                      data.bonds$bonds$z.begin == 0 &amp;
-                      data.bonds$bonds$z.end == 0, ],
-                 aes( x = x.begin, y = y.begin, xend = x.end,
-                     yend = y.end ), colour = color.atom, size = 1 )</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">vasp.plot( data.bonds, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">20</span> ) <span style="color:#f92672">+</span>
+    <span style="color:#75715e">## extract just the bonds within the considered plane</span>
+    geom_segment( data <span style="color:#f92672">=</span> data.bonds<span style="color:#f92672">$</span>bonds[
+                      data.bonds<span style="color:#f92672">$</span>bonds<span style="color:#f92672">$</span>z.begin <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;</span>
+                      data.bonds<span style="color:#f92672">$</span>bonds<span style="color:#f92672">$</span>z.end <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, ],
+                 aes( x <span style="color:#f92672">=</span> x.begin, y <span style="color:#f92672">=</span> y.begin, xend <span style="color:#f92672">=</span> x.end,
+                     yend <span style="color:#f92672">=</span> y.end ), colour <span style="color:#f92672">=</span> color.atom, size <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> )</code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/bonds1.png" alt="rotated" /></p>
 
 <p>Now we have bonds to the nearest neighbors.</p>
@@ -460,15 +459,15 @@ end of all the extracted bonds.</p>
 <p>If we want to have additional bonds to the next nearest neighbors we
 just have to increase the <em>distance</em> argument in the <em>vasp.bonds</em>
 function. (this time without rotation)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r, dependson = 'plot'" data-lang="r, dependson = 'plot'">data.plot &lt;- vasp.bonds( data.reproduced, distance = 15 )
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">data.plot <span style="color:#f92672">&lt;-</span> vasp.bonds( data.reproduced, distance <span style="color:#f92672">=</span> <span style="color:#ae81ff">15</span> )
 
-vasp.plot( data.plot, 0, 20 ) +
-    ## extract just the bonds within the considered plane
-    geom_segment( data = data.plot$bonds[
-                      data.plot$bonds$z.begin == 0 &amp;
-                      data.plot$bonds$z.end == 0, ],
-                 aes( x = x.begin, y = y.begin, xend = x.end,
-                     yend = y.end ), colour = color.atom, size = 1 )</code></pre></div>
+vasp.plot( data.plot, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">20</span> ) <span style="color:#f92672">+</span>
+    <span style="color:#75715e">## extract just the bonds within the considered plane</span>
+    geom_segment( data <span style="color:#f92672">=</span> data.plot<span style="color:#f92672">$</span>bonds[
+                      data.plot<span style="color:#f92672">$</span>bonds<span style="color:#f92672">$</span>z.begin <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;</span>
+                      data.plot<span style="color:#f92672">$</span>bonds<span style="color:#f92672">$</span>z.end <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, ],
+                 aes( x <span style="color:#f92672">=</span> x.begin, y <span style="color:#f92672">=</span> y.begin, xend <span style="color:#f92672">=</span> x.end,
+                     yend <span style="color:#f92672">=</span> y.end ), colour <span style="color:#f92672">=</span> color.atom, size <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> )</code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/bonds2.png" alt="bonds" /></p>
 
 	  </section>
