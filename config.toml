@@ -7,6 +7,7 @@ pluralizelisttitles = false
 theme = "casper"
 title = "theGreatWhiteShark"
 RSSLink = "http://feeds.feedburner.com/Thegreatwhiteshark-coding"
+pygmentsCodeFences = true
 
 [[menu.main]]
 identifier = "home"
@@ -49,8 +50,8 @@ email = "thetruephil@googlemail.com"
 description = "A collection of my various projects involving coding, hacking, and data"
 githubName = "theGreatWhiteShark"
 hideHUGOSupport = false
-pygmentsCodeFences = true
-pygmentsStyle = "monokai"
+[blackfriday]
+fencedCode = true
 [permalinks]
 post = "/:slug/"
 [sitemap]
