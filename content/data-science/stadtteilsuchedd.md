@@ -9,6 +9,8 @@ description = "Our award-winning contribution to the hackathon at the Datenspure
 tags = [ "data science", "R", "JavaScript" ]
 +++
 
+![snapshot](/thegreatwhiteshark.coding.io/images/posts/2016/stadtteilsuchedd/snapshot.jpeg)
+
 It was in mid autumn when I heard there will be a local version of the
 Chaos Computer Congress, the annual conference of the German hacker
 association [Chaos Computer Club](https://www.ccc.de/en/), called
@@ -38,8 +40,6 @@ of the so-called [Themenstadtplan](http://stadtplan2.dresden.de/), the
 interactive map of the city of Dresden to display information. Since
 they were made available beforehand, Justus and me took a deep dive
 into it to come up with a catchy idea. And we did.
-
-![snapshot](/thegreatwhiteshark.coding.io/images/posts/2016/stadtteilsuchedd/snapshot/jpeg]
 
 # Which part of town fits me best?
 
