@@ -161,19 +161,11 @@ on most devices.
 
 {{< highlight Bash >}}
 sudo apt install dirmngr
-sudo apt-mark auto gpgsm dirmngr
 {{< / highlight >}}
  
 `dirmngr` takes care of talking to the GPG keyserver since version
 2.1. All the examples you can find in the internet using the
-`--keyserver` argument to `gpg` are obsolete.
- 
-`apt-mark` is a unified interface to set the properties of installed
-package. Using the *auto* command, they are handled as installed
-automatically and will be thus issued for the autoremoval as soon as
-no other package is depending on them anymore. We run it here since we
-do not have any use of the dirmngr package after removing our GPG
-toolchain.
+`--keyserver` argument to `gpg` are obsolete. 
 
 Now, the following command will upload the public key associated with
 the key ID \<KEY\_ID\>. You can find the ID by running `gpg --list-keys`.
