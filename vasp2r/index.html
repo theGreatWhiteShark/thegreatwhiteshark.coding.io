@@ -255,24 +255,17 @@ is smaller in size and I want to keep package’s size at a minimum.</p>
 
 <p>First of all you have to be sure of have the <strong>vasp2R</strong> package
 installed.</p>
-
-<pre><code class="language-r">check.validity &lt;- try( library( &quot;vasp2R&quot; ), silent = TRUE )
-if ( class( check.validity ) == &quot;try-error&quot; ){
-    ## the package is not installed yet
-    devtools::install_github( &quot;theGreatWhiteShark/vasp2R&quot; )
-    library( vasp2R )
-}
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">check.validity <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">try</span>( <span style="color:#f92672">library</span>( <span style="color:#e6db74">&#34;vasp2R&#34;</span> ), silent <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span> )
+<span style="color:#66d9ef">if</span> ( <span style="color:#66d9ef">class</span>( check.validity ) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;try-error&#34;</span> ){
+    <span style="color:#75715e">## the package is not installed yet</span>
+    devtools<span style="color:#f92672">::</span>install_github( <span style="color:#e6db74">&#34;theGreatWhiteShark/vasp2R&#34;</span> )
+    <span style="color:#f92672">library</span>( vasp2R )
+}</code></pre></div>
 <p>During installation the CHG files is copied as one of the package&rsquo;s
 assets on the hard disk. We will import it into R using the
 <em>vasp.import</em> function.</p>
-
-<pre><code class="language-r">
-data.imported &lt;- vasp.import( system.file( &quot;example/CHG&quot;,
-                                          package = &quot;vasp2R&quot; ) )
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r import, cache = TRUE" data-lang="r import, cache = TRUE"><span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">imported</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">vasp</span>.<span style="color:#f92672">import</span>( <span style="color:#a6e22e">system</span>.<span style="color:#a6e22e">file</span>( <span style="color:#e6db74">&#34;example/CHG&#34;</span>,
+                                          <span style="color:#f92672">package</span> = <span style="color:#e6db74">&#34;vasp2R&#34;</span> ) )</code></pre></div>
 <h2 id="structure-of-the-imported-vasp-object">Structure of the imported vasp object</h2>
 
 <p>The resulting object <em>data.imported</em> is of class <strong>vasp</strong> and inherits
@@ -307,16 +300,12 @@ entries of a specific row correspond to a specific vector.</p>
 <p>Afterwards we will reproduce the imported VASP results of a single Ni
 atom with periodic boundary conditions to make it actually look like a
 surface.</p>
-
-<pre><code class="language-r">data.reproduced &lt;- vasp.reproduce( data.imported, x.rep = seq( -3, 3 ),
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r reproduce, dependson = 'import', cache = TRUE" data-lang="r reproduce, dependson = 'import', cache = TRUE">data.reproduced &lt;- vasp.reproduce( data.imported, x.rep = seq( -3, 3 ),
                                   y.rep = seq( -3, 3 ) )
 ## the x.rep, y.rep and z.rep argument of the vasp.reproduce function
 ## have to be supplied using a numerical vector. In the above example
 ## the unit cell is going to be reproduced three times in the positive
-## and negative direction along both the x and y axis.
-
-</code></pre>
-
+## and negative direction along both the x and y axis.</code></pre></div>
 <p>Most of the functions in vasp2R can be called with either the whole
 object of class <strong>vasp</strong> or with the individual elements. So its also
 possible to call <em>vasp.reproduce( data.imported$atoms )</em> to calculate
@@ -327,22 +316,12 @@ just a reproduced version of the atomic positions.</p>
 <p>We can also rotate the positions to change our point of view. For such
 a clean and symmetric surface this is a little bit useless. But for
 more complex structures it will become quite handy.</p>
-
-<pre><code class="language-r">
-data.rotated &lt;- vasp.rotate.cell( data.reproduced, angle = 45* pi/ 180 )
-
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r rotate, dependson = 'reproduce', cache = TRUE" data-lang="r rotate, dependson = 'reproduce', cache = TRUE">data.rotated &lt;- vasp.rotate.cell( data.reproduced, angle = 45* pi/ 180 )</code></pre></div>
 <h2 id="creating-bonds-between-atoms">Creating bonds between atoms</h2>
 
 <p>Then we establish bonds between the individual atoms (for a better
 visualization of the results).</p>
-
-<pre><code class="language-r">
-data.bonds &lt;- vasp.bonds( data.rotated, distance = 8 )
-
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r bonding, dependson = 'rotate', cache = TRUE" data-lang="r bonding, dependson = 'rotate', cache = TRUE">data.bonds &lt;- vasp.bonds( data.rotated, distance = 8 )</code></pre></div>
 <p>The <em>vasp.bonds</em> function will create bonds between all atoms closer
 together than the supplied distance value within the x-y plane.</p>
 
@@ -378,12 +357,10 @@ of thousand points)</li>
 
 <p>So instead we create an evenly grid of variable size and calculate the
 mean charge density in each of those grid boxes.</p>
-
-<pre><code class="language-r">
-library( ggplot2 )
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r plot, dependson = 'bonding', cache = TRUE" data-lang="r plot, dependson = 'bonding', cache = TRUE">library( ggplot2 )
 library( RColorBrewer ) # For nice colors out of the bxo
-color.atom &lt;- &quot;navy&quot;
-color.gradient &lt;- &quot;YlOrRd&quot; # a RColorBrewer palette
+color.atom &lt;- &#34;navy&#34;
+color.gradient &lt;- &#34;YlOrRd&#34; # a RColorBrewer palette
 
 ## Here we will create a plot function taking a z value, create
 ## a slice at this specific value and plots it along with the atomic
@@ -399,11 +376,11 @@ vasp.plot &lt;- function( vasp.input, z = 0, grid.point.number = 20 ){
     ## Extract just those values of the charge density corresponding to
     ## the determined slice grid point
     slice.charge &lt;-  vasp.input$charge[
-        vasp.input$charge[ &quot;z&quot; ] == unique( vasp.input$charge$z )[
+        vasp.input$charge[ &#34;z&#34; ] == unique( vasp.input$charge$z )[
                                               plot.height ], ]
     ## Same for the atoms
     plot.atoms &lt;-  vasp.input$atoms[
-        vasp.input$atoms[ &quot;z&quot; ] == unique( vasp.input$atoms$z )[
+        vasp.input$atoms[ &#34;z&#34; ] == unique( vasp.input$atoms$z )[
                                              plot.height ], ]
 
     ## Constructing a grid for plotting the charge density
@@ -458,36 +435,24 @@ vasp.plot &lt;- function( vasp.input, z = 0, grid.point.number = 20 ){
 }
 
 vasp.plot( data.imported, 0, 20 )
-    
-</code></pre>
-
+    </code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/imported.png" alt="unit cell" /></p>
 
 <p>And for the reproduced one</p>
-
-<pre><code class="language-r,">
-vasp.plot( data.reproduced, 0, 20 )
-
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r, dependson = 'plot'" data-lang="r, dependson = 'plot'">vasp.plot( data.reproduced, 0, 20 )</code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/reproduced.png" alt="reproduced plot" /></p>
 
 <p>Pretty good so far. Now lets introduce the bonds to the plotting.</p>
 
 <p>The <em>data.bonds$bonds</em> element contains the point of the beginning and
 end of all the extracted bonds.</p>
-
-<pre><code class="language-r,">
-vasp.plot( data.bonds, 0, 20 ) +
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r, dependson = 'plot'" data-lang="r, dependson = 'plot'">vasp.plot( data.bonds, 0, 20 ) +
     ## extract just the bonds within the considered plane
     geom_segment( data = data.bonds$bonds[
                       data.bonds$bonds$z.begin == 0 &amp;
                       data.bonds$bonds$z.end == 0, ],
                  aes( x = x.begin, y = y.begin, xend = x.end,
-                     yend = y.end ), colour = color.atom, size = 1 )
-
-</code></pre>
-
+                     yend = y.end ), colour = color.atom, size = 1 )</code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/bonds1.png" alt="rotated" /></p>
 
 <p>Now we have bonds to the nearest neighbors.</p>
@@ -495,9 +460,7 @@ vasp.plot( data.bonds, 0, 20 ) +
 <p>If we want to have additional bonds to the next nearest neighbors we
 just have to increase the <em>distance</em> argument in the <em>vasp.bonds</em>
 function. (this time without rotation)</p>
-
-<pre><code class="language-r,">
-data.plot &lt;- vasp.bonds( data.reproduced, distance = 15 )
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r, dependson = 'plot'" data-lang="r, dependson = 'plot'">data.plot &lt;- vasp.bonds( data.reproduced, distance = 15 )
 
 vasp.plot( data.plot, 0, 20 ) +
     ## extract just the bonds within the considered plane
@@ -505,10 +468,7 @@ vasp.plot( data.plot, 0, 20 ) +
                       data.plot$bonds$z.begin == 0 &amp;
                       data.plot$bonds$z.end == 0, ],
                  aes( x = x.begin, y = y.begin, xend = x.end,
-                     yend = y.end ), colour = color.atom, size = 1 )
-
-</code></pre>
-
+                     yend = y.end ), colour = color.atom, size = 1 )</code></pre></div>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2016/vasp2r/bonds2.png" alt="bonds" /></p>
 
 	  </section>

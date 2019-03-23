@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="Mutt: a command line email client"/>
+<meta name="twitter:description" content="Did you ever secretly wished to handle email, you know, the nerdy way? No GUI, no mouse, just command line tools? Well, then prick your ears. In this post I will explain the basic setup to use **Mutt** with GPG encryption, multiple IMAP accounts, and **postfix** for sending outgoing email."/>
+<meta name="twitter:site" content="@"/>
+
+
+
+  	<meta property="og:title" content="Mutt: a command line email client" />
+  	<meta property="og:site_name" content="theGreatWhiteShark" />
+  	<meta property="og:url" content="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/email/" />
+
+    
+        
+            <meta property="og:image" content="/thegreatwhiteshark.coding.io/images/moses-banner.png"/>
+        
+    
+
+    
+    <meta property="og:description" content="Did you ever secretly wished to handle email, you know, the nerdy way? No GUI, no mouse, just command line tools? Well, then prick your ears. In this post I will explain the basic setup to use **Mutt** with GPG encryption, multiple IMAP accounts, and **postfix** for sending outgoing email." />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2019-03-23T12:49:25&#43;01:00" />
+
+    
+    <meta property="article:tag" content="Linux" />
+    
+    <meta property="article:tag" content="encryption" />
+    
+    
+
+    <title>Mutt: a command line email client</title>
+
+    
+    <meta name="description" content="Did you ever secretly wished to handle email, you know, the nerdy way? No GUI, no mouse, just command line tools? Well, then prick your ears. In this post I will explain the basic setup to use **Mutt** with GPG encryption, multiple IMAP accounts, and **postfix** for sending outgoing email." />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/thegreatwhiteshark.coding.io/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="/thegreatwhiteshark.coding.io/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="/thegreatwhiteshark.coding.io/css/custom.css" />
+
+    
+
+    
+
+    
+      
+          <link href="/thegreatwhiteshark.coding.io/index.xml" rel="alternate" type="application/rss+xml" title="theGreatWhiteShark" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.52" />
+
+    <link rel="canonical" href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/email/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": 
+    },
+    "author": {
+        "@type": "Person",
+        "name": ,
+        
+        "url": https://thegreatwhiteshark.github.io/,
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ]
+    },
+    "headline": Mutt: a command line email client,
+    "name": Mutt: a command line email client,
+    "wordCount": 3029,
+    "timeRequired": "PT15M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": en
+    },
+    "url": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/email/,
+    "datePublished": 2019-03-23T12:49Z,
+    "dateModified": 2019-03-23T12:49Z,
+    
+    "keywords": Linux, encryption,
+    "description": Did you ever secretly wished to handle email, you know, the nerdy way? No GUI, no mouse, just command line tools? Well, then prick your ears. In this post I will explain the basic setup to use **Mutt** with GPG encryption, multiple IMAP accounts, and **postfix** for sending outgoing email.,
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/email/
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/">Home</a>
+            </li>
+        
+            <h3>Topics</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/data-science">Data Science</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/hacks">Hacks</a>
+            </li>
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/theGreatWhiteShark">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://thegreatwhiteshark.github.io/">Blogs</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/thegreatwhiteshark.coding.io/about">About me</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="/thegreatwhiteshark.coding.io/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+      <header class="main-header post-head no-cover">
+	<nav class="main-nav clearfix">
+	  
+
+	  
+	  
+	  <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+	  
+	</nav>
+      </header>
+
+
+
+      <main class="content" role="main">
+
+	<article class="post post">
+
+	  <header class="post-header">
+	    <h1 class="post-title">Mutt: a command line email client</h1>
+	    
+	      <h3 class="post-subtitle">Convenient handling of the emails in Linux</h3>
+	    
+	    <hr class="post-description-separator"/>
+	    <section class="post-description-single">  
+	      <p>Did you ever secretly wished to handle email, you know, the nerdy way? No GUI, no mouse, just command line tools? Well, then prick your ears. In this post I will explain the basic setup to use <strong>Mutt</strong> with GPG encryption, multiple IMAP accounts, and <strong>postfix</strong> for sending outgoing email.
+	    </section>
+	    <hr class="post-description-separator"/>
+            <section class="post-meta">
+              
+              <time class="post-date" datetime="2019-03-23T12:49:25&#43;01:00">
+		Mar 23, 2019
+              </time>
+              
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/linux/">#Linux</a></span>
+              
+              <span class="post-tag small"><a href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io//tags/encryption/">#encryption</a></span>
+              
+            </section>
+	  </header>
+
+	  <section class="post-content">
+	    
+
+<p>But before we jump right to the configuration of
+<a href="https://gitlab.com/muttmua/mutt">Mutt</a> a short explanation of general
+concepts in email delivery are required to clarify what Mutt is
+actually doing and what not.</p>
+
+<p>When sending an email quite a number of different programs are
+involved. Firstly, you write the mail in a <strong>Mail User Agent (MUA)</strong>,
+basically a small program that allows you to compose and en- and
+decrypt MIME messages (emails). It hands the mail to the <strong>Mail
+Transport Agent (MTA)</strong>, a SMTP server handling, as the name already
+suggests, the transport through your local system or the
+internet. Depending on the location of the server the mailbox of the
+receiver is located at also many MTAs can be involved in the transport.
+But eventually all emails will end up at a <strong>Mail Delivery Agent
+(MDA)</strong>, which accepts the mail and stores it into its local
+database. In order to obtain the new email, the receiver has to use a
+<strong>Mail Retrieval Agent (MRA)</strong> to download it to her local system and
+than inspect it using a MUA.</p>
+
+<p>What a mess! Why it&rsquo;s not as simple as a HTTP request done when e.g.
+retrieving this blog post and doesn&rsquo;t it work using a single program
+like Thunderbird? The point of having such an involved infrastructure
+is because you want to receive your email regardless of if your
+computer is running or not. In addition, you probably also want to
+access it from multiple locations and devices. The reason you were
+probably unaware of the multitude of programs involved is because big
+programs, like Thunderbird, tend to not stick to the Unix principle
+and try to do everything themselves causing them to be a combination
+of a MUA, MRA, and MTA. This <em>won&rsquo;t</em> be the case for <strong>Mutt</strong>. Luckily
+it features some IMAP capabilities to directly obtain emails from your
+provider but it is intended to be just a MUA and we have to set up a
+MTA ourselves to deliver the mails to our email providers. But don&rsquo;t
+worry. Our software of choice, <strong>postfix</strong>, is quite easily to
+configure, which will be covered in the end of this post. In case your
+interested about how mail protocols and the individual parts in the
+corresponding infrastructure do work, check out the
+<a href="https://gitlab.com/muttmua/mutt/wikis/MailConcept">documentation</a> of
+Mutt.</p>
+
+<h1 id="mutt">Mutt</h1>
+
+<p>Like many elderly Linux/Unix software Mutt is best to be compiled
+freshly from source with all options you want to en- or disable
+provided as additional arguments. But before we do, we need to install
+some dependencies.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt update
+sudo apt install libncursesw5-dev libgpgme-dev gpgsm</code></pre></div>
+<p>Use the <em>ncurses</em> with a <strong>w</strong> at the end. This fixes charset and
+display errors. At least at my end. <strong>GPG made easy (GPGME)</strong>  is an API
+wrapper around the command line <code>gpg</code> program. It also is able to
+support S/MIME, which will be covered internally by the <em>gpgsm</em>
+package. Both tools make it super easy to use encryption with GPG in
+Mutt. Now, it&rsquo;s time to compile the source.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">## Obtain a copy of the Mutt source code</span>
+git clone https://gitlab.com/muttmua/mutt
+cd mutt
+<span style="color:#75715e">## Compile it with a number of options.</span>
+./configure --enable-pgp --enable-gpgme --enable-compressed --enable-hcache --enable-imap --enable-sidebar --with-gnutls --with-curses<span style="color:#f92672">=</span>/usr/lib/x86_64-linux-gnu/</code></pre></div>
+<p>In this custom compilations we enabled encryption using GPG with
+<code>--enable-pgp --enable-gpgme</code>, asked Mutt to optimize its resource
+management by compressing the emails with <code>--enable-compressed</code>, and
+to speed up mail inspection by storing some metadata of the recently
+explored emails with <code>--enable-hcache</code>. The
+<code>--enable-imap --enable-sidebar --with-gnutls</code> arguments allow us to
+directly retrieve emails from a provider using the IMAP protocol
+encrypted with GnuTLS and to display various content in a sidebar. The
+<code>--with-curses</code> option was important for me to render non-ASCII
+symbols properly.</p>
+
+<p>If you for some reason want to use the version of Mutt provided by
+the package system of your operation system, you can install it via</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt update
+sudo apt install mutt</code></pre></div>
+<p>But some of the features described in the following may not be enabled
+in this default version.</p>
+
+<h3 id="imap-setup">IMAP setup</h3>
+
+<p>First things first. Let&rsquo;s start with getting access to our emails
+using Mutt. Classically, you would install a MDA, like
+<a href="http://www.fetchmail.info/">fetchmail</a>,
+<a href="http://pyropus.ca/software/getmail/">getmail</a>, or
+<a href="http://freecode.com/projects/retchmail">retchmail</a>, download all
+emails into a local mailbox of the
+e.g. <a href="https://cr.yp.to/proto/maildir.html">Maildir</a> format, and tell
+Mutt to use this folder. It sure has the benefit of being able to
+automatically process incoming mail with programs like
+<a href="https://spamassassin.apache.org/">SpamAssassin</a> but such setup is too
+involved for us right now. Instead, we will just retrieve the
+individual mails using IMAP.</p>
+
+<p>We start with some general configuration</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">### IMAP</span>
+<span style="color:#75715e"># Activate TLS</span>
+set ssl_starttls<span style="color:#f92672">=</span>yes
+<span style="color:#75715e"># Always use SSL when connecting to server</span>
+set ssl_force_tls<span style="color:#f92672">=</span>yes
+<span style="color:#75715e"># Don&#39;t wait till a manual entering of the mailbox occurred</span>
+unset imap_passive
+<span style="color:#75715e"># Poll every 15 seconds</span>
+set mail_check<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span>
+<span style="color:#75715e"># Keep a cache of the headers for faster loading</span>
+set header_cache<span style="color:#f92672">=</span>~/.muttHeaderCache
+<span style="color:#75715e"># Display the download progress every 5KB</span>
+set net_inc<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>
+<span style="color:#75715e"># View the mail in threaded mode</span>
+set sort <span style="color:#f92672">=</span> threads
+set sort_aux <span style="color:#f92672">=</span> reverse-last-date-received
+<span style="color:#75715e"># Only notify me for new mails since the last poll and not about all</span>
+<span style="color:#75715e"># new mails in the mailbox.</span>
+set mail_check_recent <span style="color:#f92672">=</span> yes
+<span style="color:#75715e"># Check for new mail in the current mailbox.</span>
+set imap_idle <span style="color:#f92672">=</span> yes</code></pre></div>
+<p>You can just copy-paste these lines into your <em>~/.mutt/muttrc</em> as they
+enable encrypted communication and just set some general stuff. A full
+list of all options can be found in the official
+<a href="http://www.mutt.org/doc/manual/">documentation</a>.</p>
+
+<p>Next, we have to add all settings for a specific email account of
+ours, e.g. Gmail or Posteo.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># General settings</span>
+set from <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;USER@googlemail.com&#34;</span>
+set folder <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;imaps://imap.gmail.com&#34;</span>
+set record <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;=Sent&#34;</span>
+set spoolfile <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;=Inbox&#34;</span>
+set postponed <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;=%5BGoogle%20Mail%5D/Entw%26APw-rfe&#34;</span>
+set trash <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;=Trash&#34;</span>
+
+set use_envelope_from
+set envelope_from_address <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;USER@googlemail.com&#34;</span>
+
+<span style="color:#75715e"># Retrieve the password from the &#39;pass&#39; password manager.</span>
+set my_pw_gmail<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>pass show Email/gmail<span style="color:#e6db74">`</span>
+
+<span style="color:#75715e"># IMAP</span>
+set imap_user <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;USER@googlemail.com&#34;</span>
+set imap_pass <span style="color:#f92672">=</span> $my_pw_gmail
+
+<span style="color:#75715e">### Custom macros</span>
+<span style="color:#75715e"># Move to the &#39;Alle Nachrichten&#39; folder</span>
+set my_gmail_location_all_messages <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;=%5BGoogle%20Mail%5D/Alle%20Nachrichten&#34;</span>
+macro index,pager <span style="color:#ae81ff">\C</span>a <span style="color:#e6db74">&#34;&lt;change-folder&gt;</span>$my_gmail_location_all_messages<span style="color:#e6db74">&lt;enter&gt;&#34;</span>
+
+<span style="color:#75715e"># Monitor incoming mail from the following folders</span>
+set my_gmail_location_xxx <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;=%5BGoogle%20Mail%5D/XXX&#34;</span>
+set my_gmail_location_yyy <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;=%5BGoogle%20Mail%5D/YYY&#34;</span>
+mailboxes $spoolfile $postponed $record $trash            <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>	  $my_gmail_location_all_messages                     <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>	  $my_gmail_location_xxx $my_gmail_location_yyy
+
+<span style="color:#75715e"># Custom status bar</span>
+set status_format <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;-%r-Gmail: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%&gt;-(%P)---&#34;</span></code></pre></div>
+<p>That&rsquo;s quite a lot! Let&rsquo;s go through it line by line. The variable
+<code>folder</code> is maybe the most important one and specifies the
+particular mailbox we want to use. Other locations, like <code>record</code>,
+<code>spoolfile</code>, <code>postponed</code>, and <code>trash</code>, are default locations, which
+are almost always in use regardless of your provider. Please note that
+you have to enter the proper name for <em>your</em> mailbox. The English
+version of the <code>postponed</code> folder will most properly be different from
+my German one.</p>
+
+<p>The <code>use_envelope_from</code> and <code>envelope_from_address</code> override the
+<code>from</code> field in an email and ensure the receiver does know it was you
+who sent it. Without these options I had problem with some of my
+accounts. That&rsquo;s why I stick to it by default.</p>
+
+<p>To be able to identify yourself to the IMAP server, you have to
+provide both a username and a password. You can decide to type both of
+them either every time you open the mail folder in Mutt, which is a
+quite tedious thing to do, or to store them in the <code>imap_user</code> and
+<code>imap_pass</code> variables. But then again, you maybe do not want your
+password to be written in plain text in an unencrypted configuration
+file. If you by accident upload it to some server or post it on a
+mailing list, you are in deep trouble. To solve this issue, I store
+the password using the Linux program <code>pass</code>, which is explained in a
+<a href="/thegreatwhiteshark.coding.io/encryption-and-backup">previous
+post</a>. Regardless
+of the mail account you use, you will be prompted for your GPG
+passphrase and only have to reenter it if more than 5 minutes after
+the last call to <code>pass</code> did passed.</p>
+
+<p>The remainder is some convenience configuration, which establishes the
+shortcut CTRL+a to jump to the folder containing all mails, sets the
+<code>mailboxes</code> variable to show a couple of subfolders including the
+number of unread mails in the sidebar, and defines a custom status
+bar. The latter is important if you handle multiple IMAP accounts and
+doesn&rsquo;t want to loose sight of which one you are handling.</p>
+
+<h3 id="using-multiple-imap-accounts">Using multiple IMAP accounts</h3>
+
+<p>Usually, people do have quite a number of email addresses. But how to
+use all of them within Mutt? I would recommend to write for each
+account a separate configuration file like above and store them in
+files like <em>~/.mutt/account.0</em>, <em>~/.mutt/account.1</em> etc. Then we
+define a shortcut in the <em>~/.mutt/muttrc</em> to load the individual files
+and thus to switch between the folders using e.g. the F5, F6, and F7
+keys, and pick one of them to act as our default account.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">## Keyboard shortcuts for switching between different accounts.</span>
+macro index &lt;f5&gt; <span style="color:#e6db74">&#39;&lt;sync-mailbox&gt;&lt;enter-command&gt;source ~/.mutt/account.0&lt;enter&gt;&lt;change-folder&gt;!&lt;enter&gt;&#39;</span>
+macro index &lt;f6&gt; <span style="color:#e6db74">&#39;&lt;sync-mailbox&gt;&lt;enter-command&gt;source ~/.mutt/account.1&lt;enter&gt;&lt;change-folder&gt;!&lt;enter&gt;&#39;</span>
+macro index &lt;f7&gt; <span style="color:#e6db74">&#39;&lt;sync-mailbox&gt;&lt;enter-command&gt;source ~/.mutt/account.2&lt;enter&gt;&lt;change-folder&gt;!&lt;enter&gt;&#39;</span>
+
+<span style="color:#75715e"># Set the default account initialized during startup</span>
+source ~/.mutt/account.1</code></pre></div>
+<p>To ensure everything will work properly and the configuration of one
+account does not interfere with the settings of another, you should
+add the following lines to the beginning of each account
+configuration.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Reset variables specified in other accounts</span>
+unmailboxes *
+unset signature
+unset realname
+unset use_envelope_from</code></pre></div>
+<h3 id="gpg-setup">GPG setup</h3>
+
+<p>Of course we still want to encrypt our mails using GPG and I promised
+it to be very easy. But first we have to enter a couple of lines to
+our <em>~/.mutt/muttrc</em>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">### Use GPG en|decryption</span>
+<span style="color:#75715e"># Enable the automatic key retrieval of GPG</span>
+source ~/.mutt/gpg.rc
+<span style="color:#75715e"># Default key used during the encryption</span>
+set pgp_default_key <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;KEY_ID&#34;</span>
+<span style="color:#75715e"># Uses &#39;gpg-agent&#39;. Since gpg &gt; version 2.1 this option has to be set.</span>
+set pgp_use_gpg_agent <span style="color:#f92672">=</span> yes
+<span style="color:#75715e"># Use automated encryption whenever the public keys of all recipients</span>
+<span style="color:#75715e"># are in the keyring.</span>
+set crypt_opportunistic_encrypt <span style="color:#f92672">=</span> yes
+<span style="color:#75715e"># Reply encrypted to encrypted mails</span>
+set crypt_replyencrypt <span style="color:#f92672">=</span> yes
+<span style="color:#75715e"># Automatically verify signatures upon opening an email.</span>
+set crypt_verify_sig <span style="color:#f92672">=</span> yes
+<span style="color:#75715e"># Postponed messages that are marked for encruption will be</span>
+<span style="color:#75715e"># self-encrypted.</span>
+set postpone_encrypt <span style="color:#f92672">=</span> yes</code></pre></div>
+<p>Be sure to replace <em>KEY_ID</em> with the ID of your personal key. You can
+find it using <code>gpg --list-secret-keys</code>. In addition, we also need the
+corresponding <em>~/.mutt/gpg.rc</em> file.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">### beginning of ~/.mutt/gpg.rc</span>
+#
+<span style="color:#75715e"># Command formats for gpg.</span>
+# 
+<span style="color:#75715e"># $Id$</span>
+# 
+<span style="color:#75715e"># %p    The empty string when no passphrase is needed,</span>
+<span style="color:#75715e">#       the string &#34;PGPPASSFD=0&#34; if one is needed.</span>
+# 
+<span style="color:#75715e">#       This is mostly used in conditional % sequences.</span>
+# 
+<span style="color:#75715e"># %f    Most PGP commands operate on a single file or a file</span>
+<span style="color:#75715e">#       containing a message.  %f expands to this file&#39;s name.</span>
+# 
+<span style="color:#75715e"># %s    When verifying signatures, there is another temporary file</span>
+<span style="color:#75715e">#       containing the detached signature.  %s expands to this</span>
+<span style="color:#75715e">#       file&#39;s name.</span>
+# 
+<span style="color:#75715e"># %a    In &#34;signing&#34; contexts, this expands to the value of the</span>
+<span style="color:#75715e">#       configuration variable $pgp_sign_as.  You probably need to</span>
+<span style="color:#75715e">#       use this within a conditional % sequence.</span>
+# 
+<span style="color:#75715e"># %r    In many contexts, mutt passes key IDs to pgp.  %r expands to</span>
+<span style="color:#75715e">#       a list of key IDs.</span>
+
+<span style="color:#75715e"># Note that we explicitly set the comment armor header since GnuPG, when used</span>
+<span style="color:#75715e"># in some localiaztion environments, generates 8bit data in that header, thereby</span>
+<span style="color:#75715e"># breaking PGP/MIME.</span>
+
+<span style="color:#75715e"># Note from the Debian mutt maintainers: starting from 1.7.0-2 GPGME is enabled</span>
+<span style="color:#75715e"># by default. More info in NEWS.Debian.</span>
+<span style="color:#75715e"># THe pgp_* commands are left here for people who disable gpgme in their</span>
+<span style="color:#75715e"># ~/.muttrc</span>
+set crypt_use_gpgme<span style="color:#f92672">=</span>yes
+
+<span style="color:#75715e"># Note from the Debian mutt maintainers: the addition of</span>
+<span style="color:#75715e"># &#34;--pinentry-mode loopback&#34; breaks gpgv1 compatiblity, if you need to use gpgv1</span>
+<span style="color:#75715e"># remove that statement.</span>
+
+<span style="color:#75715e"># decode application/pgp</span>
+set pgp_decode_command<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gpg --status-fd=2 %?p?--passphrase-fd 0 --pinentry-mode=loopback? --no-verbose --quiet --batch --output - %f&#34;</span>
+
+<span style="color:#75715e"># verify a pgp/mime signature</span>
+set pgp_verify_command<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gpg --status-fd=2 --no-verbose --quiet --batch --output - --verify %s %f&#34;</span>
+
+<span style="color:#75715e"># decrypt a pgp/mime attachment</span>
+set pgp_decrypt_command<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gpg --status-fd=2 %?p?--passphrase-fd 0 --pinentry-mode=loopback? --no-verbose --quiet --batch --output - %f&#34;</span>
+
+<span style="color:#75715e"># create a pgp/mime signed attachment</span>
+set pgp_sign_command<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gpg --no-verbose --batch --quiet --output - %?p?--passphrase-fd 0 --pinentry-mode=loopback? --armor --detach-sign --textmode %?a?-u %a? %f&#34;</span>
+
+<span style="color:#75715e"># create a application/pgp signed (old-style) message</span>
+set pgp_clearsign_command<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gpg --no-verbose --batch --quiet --output - %?p?--passphrase-fd 0 --pinentry-mode=loopback? --armor --textmode --clearsign %?a?-u %a? %f&#34;</span>
+
+<span style="color:#75715e"># create a pgp/mime encrypted attachment</span>
+set pgp_encrypt_only_command<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/usr/lib/mutt/pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f&#34;</span>
+
+<span style="color:#75715e"># create a pgp/mime encrypted and signed attachment</span>
+set pgp_encrypt_sign_command<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/usr/lib/mutt/pgpewrap gpg %?p?--passphrase-fd 0 --pinentry-mode=loopback? --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f&#34;</span>
+
+<span style="color:#75715e"># import a key into the public key ring</span>
+set pgp_import_command<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gpg --no-verbose --import %f&#34;</span>
+
+<span style="color:#75715e"># export a key from the public key ring</span>
+set pgp_export_command<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gpg --no-verbose --export --armor %r&#34;</span>
+
+<span style="color:#75715e"># verify a key</span>
+set pgp_verify_key_command<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gpg --verbose --batch --fingerprint --check-sigs %r&#34;</span>
+
+<span style="color:#75715e"># read in the public key ring</span>
+set pgp_list_pubring_command<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gpg --no-verbose --batch --quiet --with-colons --with-fingerprint --with-fingerprint --list-keys %r&#34;</span>
+
+<span style="color:#75715e"># read in the secret key ring</span>
+set pgp_list_secring_command<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gpg --no-verbose --batch --quiet --with-colons --with-fingerprint --with-fingerprint --list-secret-keys %r&#34;</span>
+
+<span style="color:#75715e"># fetch keys</span>
+<span style="color:#75715e"># set pgp_getkeys_command=&#34;pkspxycwrap %r&#34;</span>
+
+<span style="color:#75715e"># pattern for good signature - may need to be adapted to locale!</span>
+
+<span style="color:#75715e"># set pgp_good_sign=&#34;^gpgv?: Good signature from &#34;</span>
+
+<span style="color:#75715e"># OK, here&#39;s a version which uses gnupg&#39;s message catalog:</span>
+<span style="color:#75715e"># set pgp_good_sign=&#34;`gettext -d gnupg -s &#39;Good signature from &#34;&#39; | tr -d &#39;&#34;&#39;`&#34;</span>
+
+<span style="color:#75715e"># This version uses --status-fd messages</span>
+set pgp_good_sign<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;^\\[GNUPG:\\] GOODSIG&#34;</span>
+
+<span style="color:#75715e"># pattern to verify a decryption occurred</span>
+set pgp_decryption_okay<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;^\\[GNUPG:\\] DECRYPTION_OKAY&#34;</span>
+
+<span style="color:#75715e">### end off ~/.mutt/gpg.rc</span></code></pre></div>
+
+<h3 id="various-stuff">Various stuff</h3>
+
+<p>Here are a some additional configurations to ease the handling of
+Mutt. First, we will set up the sidebar and an easy navigation through
+it.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">### Configuring the sidebar</span>
+<span style="color:#75715e"># Show the sidebar (all folders defined in the &#39;mailbox&#39; variable)</span>
+set sidebar_visible <span style="color:#f92672">=</span> yes
+<span style="color:#75715e"># Don&#39;t print the full path of the individual folders</span>
+set sidebar_short_path <span style="color:#f92672">=</span> yes
+<span style="color:#75715e"># Width in number of characters</span>
+set sidebar_width <span style="color:#f92672">=</span> <span style="color:#ae81ff">15</span>
+<span style="color:#75715e"># Keybindings to handle the sidebar</span>
+<span style="color:#75715e"># macro index,pager \C&lt;Up&gt; &#39;&lt;sidebar-prev&gt;&#39;		&#34;move up in the sidebar&#34;</span>
+macro index,pager i <span style="color:#e6db74">&#39;&lt;sidebar-prev&gt;&#39;</span>		<span style="color:#e6db74">&#34;move down in the sidebar&#34;</span>
+macro index,pager o <span style="color:#e6db74">&#39;&lt;sidebar-next&gt;&#39;</span>		<span style="color:#e6db74">&#34;move down in the sidebar&#34;</span>
+macro index,pager p <span style="color:#e6db74">&#39;&lt;sidebar-open&gt;&#39;</span>		<span style="color:#e6db74">&#34;open a folder from the sidebar&#34;</span>
+macro index,pager &lt;ESC&gt;i <span style="color:#e6db74">&#39;&lt;sidebar-page-up&gt;&#39;</span>	<span style="color:#e6db74">&#34;move one page up in the sidebar&#34;</span>
+macro index,pager &lt;ESC&gt;o <span style="color:#e6db74">&#39;&lt;sidebar-page-down&gt;&#39;</span>	<span style="color:#e6db74">&#34;move one page down in
+</span><span style="color:#e6db74">the sidebar&#34;</span></code></pre></div>
+<p>In addition, we will use <strong>Emacs</strong> as our <code>editor</code> of choice for
+composing emails. You probably have a quite complex <em>~/.emacs</em>
+file, which makes the program on the one hand quite flexible and
+powerful but on the other hand also slow to start up. Therefore, you
+should either boil down your configuration to the most essential stuff
+or just use the my <a href="https://gitlab.com/theGreatWhiteShark/configurations-and-scripts/blob/master/emacs/.emacs-mutt">minimal
+one</a>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">### Various</span>
+<span style="color:#75715e"># Use Emacs as default editor</span>
+set editor <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;emacs %s --no-init-file --no-x-resources --no-site-file --no-window-system --load ~/.mutt/.emacs-mutt -f mutt-mode&#34;</span>
+<span style="color:#75715e"># Use sendmail to transfer mails via SMTP to an MTA</span>
+set sendmail<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/usr/sbin/sendmail -oi -oem&#34;</span>
+<span style="color:#75715e"># Use a custom color theming</span>
+source ~/.mutt/colors
+<span style="color:#75715e"># Include messages in replies</span>
+set include
+<span style="color:#75715e"># Don&#39;t ask me about postponing a message when writing a new email.</span>
+set recall <span style="color:#f92672">=</span> ask-no</code></pre></div>
+<p>Also we use some custom coloring</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">### Beginning of ~/.mutt/colors</span>
+<span style="color:#75715e">### Custom colors used within mutt</span>
+<span style="color:#75715e"># Default colour definitions</span>
+color quoted     red          black
+color indicator  white	      brightblack
+color error      brightyellow  black
+color message    brightyellow black
+color search     brightwhite  magenta
+color status     black 	      brightyellow
+color tree       red          black
+color normal     white        black
+
+set header_color_partial <span style="color:#f92672">=</span> yes
+<span style="color:#75715e"># # Colours for items in the reader</span>
+color header brightwhite black <span style="color:#e6db74">&#34;^(From|Subject):&#34;</span>
+
+<span style="color:#75715e"># Colours for items in the index</span>
+color index brightwhite black ~O <span style="color:#75715e"># old messages</span>
+color index brightwhite black ~N <span style="color:#75715e"># new messages</span>
+color index white 	brightred ~D <span style="color:#75715e"># deleted messages</span>
+color index brightyellow	black ~T <span style="color:#75715e"># tagged messages</span>
+
+<span style="color:#75715e"># Highbrights inside the body of a message.</span>
+<span style="color:#75715e"># URLs</span>
+color body brightblue  black <span style="color:#e6db74">&#34;(http|https|ftp|news|telnet|finger)://[^ \&#34;&gt;\t\r\n]*&#34;</span>
+color body brightblue  black <span style="color:#e6db74">&#34;mailto:[-a-z_0-9.]+@[-a-z_0-9.]+&#34;</span>
+color body brightblue  black <span style="color:#e6db74">&#34;news:[^ \&#34;&gt;\t\r\n]*&#34;</span>
+<span style="color:#75715e"># email addresses</span>
+color body brightblue  black <span style="color:#e6db74">&#34;[-a-z_0-9.%</span>$<span style="color:#e6db74">]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+&#34;</span>
+<span style="color:#75715e">### end of ~/.mutt/colors</span></code></pre></div>
+<p>The full configuration I use with Mutt can be found in
+<a href="https://gitlab.com/theGreatWhiteShark/configurations-and-scripts/tree/master/mutt">here</a>. If
+you also plan to upload yours, be sure to encrypt all files containing
+either passwords or other confidential stuff as well as all your files
+listing email addresses, be it of friends, mailing lists, or even
+yourself. Unobscured addresses should be never uploaded into public
+locations.</p>
+
+<h1 id="postfix">Postfix</h1>
+
+<p>Last but not least, we still have to install a MTA to be able to send
+our emails. In here we will use <a href="http://www.postfix.org/">postfix</a>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt update
+sudo apt install mutt postfix</code></pre></div>
+<p>It will replace the default MTA/MDA <code>sendmail</code> by linking the binary
+<em>/usr/sbin/sendmail</em> to its own variant capable of handling the same
+input arguments as the original.</p>
+
+<p>The main configuration of postfix can be found in
+<em>/etc/postfix/main.cf</em>. We will just add several lines and keep the
+rest of the file intact.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">### SMTP spass</span>
+<span style="color:#75715e"># Enables client-side authentication</span>
+smtp_sasl_auth_enable <span style="color:#f92672">=</span> yes
+<span style="color:#75715e"># Ensures encryption</span>
+smtp_tls_security_level <span style="color:#f92672">=</span> encrypt
+<span style="color:#75715e"># Removes prohibition on plaintext passwords</span>
+smtp_sasl_tls_security_options <span style="color:#f92672">=</span> noanonymous
+<span style="color:#75715e"># Send username and password information to the mail gateway server.</span>
+smtp_sasl_password_maps <span style="color:#f92672">=</span> hash:/etc/postfix/sasl_passwd
+<span style="color:#75715e"># Support multiple accounts</span>
+smtp_sender_dependent_authentication <span style="color:#f92672">=</span> yes
+sender_dependent_relayhost_maps <span style="color:#f92672">=</span> hash:/etc/postfix/sender_relay
+<span style="color:#75715e"># Use the Gmail one as the default</span>
+relayhost <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>smtp.gmail.com<span style="color:#f92672">]</span></code></pre></div>
+<p>In order to use postfix with state-of-the-art email providers we have
+to activate encryption and supply it with our credentials. The file
+<em>/etc/postfix/sender_relay</em> specifies which outgoing SMTP server to
+use for which email account. This is key when using multiple ones.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">### beginning of /etc/postfix/sender_relay</span>
+<span style="color:#75715e"># Use different providers for different senders</span>
+USER@ladi.da				<span style="color:#f92672">[</span>ladi.da<span style="color:#f92672">]</span>:587
+USER@gmx.net				<span style="color:#f92672">[</span>mail.gmx.net<span style="color:#f92672">]</span>
+<span style="color:#75715e">### end of /etc/postfix/sender_relay</span></code></pre></div>
+<p>The corresponding passwords are stored in the
+<em>/etc/postfix/sasl_password</em> file.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">### beginning of /etc/postfix/sasl_passwd</span>
+<span style="color:#75715e"># Use different authentication for different senders</span>
+USER@ladi.da				USER:PASSWORD
+USER@gmx.net				USER@gmx.net:PASSWORD
+
+<span style="color:#75715e"># Login information for the defaul relay</span>
+<span style="color:#75715e"># Destination			credentials</span>
+<span style="color:#f92672">[</span>smtp.gmail.com<span style="color:#f92672">]</span>     	USER@googlemail.com:PASSWORD
+<span style="color:#75715e">### end of /etc/postfix/sasl_passwd</span></code></pre></div>
+<p>In both the passwords and addresses have to be inserted in
+plaintext. Be sure to configure the permissions properly or other
+users can read them too!</p>
+
+<p>After modifying those files, run the following commands to write the
+changes into the <code>postfix</code> database. The actual files won&rsquo;t be
+read/touched.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo postmap /etc/postfix/sender_relay
+sudo postmap /etc/postfix/sasl_passwd</code></pre></div>
+<p>Finally, make <code>postfix</code> aware of the changes by invoking</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo postfix reload</code></pre></div>
+<p>Now, everything is set and done and you should be able to do all your
+daily email stuff with Mutt.</p>
+
+	  </section>
+
+
+	  <footer class="post-footer">
+
+
+	    
+
+
+
+
+	    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Mutt%3a%20a%20command%20line%20email%20client&nbsp;-&nbsp;theGreatWhiteShark&amp;url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2femail%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2femail%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2femail%2f&amp;description=Mutt%3a%20a%20command%20line%20email%20client"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=https%3a%2f%2fthegreatwhiteshark.github.io%2fthegreatwhiteshark.coding.io%2femail%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+	    
+
+<div id="disqus_thread"></div>
+<script>
+
+
+
+
+var disqus_config = function () {
+this.page.url = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/email\/";  
+this.page.identifier = "https:\/\/thegreatwhiteshark.github.io\/thegreatwhiteshark.coding.io\/email\/"; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://thegreatwhiteshark-coding-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+
+	  </footer>
+	</article>
+
+      </main>
+
+      
+      <aside class="read-next">
+  
+  
+  <a class="read-next-story prev" style="no-cover" href="/thegreatwhiteshark.coding.io/encryption-and-backup/">
+    <section class="post">
+      <h2>Encryption, password management, and backups in Linux</h2>
+      
+        <h4>An easy introduction to some of the most important tools and concepts</h4>
+      
+    </section>
+  </a>
+  
+</aside>
+
+      
+
+          <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">theGreatWhiteShark</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/thegreatwhiteshark.coding.io/js/index.js"></script>
+    
+</body>
+</html>
+

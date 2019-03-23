@@ -101,8 +101,8 @@
     },
     "headline": Encryption, password management, and backups in Linux,
     "name": Encryption, password management, and backups in Linux,
-    "wordCount": 1977,
-    "timeRequired": "PT10M",
+    "wordCount": 1911,
+    "timeRequired": "PT9M",
     "inLanguage": {
       "@type": "Language",
       "alternateName": en
@@ -372,19 +372,11 @@ is to upload it to a GPG keyserver. The command handling it does live
 outside of the GPG package nowadays and is not installed per default
 on most devices.</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">sudo apt install dirmngr
-sudo apt-mark auto gpgsm dirmngr</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">sudo apt install dirmngr</code></pre></div>
 
 <p><code>dirmngr</code> takes care of talking to the GPG keyserver since version
 2.1. All the examples you can find in the internet using the
 <code>--keyserver</code> argument to <code>gpg</code> are obsolete.</p>
-
-<p><code>apt-mark</code> is a unified interface to set the properties of installed
-package. Using the <em>auto</em> command, they are handled as installed
-automatically and will be thus issued for the autoremoval as soon as
-no other package is depending on them anymore. We run it here since we
-do not have any use of the dirmngr package after removing our GPG
-toolchain.</p>
 
 <p>Now, the following command will upload the public key associated with
 the key ID &lt;KEY_ID&gt;. You can find the ID by running <code>gpg --list-keys</code>.</p>
@@ -595,6 +587,16 @@ s.setAttribute('data-timestamp', +new Date());
 
       
       <aside class="read-next">
+  
+  <a class="read-next-story" style="no-cover" href="/thegreatwhiteshark.coding.io/email/">
+    <section class="post">
+      <h2>Mutt: a command line email client</h2>
+      
+        <h4>Convenient handling of the emails in Linux</h4>
+      
+      
+    </section>
+  </a>
   
   
   <a class="read-next-story prev" style="no-cover" href="/thegreatwhiteshark.coding.io/lightning-keymap-mode/">

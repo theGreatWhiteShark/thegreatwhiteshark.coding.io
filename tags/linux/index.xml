@@ -6,10 +6,20 @@
     <description>Recent content in Linux on theGreatWhiteShark</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 Mar 2019 13:49:50 +0100</lastBuildDate>
+    <lastBuildDate>Sat, 23 Mar 2019 12:49:25 +0100</lastBuildDate>
     
 	<atom:link href="https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Mutt: a command line email client</title>
+      <link>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/email/</link>
+      <pubDate>Sat, 23 Mar 2019 12:49:25 +0100</pubDate>
+      
+      <guid>https://thegreatwhiteshark.github.io/thegreatwhiteshark.coding.io/email/</guid>
+      <description>But before we jump right to the configuration of Mutt a short explanation of general concepts in email delivery are required to clarify what Mutt is actually doing and what not.
+When sending an email quite a number of different programs are involved. Firstly, you write the mail in a Mail User Agent (MUA), basically a small program that allows you to compose and en- and decrypt MIME messages (emails).</description>
+    </item>
     
     <item>
       <title>Encryption, password management, and backups in Linux</title>

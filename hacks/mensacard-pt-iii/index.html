@@ -99,7 +99,7 @@
     },
     "headline": Mensacard Hack Pt. III,
     "name": Mensacard Hack Pt. III,
-    "wordCount": 2358,
+    "wordCount": 2357,
     "timeRequired": "PT12M",
     "inLanguage": {
       "@type": "Language",
@@ -329,10 +329,7 @@ Mensacard&rsquo;s information? That&rsquo;s right: doing it using
 <p>First of all, you have to install the <em>android-mk</em> package in order to
 generate a <em>Makefile</em> to transcompile the written code for the
 Arduino&rsquo;s CPU.</p>
-
-<pre><code class="language-bash">sudo apt install arduino-core arduino-mk
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt install arduino-core arduino-mk</code></pre></div>
 <h3 id="transcompiling">Transcompiling?</h3>
 
 <p>When you computer is compiling code, it translates it into a set of
@@ -354,12 +351,9 @@ the Arduino via USB while it is still running. This way we can both
 send commands and receive messages. It would be quite pointless for
 the Arduino to read a card&rsquo;s information without transmitting it to
 us, wouldn&rsquo;t it?</p>
-
-<pre><code class="language-bash"># Make sure to replace USERNAME by your actual user name
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Make sure to replace USERNAME by your actual user name</span>
 sudo usermod -a -G dialout USERNAME
-# You need to restart your system to apply this change
-</code></pre>
-
+<span style="color:#75715e"># You need to restart your system to apply this change</span></code></pre></div>
 <p>Do we need to be in <em>dialout</em>? Actually it would be sufficient to just
 run <code>sudo chmod 666 /dev/ttyACM0</code> every time you connect your
 Arduino. But this is quite nagging and you should reduce your sudo
@@ -387,11 +381,8 @@ libraries, I provide them as submodules. So don&rsquo;t worry if you don&rsquo;t
 see any content in the //arduino/libraries/PN532 folder of the git
 repository yet. We still have to get their content by initializing and
 updating those submodules.</p>
-
-<pre><code class="language-bash"># Make sure you are at the root of mensacard-hack's repository tree
-git submodule update --init --recursive --remote
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Make sure you are at the root of mensacard-hack&#39;s repository tree</span>
+git submodule update --init --recursive --remote</code></pre></div>
 <p>Now, every time you would import a library via Arduino&rsquo;s IDE, it would
 just copy the folder/unzip the zip to Arduino&rsquo;s default library
 path. This one is defined in the <em>preferences.txt</em> file as
@@ -404,11 +395,8 @@ specifying <em>ARDUINO_LIB_PATH</em> to the Makefile and you are done.</p>
 <em>//arduino/libraries/PN532</em> into <em>sketchbook.path/libraries</em>. (All the
 README.md, git related files etc. are not harmful and we don&rsquo;t have to
 care about them)</p>
-
-<pre><code class="language-bash"># make sure your Arduino folder really is called ~/.arduino15
-cp arduino/libraries/PN532/* $(cat ~/.arduino15/preferences.txt | awk 'BEGIN {FS=&quot;=&quot;} /sketchbook.path/{print $2&quot;/libraries&quot;}')
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># make sure your Arduino folder really is called ~/.arduino15</span>
+cp arduino/libraries/PN532/* <span style="color:#66d9ef">$(</span>cat ~/.arduino15/preferences.txt | awk <span style="color:#e6db74">&#39;BEGIN {FS=&#34;=&#34;} /sketchbook.path/{print $2&#34;/libraries&#34;}&#39;</span><span style="color:#66d9ef">)</span></code></pre></div>
 <p>The second command is just a small <a href="http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html">bash
 script</a> using
 <a href="https://en.wikipedia.org/wiki/AWK">AWK</a> to extract the default
@@ -427,24 +415,18 @@ it).</p>
 <p>Firstly, let&rsquo;s download the corresponding Lisp file. (For the sake of
 completeness, I also added this file to
 <em>//arduino/res/arduino-mode.el</em>).</p>
-
-<pre><code class="language-bash">mkdir --parents ~/git/emacs-spass
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir --parents ~/git/emacs-spass
 cd ~/git/emacs-spass
-git clone git://github.com/bookest/arduino-mode.git
-</code></pre>
-
+git clone git://github.com/bookest/arduino-mode.git</code></pre></div>
 <p>Now we have to tell Emacs where to find this file, to load it whenever
 we are in need of the Arduino-mode, and which file suffixes are
 associated with this mode (.ino and .pbe). I actually took a look into
 the Lisp code and the package adds a hook for those suffixes
 itself. But it&rsquo;s good practice to do so anyway. Therefore, we will add
 the following lines to our <em>~/.emacs</em>.</p>
-
-<pre><code class="language-lisp">(add-to-list 'load-path &quot;~/git/emacs-spass/arduino-mode&quot;)
-(setq auto-mode-alist (cons '(&quot;\\.\\(pde\\|ino\\)$&quot; . arduino-mode) auto-mode-alist))
-(autoload 'arduino-mode &quot;arduino-mode&quot; nil t)
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lisp" data-lang="lisp">(add-to-list <span style="color:#e6db74">&#39;load-path</span> <span style="color:#e6db74">&#34;~/git/emacs-spass/arduino-mode&#34;</span>)
+(setq auto-mode-alist (cons <span style="color:#f92672">&#39;</span>(<span style="color:#e6db74">&#34;\\.\\(pde\\|ino\\)$&#34;</span> <span style="color:#f92672">.</span> arduino-mode) auto-mode-alist))
+(autoload <span style="color:#e6db74">&#39;arduino-mode</span> <span style="color:#e6db74">&#34;arduino-mode&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">t</span>)</code></pre></div>
 <h3 id="getting-started">Getting started</h3>
 
 <p>Now that everything is set up, let&rsquo;s just start right away.</p>
@@ -454,41 +436,35 @@ and to report this via the serial port. Note that we will do so in a
 distinct folder. Since we have to use a separate Makefile for every
 Arduino script, it&rsquo;s good practice to keep them all separated in
 different folders.</p>
-
-<pre><code class="language-bash">mkdir blinking
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir blinking
 cd blinking
 touch blinking.ino
-touch Makefile
-</code></pre>
-
+touch Makefile</code></pre></div>
 <p>The <em>blinking.ino</em> script will contain the following lines of code.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">// Number of the LED&#39;s pin
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> led <span style="color:#f92672">=</span> <span style="color:#ae81ff">13</span>;
 
-<pre><code class="language-c">// Number of the LED's pin
-const int led = 13;
-
-// Run once on initialization
-void setup(){
-  // Setup the serial communication
-  Serial.begin( 9600 );
-  // Use LED as output
-  pinMode( led, OUTPUT );
+<span style="color:#75715e">// Run once on initialization
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setup</span>(){
+  <span style="color:#75715e">// Setup the serial communication
+</span><span style="color:#75715e"></span>  Serial.begin( <span style="color:#ae81ff">9600</span> );
+  <span style="color:#75715e">// Use LED as output
+</span><span style="color:#75715e"></span>  pinMode( led, OUTPUT );
 }
 
-// Run until resetting or switching of the power supply
-void loop(){
-  // Turn on the LED
-  digitalWrite( led, HIGH );
-  // Wait a second
-  delay( 1000 );
-  // Turn the LED off again
-  digitalWrite( led, LOW );
-  // Wait another second
-  delay( 1000 );
-  // Print a message via the serial port
-  Serial.println( &quot;Hello world!&quot; );
-}
-</code></pre>
-
+<span style="color:#75715e">// Run until resetting or switching of the power supply
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">loop</span>(){
+  <span style="color:#75715e">// Turn on the LED
+</span><span style="color:#75715e"></span>  digitalWrite( led, HIGH );
+  <span style="color:#75715e">// Wait a second
+</span><span style="color:#75715e"></span>  delay( <span style="color:#ae81ff">1000</span> );
+  <span style="color:#75715e">// Turn the LED off again
+</span><span style="color:#75715e"></span>  digitalWrite( led, LOW );
+  <span style="color:#75715e">// Wait another second
+</span><span style="color:#75715e"></span>  delay( <span style="color:#ae81ff">1000</span> );
+  <span style="color:#75715e">// Print a message via the serial port
+</span><span style="color:#75715e"></span>  Serial.println( <span style="color:#e6db74">&#34;Hello world!&#34;</span> );
+}</code></pre></div>
 <h3 id="create-a-makefile">Create a Makefile</h3>
 
 <p>In order to compile the <em>blinking.ino</em> script, we still have to have a
@@ -500,11 +476,8 @@ Arduino board we are using.</p>
 <p>Therefore the minimal version of our <strong>Makefile</strong> consists of two
 lines. (Make sure it resides in the same folder as the <em>blinking.ino</em>
 script.)</p>
-
-<pre><code class="language-c">BOARD_TAG = mega2560
-include /usr/share/arduino/Arduino.mk
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">BOARD_TAG <span style="color:#f92672">=</span> mega2560
+include <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>share<span style="color:#f92672">/</span>arduino<span style="color:#f92672">/</span>Arduino.mk</code></pre></div>
 <p>The <em>arduino-mk</em> package will now just reference to the a copy of the
 <em>preferences.txt</em> file to obtain all additional configuration
 necessary for compilation.</p>
@@ -526,12 +499,9 @@ to see what the Arduino tries telling us. For this, just open a new
 instance of your
 <a href="https://github.com/emacsmirror/multi-term">multi-term</a> in a separate
 buffer and enter the following commands.</p>
-
-<pre><code class="language-bash">stty /dev/ttyACM0 9600
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">stty /dev/ttyACM0 <span style="color:#ae81ff">9600</span>
 stty /dev/ttyACM0 raw
-cat &lt; /dev/ttyACM0
-</code></pre>
-
+cat &lt; /dev/ttyACM0</code></pre></div>
 <p>This terminal will keep listening to the serial port connected to the
 Arduino and display everything it has to say. (Note, the digit behind
 /dev/ttyACM can differ)</p>
@@ -545,65 +515,59 @@ shield to my Arduino Mega</p>
 <p><img src="/thegreatwhiteshark.coding.io/images/posts/2017/mensa-card-hack/wiring-arduino.jpeg" alt="wiring" /></p>
 
 <p>and wrote a little script to detect a NFC tag.</p>
-
-<pre><code class="language-c">// Use the Serial-Peripheral Interfaces to communicate with the Arduino
-#if 0
-  #include &lt;SPI.h&gt;
-  #include &lt;PN532_SPI.h&gt;
-  #include &lt;PN532.h&gt;
-  #include &lt;NfcAdapter.h&gt;
-
-  PN532_SPI pn532spi( SPI, 10 );
-  NfcAdapter nfc = NfcAdapter( pn532spi );
-#elif 0 // If SPI is not working, set this one to 1 to use HSU
-  #include &lt;PN532_HSU.h&gt;
-  #include &lt;PN532.h&gt;
-  #include &lt;NfcAdapter.h&gt;
-      
-  PN532_HSU pn532hsu( Serial1 );
-  NfcAdapter nfc = NfcAdapter( pn532hsu );
-#else // This one I used with my NFC shield
-  #include &lt;PN532_I2C.h&gt;
-  #include &lt;PN532.h&gt;
-  #include &lt;NfcAdapter.h&gt;
-  #include &lt;Wire.h&gt;
-
-  PN532_I2C pn532i2c( Wire );
-  NfcAdapter nfc = NfcAdapter( pn532i2c );
-#endif
-
-// Run once on initialization
-void setup() {
-  Serial.begin( 9600 );
-  Serial.println(&quot;Starting up NDEF reader...&quot;);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">// Use the Serial-Peripheral Interfaces to communicate with the Arduino
+</span><span style="color:#75715e"></span><span style="color:#75715e">#if 0</span><span style="color:#75715e">
+</span><span style="color:#75715e">  #include &lt;SPI.h&gt;
+</span><span style="color:#75715e">  #include &lt;PN532_SPI.h&gt;
+</span><span style="color:#75715e">  #include &lt;PN532.h&gt;
+</span><span style="color:#75715e">  #include &lt;NfcAdapter.h&gt;
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">  PN532_SPI pn532spi( SPI, 10 );
+</span><span style="color:#75715e">  NfcAdapter nfc = NfcAdapter( pn532spi );
+</span><span style="color:#75715e"></span><span style="color:#75715e">#elif 0 // If SPI is not working, set this one to 1 to use HSU
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;PN532_HSU.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;PN532.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;NfcAdapter.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>      
+  PN532_HSU <span style="color:#a6e22e">pn532hsu</span>( Serial1 );
+  NfcAdapter nfc <span style="color:#f92672">=</span> NfcAdapter( pn532hsu );
+<span style="color:#75715e">#else </span><span style="color:#75715e">// This one I used with my NFC shield
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;PN532_I2C.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;PN532.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;NfcAdapter.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;Wire.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+  PN532_I2C <span style="color:#a6e22e">pn532i2c</span>( Wire );
+  NfcAdapter nfc <span style="color:#f92672">=</span> NfcAdapter( pn532i2c );
+<span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// Run once on initialization
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setup</span>() {
+  Serial.begin( <span style="color:#ae81ff">9600</span> );
+  Serial.println(<span style="color:#e6db74">&#34;Starting up NDEF reader...&#34;</span>);
   nfc.begin();
 }
 
-// Run until resetting or switching of the power supply
-void loop(){
-  if ( nfc.tagPresent() ){
-    // A tag was detected
-    NfcTag tag = nfc.read();
-    Serial.println( &quot;Found a tag!&quot; );
-    // Print the type of the tag
-    Serial.println( tag.getTagType() );
-    // And its Unifersal identifier (its name)
-    Serial.print( &quot;UID: &quot; );
+<span style="color:#75715e">// Run until resetting or switching of the power supply
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">loop</span>(){
+  <span style="color:#66d9ef">if</span> ( nfc.tagPresent() ){
+    <span style="color:#75715e">// A tag was detected
+</span><span style="color:#75715e"></span>    NfcTag tag <span style="color:#f92672">=</span> nfc.read();
+    Serial.println( <span style="color:#e6db74">&#34;Found a tag!&#34;</span> );
+    <span style="color:#75715e">// Print the type of the tag
+</span><span style="color:#75715e"></span>    Serial.println( tag.getTagType() );
+    <span style="color:#75715e">// And its Unifersal identifier (its name)
+</span><span style="color:#75715e"></span>    Serial.print( <span style="color:#e6db74">&#34;UID: &#34;</span> );
     Serial.println( tag.getUidString() );
   }
-}
-</code></pre>
-
+}</code></pre></div>
 <p>In order to establish a serial connection to the shield, I had to use
 the I2C protocol and switch a tiny switch on the shield. In addition
 you have to declare all libraries in the <em>Makefile</em> you are about to
 use in your script!</p>
 
 <p>For communicating via I2C, I had to add the following line.</p>
-
-<pre><code class="language-c">ARDUINO_LIBS = NDEF PN532 PN532_I2C Wire
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">ARDUINO_LIBS <span style="color:#f92672">=</span> NDEF PN532 PN532_I2C Wire</code></pre></div>
 <h2 id="reading-the-mensacard-and-the-tag">Reading the Mensacard and the tag</h2>
 
 <p>Now our big moment has finally come and we are ready to read the
