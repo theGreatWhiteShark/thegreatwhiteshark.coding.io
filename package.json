@@ -2,18 +2,15 @@
   "name": "osprey",
   "version": "1.0.0",
   "description": "![Logo](https://github.com/tomanistor/osprey/blob/master/images/osprey-logo.png)",
-  "main": "gulpfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "scripts": {
+	"clean": "rm -f static/css/custom.css",
+	"build": "npm run clean && npx node-sass src/scss/custom.scss static/css/custom.css"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-sass": "^4.0.2",
-    "natives": "^1.1.6",
-    "node-sass": "^4.13.1"
-  },
-  "dependencies": {}
+  "devDependencies": {},
+  "dependencies": {
+    "node-sass": "^8.0.0"
+  }
 }
